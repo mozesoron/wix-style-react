@@ -14,6 +14,9 @@ Types of changes:
 
 ## next
 ### Changed
+- `<DatePicker/>` - allow passing custom locale to DatePicker [#1684](https://github.com/wix/wix-style-react/pull/1684)
+
+### Changed
 - `<Input/>` - select the entire text on click [#1773](https://github.com/wix/wix-style-react/pull/1773)
 - `<DataTable/>` - changed styles to new design with `newDesign` flag [#1817](https://github.com/wix/wix-style-react/pull/1817)
 
