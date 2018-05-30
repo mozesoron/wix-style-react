@@ -161,6 +161,7 @@ Types of changes:
 - `<CounterBadge/>` [migration guide](https://github.com/wix/wix-style-react/blob/master/src/CounterBadge/MIGRATION.md)
 - jQuery no longer used in testkits, may possibly break your tests
 - `<Text/>` - no more unexpected `margins` when using any of the following `appearance`s: `H0`, `H1`, `H1.1`, `H2`, `H2.1`, `H3`, `H4`. May break layout.
+- SSR support for `.st.css` files: [Instructions](https://github.com/wix/stylable-integration#nodejs-require-hook)
 
 ## 2.0.34 - 2018-03-26
 ### Fixed
