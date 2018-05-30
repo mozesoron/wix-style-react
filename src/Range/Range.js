@@ -5,7 +5,7 @@ import Input from '../Input';
 import DatePicker from '../DatePicker';
 import RangeInputWithLabelComposite from '../Composite/RangeInputWithLabelComposite/RangeInputWithLabelComposite';
 
-const Range = ({...props, children}) => (
+const Range = ({children, ...props}) => (
   <RangeInputWithLabelComposite {...props}>
     {children}
   </RangeInputWithLabelComposite>

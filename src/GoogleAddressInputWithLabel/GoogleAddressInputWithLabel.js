@@ -4,7 +4,7 @@ import Label from '../Label';
 import GoogleAddressInput from '../GoogleAddressInput';
 import InputAreaWithLabelComposite from '../Composite/InputAreaWithLabelComposite/InputAreaWithLabelComposite';
 
-const GoogleAddressInputWithLabel = ({...props, children}) => (
+const GoogleAddressInputWithLabel = ({children, ...props}) => (
   <InputAreaWithLabelComposite {...props}>
     {children}
   </InputAreaWithLabelComposite>
