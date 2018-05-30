@@ -13,7 +13,8 @@ import {runInputWithOptionsTest} from '../InputWithOptions/InputWithOptions.spec
 import {makeControlled} from '../../test/utils';
 import {mount} from 'enzyme';
 
-runInputWithOptionsTest(searchDriverFactory);
+// We use the parent component because the Search component has a wrapper around <InputWithOption />
+runInputWithOptionsTest(args => searchDriverFactory({...args, element: args.element ? args.element.parentElement : args.element}));
 
 const options = [
   'The quick',
@@ -198,11 +199,55 @@ describe('Search', () => {
   describe('Expandable', () => {
     it('should start as collapsed element by default when expndable=true', () => {
       const driver = createDriver(
-        <Search
-          options={options}
-          expandable
-        />
+        <Search options={options} expandable/>
       );
+
+      expect(driver.isExpandable()).toBeTruthy();
+      expect(driver.isCollapsed()).toBeTruthy();
+    });
+
+    it('should extend the search input when clicked', () => {
+      const driver = createDriver(
+        <Search options={options} expandable/>
+      );
+
+      expect(driver.isCollapsed()).toBeTruthy();
+      expect(driver.isExtended()).toBeFalsy();
+      driver.clickToExtend();
+      expect(driver.isExtended()).toBeTruthy();
+    });
+
+    it('should be focused on the input after expanding the search component', () => {
+      const driver = createDriver(
+        <Search options={options} expandable/>
+      );
+
+      expect(driver.inputDriver.isFocus()).toBeFalsy();
+      driver.clickToExtend();
+      expect(driver.inputDriver.isFocus()).toBeTruthy();
+    });
+
+    it('should not collapse the input if the input has not value and blurred', () => {
+      const driver = createDriver(
+        <Search options={options} expandable/>
+      );
+
+      driver.clickToExtend();
+      driver.inputDriver.enterText('wix');
+      driver.inputDriver.blur();
+      expect(driver.isCollapsed()).toBeFalsy();
+      expect(driver.isExtended()).toBeTruthy();
+    });
+
+    it('should collapse the input if the input has not value and blurred', () => {
+      const driver = createDriver(
+        <Search options={options} expandable/>
+      );
+
+      driver.clickToExtend();
+      driver.inputDriver.blur();
+      expect(driver.isCollapsed()).toBeTruthy();
+      expect(driver.isExtended()).toBeFalsy();
     });
   });
 });

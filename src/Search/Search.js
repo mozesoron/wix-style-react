@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import omit from 'omit';
 
 import InputWithOptions from '../InputWithOptions';
 import SearchIcon from 'wix-ui-icons-common/Search';
 import WixComponent from '../BaseComponents/WixComponent';
 
 import styles from './Search.scss';
-import classNames from 'classnames';
-
 
 /**
  * Search component with suggestions based on input value listed in dropdown
@@ -106,33 +106,36 @@ export default class Search extends WixComponent {
 
   _onWrapperClick = () => {
     if (this.props.expandable && this.state.collapsed) {
-      this.setState({ collapsed: false });
+      this.setState({collapsed: false});
       this.refs.searchInput.input.focus();
     }
   };
 
   render() {
     const wrapperClasses = classNames({
-      [styles.expandableStyles]: true,
+      [styles.expandableStyles]: this.props.expandable,
       [styles.collapsed]: this.state.collapsed && this.props.expandable,
       [styles.expanded]: !this.state.collapsed && this.props.expandable
     });
 
     return (
-      <InputWithOptions
-        {...this.props}
-        ref="searchInput"
-        roundInput
-        prefix={<div className={styles.leftIcon}><SearchIcon/></div>}
-        menuArrow={false}
-        clearButton
-        closeOnSelect
-        showOptionsIfEmptyInput={false}
-        options={this._filteredOptions}
-        onClear={this._onClear}
-        onChange={this._onChange}
-        onBlur={this._onBlur}
-        highlight/>
+      <div data-hook={this.props.dataHook} className={wrapperClasses} onClick={this._onWrapperClick}>
+        <InputWithOptions
+          {...omit(['dataHook'], this.props)}
+          ref="searchInput"
+          roundInput
+          prefix={<div className={styles.leftIcon}><SearchIcon/></div>}
+          menuArrow={false}
+          clearButton
+          closeOnSelect
+          showOptionsIfEmptyInput={false}
+          options={this._filteredOptions}
+          onClear={this._onClear}
+          onChange={this._onChange}
+          onBlur={this._onBlur}
+          highlight
+          />
+      </div>
     );
   }
 }
