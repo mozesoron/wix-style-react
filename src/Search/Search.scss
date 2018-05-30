@@ -1,12 +1,53 @@
 @import '../common';
 
+$iconSize: 22px;
+
 .leftIcon {
     margin: 0 4px 0 3px;
     color: $B10;
 
     & > svg {
         display: block;
-        width: 22px;
-        height: 22px;
+        width: $iconSize;
+        height: $iconSize;
     }
+}
+
+.expandableStyles {
+  display: inline-block;
+
+  > div {
+    > div {
+      > div {
+        transition: all .3s;
+      }
+    }
+  }
+}
+
+.collapsed {
+  cursor: pointer;
+
+  > div {
+    > div {
+      > div {
+        border-color: transparent;
+        width: 13 + $iconSize;
+
+        input {
+          min-width: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+.expanded {
+  > div {
+    > div {
+      > div {
+        width: 100%;
+      }
+    }
+  }
 }

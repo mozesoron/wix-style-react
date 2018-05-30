@@ -194,6 +194,17 @@ describe('Search', () => {
       expect(driver.dropdownLayoutDriver.optionsLength()).toBe(1);
     });
   });
+
+  describe('Expandable', () => {
+    it('should start as collapsed element by default when expndable=true', () => {
+      const driver = createDriver(
+        <Search
+          options={options}
+          expandable
+        />
+      );
+    });
+  });
 });
 
 describe('Testkits', () => {
