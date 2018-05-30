@@ -12,6 +12,14 @@ Types of changes:
 1. **Security** in case of vulnerabilities.
 1. **Breaking** for breaking changes
 
+## next
+
+## 4.0.0 - 2018-05-28
+### Breaking
+- `<ToggleSwitch>` -  [migration guide](https://github.com/wix/wix-style-react/blob/master/src/ToggleSwitch/MIGRATION.md)
+- `<Text/>` [migration guide](https://github.com/wix/wix-style-react/blob/master/src/Text/MIGRATION.md)
+- `<Label/>` [migration guide](https://github.com/wix/wix-style-react/blob/master/src/Label/MIGRATION.md)
+
 ## 3.2.0 - 2018-05-28
 ### Added
 - `<MultiSelectCheckbox/>` - new component [#1755](https://github.com/wix/wix-style-react/pull/1755)
@@ -146,7 +154,6 @@ Types of changes:
 
 - `<Range/>` - fix click race condition
 
-
 ## 3.0.0
 ### Breaking
 - `<DatePicker/>` [migration guide](https://github.com/wix/wix-style-react/blob/master/src/DatePicker/MIGRATION.md)
@@ -154,6 +161,8 @@ Types of changes:
 - `<CounterBadge/>` [migration guide](https://github.com/wix/wix-style-react/blob/master/src/CounterBadge/MIGRATION.md)
 - jQuery no longer used in testkits, may possibly break your tests
 - `<Text/>` - no more unexpected `margins` when using any of the following `appearance`s: `H0`, `H1`, `H1.1`, `H2`, `H2.1`, `H3`, `H4`. May break layout.
+- SSR support for `.st.css` files: [Instructions](https://github.com/wix/stylable-integration#nodejs-require-hook)
+- `<Svg>` - the path for src/svg is deprecated. Instead, every icon/svg should be imported from `src/icons`.
 
 ## 2.0.34 - 2018-03-26
 ### Fixed

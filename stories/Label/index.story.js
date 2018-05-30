@@ -19,9 +19,10 @@ export default {
   storyName: '1.2 + Label',
 
   component: Label,
-  componentPath: '../../src/Label',
+  componentPath: '../../node_modules/wix-ui-backoffice/src/components/Label/Label.tsx',
   componentProps: {
-    children: children[0]
+    children: children[0],
+    size: 'medium'
   },
 
   exampleProps: {

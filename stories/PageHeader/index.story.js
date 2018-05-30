@@ -21,7 +21,7 @@ export default {
   },
 
   exampleProps: {
-    breadcrumbs: [null, Breadcrumbs],
-    actionsBar: [null, action]
+    breadcrumbs: ['', Breadcrumbs],
+    actionsBar: ['', action]
   }
 };

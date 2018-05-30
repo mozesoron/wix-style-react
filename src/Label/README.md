@@ -1,6 +1,6 @@
-# `<Text/>`
+# `<Label/>`
 
-General all purpose text component with Wix styling.
+General all purpose label component with Wix styling.
 
 ## Usage
 
@@ -10,13 +10,13 @@ General all purpose text component with Wix styling.
 <link rel="stylesheet" href="//static.parastorage.com/services/third-party/fonts/Helvetica/fontFace.css">
 ```
 
-2. Use `<Text>` component with appropriate appearance:
+2. Use `<Label>` component with appropriate appearance:
 
 ```js
-import Text from 'wix-style-react/Text';
+import Label from 'wix-style-react/Label';
 
 export default () =>
   <div>
-    <Text>Text</Text>
+    <Label>Label</Label>
   </div>;
 ```

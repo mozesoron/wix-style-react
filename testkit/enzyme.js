@@ -12,9 +12,6 @@ export const tooltipTestkitFactory = enzymeTestkitFactoryCreator(tooltipDriverFa
 import backofficeTooltipDriverFactory from '../src/Backoffice/Tooltip/Tooltip.driver';
 export const backofficeTooltipTestkitFactory = enzymeTestkitFactoryCreator(backofficeTooltipDriverFactory);
 
-import labelDriverFactory from '../src/Label/Label.driver';
-export const labelTestkitFactory = enzymeTestkitFactoryCreator(labelDriverFactory);
-
 import breadcrumbsDriverFactory from '../src/Breadcrumbs/Breadcrumbs.driver';
 export const breadcrumbsTestkitFactory = enzymeTestkitFactoryCreator(breadcrumbsDriverFactory);
 
@@ -141,14 +138,8 @@ export const timeInputTestkitFactory = enzymeTestkitFactoryCreator(timeInputDriv
 import sliderDriverFactory from '../src/Slider/Slider.driver';
 export const sliderTestkitFactory = enzymeTestkitFactoryCreator(sliderDriverFactory);
 
-import toggleSwitchDriverFactory from '../src/ToggleSwitch/ToggleSwitch.driver';
-export const toggleSwitchTestkitFactory = enzymeTestkitFactoryCreator(toggleSwitchDriverFactory);
-
 import imageViewerDriverFactory from '../src/ImageViewer/ImageViewer.driver';
 export const imageViewerTestkitFactory = enzymeTestkitFactoryCreator(imageViewerDriverFactory);
-
-import textDriverFactory from '../src/Text/Text.driver';
-export const textTestkitFactory = enzymeTestkitFactoryCreator(textDriverFactory);
 
 import sideMenuDriverFactory from '../src/SideMenu/core/SideMenu.driver';
 export const sideMenuTestkitFactory = enzymeTestkitFactoryCreator(sideMenuDriverFactory);
@@ -209,5 +200,8 @@ export const sectionHelperTestkitFactory = enzymeTestkitFactoryCreator(sectionHe
 export {
   badgeTestkitFactory,
   stylableCounterBadgeTestkitFactory as counterBadgeTestkitFactory,
-  headingTestkitFactory
+  headingTestkitFactory,
+  toggleSwitchTestkitFactory,
+  textTestkitFactory,
+  labelTestkitFactory
 } from 'wix-ui-backoffice/dist/src/testkit/enzyme';
