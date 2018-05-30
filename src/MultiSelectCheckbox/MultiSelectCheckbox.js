@@ -42,7 +42,6 @@ class MultiSelectCheckbox extends InputWithOptions {
 
   inputAdditionalProps() {
     return {
-      inputElement: <Input textOverflow="ellipsis" readOnly/>,
       value: this.selectedOptionsToText()
     };
   }
@@ -103,11 +102,15 @@ MultiSelectCheckbox.propTypes = {
   onDeselect: PropTypes.func,
 
   /** delimiter between the selected options that will be displayed in the input. */
-  delimiter: PropTypes.string
+  delimiter: PropTypes.string,
+
+  /** An input element to use instead of the default one */
+  inputElement: PropTypes.element
 };
 
 MultiSelectCheckbox.defaultProps = {
   ...InputWithOptions.defaultProps,
+  inputElement: <Input textOverflow="ellipsis" readOnly/>,
   delimiter: ', ',
   selectedOptions: [],
   closeOnSelect: false
