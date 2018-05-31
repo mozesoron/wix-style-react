@@ -258,7 +258,7 @@ describe('Search', () => {
 
     it('should not be collapsed by default', () => {
       const driver = createDriver(
-        <Search options={options} />
+        <Search options={options}/>
       );
 
       expect(driver.isExpandable()).toBeFalsy();
