@@ -81,19 +81,25 @@ export default class Search extends WixComponent {
     onClear && onClear();
   };
 
+  _currentValue = () => {
+    let value;
+
+    if (this._isControlled) {
+      value = this.props.value;
+    } else {
+      value = this.state.inputValue;
+    }
+
+    return value;
+  };
+
   _onBlur = () => {
     const {
       onBlur
     } = this.props;
 
     if (!this.state.collapsed && this.props.expandable) {
-      let value;
-
-      if (this._isControlled) {
-        value = this.props.value;
-      } else {
-        value = this.state.inputValue;
-      }
+      const value = this._currentValue();
 
       if (value === '') {
         this.setState({
@@ -115,8 +121,12 @@ export default class Search extends WixComponent {
   _onWrapperMouseDown = e => {
     // We need to capture mouse down and prevent it's event if the input
     // is already open
-    if (!this.state.collapsed) {
-      e.preventDefault();
+    if (this.props.expandable && !this.state.collapsed) {
+      const value = this._currentValue();
+
+      if (value === '') {
+        e.preventDefault();
+      }
     }
   };
 
