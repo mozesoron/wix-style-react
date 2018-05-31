@@ -190,7 +190,10 @@ hardcoded string of import example
 
 #### `exampleProps` - `object`
 
-exampleProps is an object who's keys are prop names, and their values are lists of possible values. For example:
+exampleProps is an object who's keys are prop names, and their values are either: 
+- a list of possible values
+- a function
+##### An example using a list value:
 ```js
 export default {
   // ... other config
@@ -201,8 +204,21 @@ export default {
 ```
 In this example the story's Props section (which is interactive) will include a 'placement' props with a Radio-Selection (or Dropdown selection) for the `placement` values.
 
+##### An example using a function value:
+```js
+export default {
+  // ... other config
+  exampleProps: {
+    onClick: ()=>{/** see interactive preview */})
+  }
+}
+```
+In this example auto-docs will create an interactive prop value text which will "glow" when the callback is called.
+
+##### Initial value
 Initialy, the rendered Preview is rendered with the props in `componentProps`, and the `placement` selection would be unselected.
 
+##### Moreover
 `exampleProps` is mostly useful when the prop values have more complex types like functions or ReactNode. For example, you can use it with the children prop:
 ```js
 export default {

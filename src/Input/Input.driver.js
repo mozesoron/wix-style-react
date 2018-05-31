@@ -48,6 +48,7 @@ const inputDriverFactory = ({element, wrapper, component}) => {
     suffixComponentExists: style => !!element.querySelector(`.${styles.suffix} ${style}`),
     isMenuArrowLast: () => element.querySelectorAll(`.${styles.suffixes} .${styles.suffix}:last-child > .${styles.menuArrow}`).length === 1,
     hasExclamation: () => !!element.querySelector(`.${styles.exclamation}`),
+    isNarrowError: () => !!element.querySelector(`.${styles.narrow}`),
     hasHelp: () => !!element.querySelector(`.${styles.help}`),
     hasError: () => element.classList.contains(styles.hasError),
     getTooltipElement: () => element,
