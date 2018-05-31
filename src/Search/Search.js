@@ -70,8 +70,6 @@ export default class Search extends WixComponent {
       onClear
     } = this.props;
 
-    this.refs.searchInput.input.blur();
-
     if (!this.state.collapsed && this.props.expandable) {
       this.setState({
         collapsed: true
@@ -141,7 +139,6 @@ export default class Search extends WixComponent {
       <div className={wrapperClasses} onClick={this._onWrapperClick} onMouseDown={this._onWrapperMouseDown}>
         <InputWithOptions
           {...this.props}
-          ref="searchInput"
           roundInput
           prefix={<div className={styles.leftIcon}><SearchIcon/></div>}
           menuArrow={false}

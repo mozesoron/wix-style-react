@@ -103,7 +103,7 @@ describe('Search', () => {
       expect(driver.inputDriver.hasClearButton()).toBe(true);
     });
 
-    it('should unfocus Search after clear button click', () => {
+    it('should remain focused on Search component after clear button click', () => {
       const driver = createDriver(
         <ControlledSearch
           options={options}
@@ -112,7 +112,7 @@ describe('Search', () => {
       );
 
       driver.inputDriver.clickClear();
-      expect(driver.inputDriver.isFocus()).toBe(false);
+      expect(driver.inputDriver.isFocus()).toBe(true);
     });
 
     it('should collapse search options after clear button click', () => {

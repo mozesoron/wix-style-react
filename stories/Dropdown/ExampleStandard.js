@@ -68,4 +68,10 @@ export default () =>
         <Dropdown options={options} dropDirectionUp suffix={<Input.Unit>%</Input.Unit>}/>
       </div>
     </div>
+    <div>
+      <div className="ltr" style={style}>
+        <div>With error</div>
+        <Dropdown selectedId={1} options={options} error errorMessage="Somthing is wrong"/>
+      </div>
+    </div>
   </div>;

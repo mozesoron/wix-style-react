@@ -368,6 +368,10 @@ $material-gap: 8px;
   justify-content: center;
   color: #fff;
 
+  &.narrow{
+    margin: 0;
+  }
+
   > svg {
     width: 10px;
     height: 10px;
