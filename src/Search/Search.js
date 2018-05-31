@@ -107,8 +107,16 @@ export default class Search extends WixComponent {
 
   _onWrapperClick = () => {
     if (this.props.expandable && this.state.collapsed) {
-      this.setState({collapsed: false});
       this.refs.searchInput.input.focus();
+      this.setState({collapsed: false});
+    }
+  };
+
+  _onWrapperMouseDown = e => {
+    // We need to capture mouse down and prevent it's event if the input
+    // is already open
+    if (!this.state.collapsed) {
+      e.preventDefault();
     }
   };
 
@@ -120,7 +128,7 @@ export default class Search extends WixComponent {
     });
 
     return (
-      <div className={wrapperClasses} onClick={this._onWrapperClick}>
+      <div className={wrapperClasses} onClick={this._onWrapperClick} onMouseDown={this._onWrapperMouseDown}>
         <InputWithOptions
           {...this.props}
           ref="searchInput"
