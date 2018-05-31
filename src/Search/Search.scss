@@ -14,8 +14,6 @@ $iconSize: 22px;
 }
 
 .expandableStyles {
-  display: inline-block;
-
   > div {
     > div {
       > div {
@@ -32,7 +30,7 @@ $iconSize: 22px;
     > div {
       > div {
         border-color: transparent;
-        width: 13 + $iconSize;
+        width: 14 + $iconSize;
 
         input {
           min-width: 0 !important;

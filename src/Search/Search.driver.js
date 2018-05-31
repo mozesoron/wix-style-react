@@ -1,24 +1,21 @@
-import inputDriverFactory from '../InputWithOptions/InputWithOptions.driver';
-import ReactTestUtils from 'react-dom/test-utils';
+import inputWithOptionsDriverFactory from '../InputWithOptions/InputWithOptions.driver';
 
 const EXPANDABLE_CLASS = 'expandableStyles';
 const EXPANDABLE_COLLAPSED = 'collapsed';
 const EXPANDABLE_EXPANDED = 'expanded';
 
 const searchDriverFactory = args => {
-  const inputDriver = inputDriverFactory({
+  const inputWithOptionsDriver = inputWithOptionsDriverFactory({
     ...args,
-    element: args.element ? args.element.childNodes[0] : null
+    element: args.element && args.element.childNodes[0]
   });
 
   const {element} = args;
 
   return {
-    ...inputDriver,
-    clickToExtend: () => ReactTestUtils.Simulate.click(element),
+    ...inputWithOptionsDriver,
     isExpandable: () => element.className.includes(EXPANDABLE_CLASS),
-    isCollapsed: () => element.className.includes(EXPANDABLE_COLLAPSED),
-    isExtended: () => element.className.includes(EXPANDABLE_EXPANDED)
+    isCollapsed: () => element.className.includes(EXPANDABLE_COLLAPSED) && !element.className.includes(EXPANDABLE_EXPANDED),
   };
 };
 

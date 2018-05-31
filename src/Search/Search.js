@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import omit from 'omit';
 
 import InputWithOptions from '../InputWithOptions';
 import SearchIcon from 'wix-ui-icons-common/Search';
@@ -30,9 +29,11 @@ export default class Search extends WixComponent {
   constructor(props) {
     super(props);
 
+    const initalValue = (!this._isControlled && props.defaultValue) || '';
+
     this.state = {
-      inputValue: (!this._isControlled && props.defaultValue) || '',
-      collapsed: true
+      inputValue: initalValue,
+      collapsed: props.expandable && initalValue === ''
     };
   }
 
@@ -119,9 +120,9 @@ export default class Search extends WixComponent {
     });
 
     return (
-      <div data-hook={this.props.dataHook} className={wrapperClasses} onClick={this._onWrapperClick}>
+      <div className={wrapperClasses} onClick={this._onWrapperClick}>
         <InputWithOptions
-          {...omit(['dataHook'], this.props)}
+          {...this.props}
           ref="searchInput"
           roundInput
           prefix={<div className={styles.leftIcon}><SearchIcon/></div>}
