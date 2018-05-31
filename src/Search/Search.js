@@ -139,6 +139,7 @@ export default class Search extends WixComponent {
       <div className={wrapperClasses} onClick={this._onWrapperClick} onMouseDown={this._onWrapperMouseDown}>
         <InputWithOptions
           {...this.props}
+          ref="searchInput"
           roundInput
           prefix={<div className={styles.leftIcon}><SearchIcon/></div>}
           menuArrow={false}
