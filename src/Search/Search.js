@@ -6,6 +6,7 @@ import SearchIcon from 'wix-ui-icons-common/Search';
 import WixComponent from '../BaseComponents/WixComponent';
 
 import styles from './Search.scss';
+import Loader from "../Loader/Loader";
 
 /**
  * Search component with suggestions based on input value listed in dropdown
@@ -15,12 +16,16 @@ export default class Search extends WixComponent {
 
   static propTypes = {
     ...InputWithOptions.propTypes,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    loading: PropTypes.bool,
+    renderLoading: PropTypes.func
   };
 
   static defaultProps = {
     ...InputWithOptions.defaultProps,
-    placeholder: 'Search'
+    placeholder: 'Search',
+    loading: false,
+    renderLoading: null
   };
 
   constructor(props) {
@@ -59,11 +64,14 @@ export default class Search extends WixComponent {
     }
   };
 
+  _renderDefaultLoading = () => (<div className={styles.loaderContainer}><Loader size={'small'}/></div>);
+
   render() {
     return (
       <InputWithOptions
         {...this.props}
         roundInput
+        suffix={this.props.loading ? (this.props.renderLoading || this._renderDefaultLoading)() : null}
         prefix={<div className={styles.leftIcon}><SearchIcon/></div>}
         menuArrow={false}
         clearButton

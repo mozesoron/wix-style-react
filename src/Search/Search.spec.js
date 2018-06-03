@@ -194,6 +194,14 @@ describe('Search', () => {
       expect(driver.dropdownLayoutDriver.optionsLength()).toBe(1);
     });
   });
+
+  describe('With Loader', () => {
+    it('should render without loader as deafult', () => {});
+
+    it('should render with default loader when loading=true', () => {});
+
+    it('should allow to use custom loader when loading=true', () => {});
+  });
 });
 
 describe('Testkits', () => {
