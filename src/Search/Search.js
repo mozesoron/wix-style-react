@@ -29,11 +29,11 @@ export default class Search extends WixComponent {
   constructor(props) {
     super(props);
 
-    const initalValue = (!this._isControlled && props.defaultValue) || '';
+    const initialValue = (!this._isControlled && props.defaultValue) || '';
 
     this.state = {
-      inputValue: initalValue,
-      collapsed: props.expandable && initalValue === ''
+      inputValue: initialValue,
+      collapsed: props.expandable && initialValue === '' && !props.autoFocus
     };
   }
 
