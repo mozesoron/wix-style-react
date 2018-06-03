@@ -278,24 +278,30 @@ describe('Search', () => {
 
   describe('With Loader', () => {
     it('should render without loader as deafult', () => {
-      const driver = createDriver(<Search options={options}/>);
+      const {searchDriver} = createDriver(<Search options={options}/>);
 
-      expect(driver.hasLoadingSuffix()).toBeFalsy();
+      expect(searchDriver.hasLoadingSuffix()).toBeFalsy();
     });
 
     it('should render with default loader when loading=true', () => {
-      const driver = createDriver(<Search loading options={options}/>);
+      const {searchDriver} = createDriver(<Search loading options={options}/>);
 
-      expect(driver.hasLoadingSuffix()).toBeTruthy();
+      expect(searchDriver.hasLoadingSuffix()).toBeTruthy();
     });
 
     it('should allow to use custom loader when loading=true', () => {
       const renderSpy = jest.fn();
       renderSpy.mockReturnValue(<div className={'custom-loader'}/>);
-      const driver = createDriver(<Search loading renderLoading={renderSpy} options={options}/>);
+      const {searchDriver} = createDriver(<Search loading renderLoading={renderSpy} options={options}/>);
 
-      expect(driver.hasLoadingSuffix()).toBeTruthy();
+      expect(searchDriver.hasLoadingSuffix()).toBeTruthy();
       expect(renderSpy.mock.calls.length).toBe(1);
+    });
+
+    it('should override loading=true in case of an error', () => {
+      const {searchDriver} = createDriver(<Search error loading options={options}/>);
+
+      expect(searchDriver.hasLoadingSuffix()).toBeFalsy();
     });
   });
 });

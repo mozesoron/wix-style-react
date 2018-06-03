@@ -150,7 +150,7 @@ export default class Search extends WixComponent {
           {...this.props}
           ref="searchInput"
           roundInput
-          suffix={this.props.loading ? (<div className={styles.loaderContainer}>{loadingRenderFn()}</div>) : null}
+          suffix={this.props.loading && !this.props.error ? (<div className={styles.loaderContainer}>{loadingRenderFn()}</div>) : null}
           prefix={<div className={styles.leftIcon}><SearchIcon/></div>}
           menuArrow={false}
           clearButton
