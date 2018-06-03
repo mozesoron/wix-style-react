@@ -6,7 +6,7 @@ import SearchIcon from 'wix-ui-icons-common/Search';
 import WixComponent from '../BaseComponents/WixComponent';
 
 import styles from './Search.scss';
-import Loader from "../Loader/Loader";
+import Loader from '../Loader/Loader';
 
 /**
  * Search component with suggestions based on input value listed in dropdown
