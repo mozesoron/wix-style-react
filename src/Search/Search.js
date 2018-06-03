@@ -34,11 +34,11 @@ export default class Search extends WixComponent {
   constructor(props) {
     super(props);
 
-    const initalValue = (!this._isControlled && props.defaultValue) || '';
+    const initialValue = (!this._isControlled && props.defaultValue) || '';
 
     this.state = {
-      inputValue: initalValue,
-      collapsed: props.expandable && initalValue === ''
+      inputValue: initialValue,
+      collapsed: props.expandable && initialValue === ''
     };
   }
 
@@ -133,7 +133,7 @@ export default class Search extends WixComponent {
     }
   };
 
-  _renderDefaultLoading = () => (<div className={styles.loaderContainer}><Loader size={'small'}/></div>);
+  _renderDefaultLoading = () => (<Loader size={'small'}/>);
 
   render() {
     const wrapperClasses = classNames({
@@ -142,13 +142,15 @@ export default class Search extends WixComponent {
       [styles.expanded]: !this.state.collapsed && this.props.expandable
     });
 
+    const loadingRenderFn = this.props.renderLoading || this._renderDefaultLoading;
+
     return (
       <div className={wrapperClasses} onClick={this._onWrapperClick} onMouseDown={this._onWrapperMouseDown}>
         <InputWithOptions
           {...this.props}
           ref="searchInput"
           roundInput
-          suffix={this.props.loading ? (this.props.renderLoading || this._renderDefaultLoading)() : null}
+          suffix={this.props.loading ? (<div className={styles.loaderContainer}>{loadingRenderFn()}</div>) : null}
           prefix={<div className={styles.leftIcon}><SearchIcon/></div>}
           menuArrow={false}
           clearButton
