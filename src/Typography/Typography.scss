@@ -5,6 +5,7 @@
   font-size: $font-size;
   color: $color;
   line-height: $line-height;
+  font-weight: normal;
 }
 
 @mixin generateVariations($list) {
