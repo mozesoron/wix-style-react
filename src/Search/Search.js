@@ -38,7 +38,7 @@ export default class Search extends WixComponent {
 
     this.state = {
       inputValue: initialValue,
-      collapsed: props.expandable && initialValue === ''
+      collapsed: props.expandable && initialValue === '' && !props.autoFocus
     };
   }
 
