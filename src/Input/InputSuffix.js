@@ -6,13 +6,16 @@ import ArrowDownThin from './../Icons/dist/components/ArrowDownThin';
 import Search4 from './../Icons/dist/components/Search4';
 import ThemedInputErrorSuffix from './ThemedInputErrorSuffix';
 import ThemedInputHelpSuffix from './ThemedInputHelpSuffix';
+import InputLoaderSuffix from './InputLoaderSuffix';
+import Input from './Input';
 
 import styles from './Input.scss';
 
 const isFixVisible = fix => fix.isVisible;
 
 const suffixRules = {
-  inputErrorSuffix: ({error, disabled}) => error && !disabled,
+  inputLoaderSuffix: ({status, disabled}) => status === Input.StatusLoading && !disabled,
+  inputErrorSuffix: ({status, disabled}) => status === Input.StatusError && !disabled,
   inputHelpSuffix: ({help, disabled}) => help && !disabled,
   magnifyingGlass: ({magnifyingGlass, isClearButtonVisible, error}) => magnifyingGlass && !isClearButtonVisible && !error,
   clearButton: ({isClearButtonVisible}) => isClearButtonVisible,
@@ -28,15 +31,21 @@ const getVisibleSuffixCount = args =>
     .filter(x => x)
     .length;
 
-const InputSuffix = ({theme, errorMessage, error, disabled, help, helpMessage, onIconClicked,
+const InputSuffix = ({theme, statusMessage, status, disabled, help, helpMessage, onIconClicked,
       magnifyingGlass, isClearButtonVisible, onClear, menuArrow, unit, suffix, focused,
       tooltipPlacement, onTooltipShow
 }) => {
 
+  const error = status === Input.StatusError;
+
   const suffixes = [
     {
-      component: () => <ThemedInputErrorSuffix theme={theme} focused={focused} narrow={menuArrow} errorMessage={errorMessage} tooltipPlacement={tooltipPlacement} onTooltipShow={onTooltipShow}/>,
-      isVisible: suffixRules.inputErrorSuffix({error, disabled})
+      component: () => <ThemedInputErrorSuffix theme={theme} focused={focused} narrow={menuArrow} errorMessage={statusMessage} tooltipPlacement={tooltipPlacement} onTooltipShow={onTooltipShow}/>,
+      isVisible: suffixRules.inputErrorSuffix({status, disabled})
+    },
+    {
+      component: () => <InputLoaderSuffix tooltipMessage={statusMessage} tooltipPlacement={tooltipPlacement} onTooltipShow={onTooltipShow}/>,
+      isVisible: suffixRules.inputLoaderSuffix({status, disabled})
     },
     {
       component: () => <ThemedInputHelpSuffix theme={theme} help={help} helpMessage={helpMessage} tooltipPlacement={tooltipPlacement} onTooltipShow={onTooltipShow}/>,
@@ -93,8 +102,8 @@ InputSuffix.propTypes = {
     isVisible: PropTypes.bool.isRequired
   })),
   theme: PropTypes.oneOf(['normal', 'tags', 'paneltitle', 'material', 'amaterial', 'flat', 'flatdark']),
-  errorMessage: PropTypes.node.isRequired,
-  error: PropTypes.bool,
+  statusMessage: PropTypes.node,
+  status: PropTypes.oneOf(['loading', 'error']),
   disabled: PropTypes.bool,
   help: PropTypes.bool,
   helpMessage: PropTypes.node,

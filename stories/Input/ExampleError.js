@@ -11,9 +11,9 @@ const style = {
 
 const Example = ({theme}) =>
   <div>
-    <div className="ltr" style={style}>Left to right<Input theme={theme} error/></div>
-    <div className="rtl" style={style}>Right to left<Input theme={theme} rtl error/></div>
-    <div className="ltr" style={style}>Error with tooltip<Input theme={theme} error errorMessage="I am a message"/></div>
+    <div className="ltr" style={style}>Left to right<Input theme={theme} status={'error'}/></div>
+    <div className="rtl" style={style}>Right to left<Input theme={theme} rtl status={'error'}/></div>
+    <div className="ltr" style={style}>Error with tooltip<Input theme={theme} status={'error'} errorMessage="I am a message"/></div>
   </div>;
 
 Example.propTypes = {

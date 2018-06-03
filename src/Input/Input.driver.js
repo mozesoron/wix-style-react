@@ -52,6 +52,7 @@ const inputDriverFactory = ({element, wrapper, component}) => {
     hasHelp: () => !!element.querySelector(`.${styles.help}`),
     hasError: () => element.classList.contains(styles.hasError),
     getTooltipElement: () => element,
+    hasLoader: () => element.querySelector(`.loaderContainer`),
     getTooltipDataHook: () => 'input-tooltip',
     getDataHook: () => element.getAttribute('data-hook'),
     getUnit: () => element.querySelector(`.${styles.unit}`).textContent,

@@ -15,6 +15,9 @@ class Input extends Component {
   static Unit = Unit;
   static Group = Group;
 
+  static StatusError = 'error';
+  static StatusLoading = 'loading';
+
   state = {
     focus: false
   };
@@ -63,17 +66,19 @@ class Input extends Component {
       prefix,
       suffix,
       type,
-      errorMessage,
       maxLength,
       textOverflow,
       theme,
       disabled,
-      error,
+      status,
+      statusMessage,
       width,
       tooltipPlacement,
       onTooltipShow,
       autocomplete,
-      required
+      required,
+      error,
+      errorMessage
     } = this.props;
 
     const onIconClicked = () => {
@@ -84,10 +89,12 @@ class Input extends Component {
       }
     };
 
-    const isClearButtonVisible = (!!clearButton || !!onClear) && !!value && !error && !disabled;
+
+    const hasErrors = error || status === Input.StatusError;
+    const isClearButtonVisible = (!!clearButton || !!onClear) && !!value && !hasErrors && !disabled;
 
     const visibleSuffixCount = getVisibleSuffixCount({
-      error, disabled, help, magnifyingGlass, isClearButtonVisible, menuArrow, unit, suffix
+      status, statusMessage, disabled, help, magnifyingGlass, isClearButtonVisible, menuArrow, unit, suffix
     });
 
     const inputClassNames = classNames(styles.input, {
@@ -131,6 +138,9 @@ class Input extends Component {
         {...props}
         />);
 
+    const suffixStatus = status ? status : (error ? Input.StatusError : null);
+    const suffixStatusMessage = statusMessage && statusMessage !== '' ? statusMessage : errorMessage;
+
     //needs additional wrapper with class .prefixSuffixWrapper to fix inputs with prefix in ie11
     //https://github.com/wix/wix-style-react/issues/1693
     //https://github.com/wix/wix-style-react/issues/1691
@@ -139,8 +149,8 @@ class Input extends Component {
 
       { inputElement }
       { visibleSuffixCount > 0 && <div className={styles.prefixSuffixWrapper}><InputSuffix
-        error={error}
-        errorMessage={errorMessage}
+        status={suffixStatus}
+        statusMessage={suffixStatusMessage}
         theme={theme}
         disabled={disabled}
         help={help}
@@ -240,6 +250,7 @@ Input.displayName = 'Input';
 Input.defaultProps = {
   size: 'normal',
   theme: 'normal',
+  statusMessage: '',
   errorMessage: '',
   helpMessage: '',
   roundInput: false,
@@ -273,11 +284,23 @@ Input.propTypes = {
   /** when set to true this component is disabled */
   disabled: PropTypes.bool,
 
-  /** Is input value erroneous */
+  /** Is input has a special status */
+  status: PropTypes.oneOf([Input.StatusError, Input.StatusLoading]),
+
+  /** Is input has errors
+   * @deprecated
+   * @see status
+   */
   error: PropTypes.bool,
 
-  /** The error message to display when hovering the error icon, if not given or empty there will be no tooltip */
+  /** Error message to display
+   * @deprecated
+   * @see statusMessage
+   */
   errorMessage: PropTypes.node,
+
+  /** The status (error/loading) message to display when hovering the error icon, if not given or empty there will be no tooltip */
+  statusMessage: PropTypes.node,
   forceFocus: PropTypes.bool,
   forceHover: PropTypes.bool,
 

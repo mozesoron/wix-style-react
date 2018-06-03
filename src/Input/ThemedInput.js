@@ -16,6 +16,7 @@ class ThemedInput extends Input {
       rtl,
       disabled,
       error,
+      status,
       forceHover,
       forceFocus,
       roundInput,
@@ -28,7 +29,7 @@ class ThemedInput extends Input {
     const classes = {
       [styles.rtl]: !!rtl,
       [styles.disabled]: disabled,
-      [styles.hasError]: !!error,
+      [styles.hasError]: (!!error) || status === 'error',
       [styles.hasHover]: forceHover,
       [styles.hasFocus]: forceFocus || this.state.focus,
       [styles.roundInput]: roundInput,

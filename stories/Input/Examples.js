@@ -9,6 +9,9 @@ import ExampleStandardRaw from '!raw-loader!./ExampleStandard';
 import ExampleError from './ExampleError';
 import ExampleErrorRaw from '!raw-loader!./ExampleError';
 
+import ExampleLoader from './ExampleLoader';
+import ExampleLoaderRaw from '!raw-loader!./ExampleLoader';
+
 import ExampleUnit from './ExampleUnit';
 import ExampleUnitRaw from '!raw-loader!./ExampleUnit';
 
@@ -38,6 +41,10 @@ const Examples = ({theme}) =>
 
     <CodeExample title="Error" code={ExampleErrorRaw}>
       <ExampleError theme={theme}/>
+    </CodeExample>
+
+    <CodeExample title="Loader" code={ExampleLoaderRaw}>
+      <ExampleLoader theme={theme}/>
     </CodeExample>
 
     <CodeExample title="Unit" code={ExampleUnitRaw}>
