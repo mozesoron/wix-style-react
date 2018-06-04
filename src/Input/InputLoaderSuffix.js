@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '../Tooltip';
 import Loader from '../Loader';
+import styles from './Input.scss';
 
 class InputLoaderSuffix extends React.Component {
   render() {
@@ -19,7 +20,9 @@ class InputLoaderSuffix extends React.Component {
         hideDelay={150}
         zIndex={10000}
         >
-        <Loader size={'tiny'}/>
+        <div className={styles.loaderContainer}>
+          <Loader size={'tiny'}/>
+        </div>
       </Tooltip>
     );
   }
