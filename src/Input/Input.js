@@ -89,12 +89,13 @@ class Input extends Component {
       }
     };
 
-
     const hasErrors = error || status === Input.StatusError;
     const isClearButtonVisible = (!!clearButton || !!onClear) && !!value && !hasErrors && !disabled;
+    const suffixStatus = status ? status : (error ? Input.StatusError : null);
+    const suffixStatusMessage = statusMessage && statusMessage !== '' ? statusMessage : errorMessage;
 
     const visibleSuffixCount = getVisibleSuffixCount({
-      status, statusMessage, disabled, help, magnifyingGlass, isClearButtonVisible, menuArrow, unit, suffix
+      status: suffixStatus, statusMessage: suffixStatusMessage, disabled, help, magnifyingGlass, isClearButtonVisible, menuArrow, unit, suffix
     });
 
     const inputClassNames = classNames(styles.input, {
@@ -137,9 +138,6 @@ class Input extends Component {
         {...ariaAttribute}
         {...props}
         />);
-
-    const suffixStatus = status ? status : (error ? Input.StatusError : null);
-    const suffixStatusMessage = statusMessage && statusMessage !== '' ? statusMessage : errorMessage;
 
     //needs additional wrapper with class .prefixSuffixWrapper to fix inputs with prefix in ie11
     //https://github.com/wix/wix-style-react/issues/1693
