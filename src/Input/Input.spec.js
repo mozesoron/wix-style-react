@@ -16,7 +16,7 @@ describe('Input', () => {
 
   describe('test tooltip', () => {
 
-    it.only('should display the error tooltip on hover', () => {
+    it('should display the error tooltip on hover', () => {
       const driver = createDriver(<Input error errorMessage="I'm the error message"/>);
       const dataHook = driver.getTooltipDataHook();
       const wrapper = driver.getTooltipElement();
