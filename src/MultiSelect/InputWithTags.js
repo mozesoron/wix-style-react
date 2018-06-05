@@ -48,13 +48,16 @@ class InputWithTags extends React.Component {
   }
 
   render() {
-    const {tags, onRemoveTag, placeholder, error, disabled, delimiters, ...inputProps} = this.props;
+    const {tags, onRemoveTag, placeholder, error, disabled, delimiters, mode, ...inputProps} = this.props;
     const {inputHasFocus: hasFocus, hasHover} = this.state;
+    const isSelectMode = mode === 'select'
 
     const className = classNames({
       [styles.tagsContainer]: true,
       [styles.disabled]: disabled,
       [styles.error]: error,
+      [styles.empty]: !tags.length,
+      [styles.readOnly]: isSelectMode,
       [styles.hasFocus]: hasFocus,
       [styles.hasHover]: hasHover,
       [styles.hasMaxHeight]: !isUndefined(this.props.maxHeight) || !isUndefined(this.props.maxNumRows)
@@ -65,13 +68,13 @@ class InputWithTags extends React.Component {
       'inputElement',
       'closeOnSelect',
       'predicate',
-      'menuArrow',
       'onClickOutside',
       'fixedHeader',
       'fixedFooter',
       'dataHook',
       'onFocus',
       'onBlur',
+      'menuArrow',
       'onInputClicked'], inputProps);
     const fontSize = (desiredProps.size && desiredProps.size === 'small') ? '14px' : '16px';
 
@@ -107,6 +110,9 @@ class InputWithTags extends React.Component {
             {...desiredProps}
             dataHook="inputWithTags-input"
             disabled={disabled}
+            error={error}
+            menuArrow={isSelectMode}
+            readOnly={isSelectMode}
             onChange={e => {
               if (!delimiters.includes(e.target.value)) {
                 this.setState({inputValue: e.target.value});
@@ -152,6 +158,7 @@ InputWithTags.propTypes = {
   autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
   error: PropTypes.bool,
+  mode: PropTypes.string,
   delimiters: PropTypes.array,
   width: PropTypes.string
 };

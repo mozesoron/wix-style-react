@@ -17,6 +17,7 @@ const multiSelectDriverFactory = ({element, wrapper, component}) => {
     getMaxHeight: () => inputWrapper.style.maxHeight,
     clickOnInputWrapper: () => ReactTestUtils.Simulate.click(inputWrapper),
     inputWrapperHasFocus: () => inputWrapper.classList.contains('hasFocus'),
+    inputWrapperHasError: () => inputWrapper.classList.contains('error'),
     numberOfTags: () => tags.length,
     getTagLabelAt: index => tags[index].textContent,
     pressCommaKey: () => inputDriver.keyDown(','),

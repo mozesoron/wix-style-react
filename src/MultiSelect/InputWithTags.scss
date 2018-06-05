@@ -3,10 +3,15 @@
 .input {
   min-width: 30px;
   margin: -1px;
+  flex-grow:1;
 }
 
 .emptyInput {
   width: 100%;
+}
+
+.readOnly, .readOnly input {
+  cursor: pointer;
 }
 
 .hiddenDiv {
@@ -39,7 +44,7 @@
   border-color: transparent !important;
 }
 
-.tagsContainer div:hover {
+.tagsContainer:not(.empty) div:hover {
   background-color: transparent;
 }
 

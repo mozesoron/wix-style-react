@@ -30,6 +30,7 @@ class ExampleWithoutOptions extends React.Component {
         <div className={styles.main}>
           <MultiSelect
             error
+            errorMessage={'This is an error message'}
             tags={this.state.tags}
             onSelect={this.handleOnSelect}
             onRemoveTag={this.handleOnRemoveTag}

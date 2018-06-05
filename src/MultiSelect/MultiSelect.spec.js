@@ -136,6 +136,21 @@ describe('multiSelect', () => {
     expect(inputDriver.getPlaceholder()).toBe(placeholder);
   });
 
+  it('should render readonly input on select mode', () => {
+    const {inputDriver} = createDriver(<MultiSelect options={options} mode="select"/>);
+    expect(inputDriver.getReadOnly()).toBeTruthy();
+  });
+
+  it('should render arrow on select mode', () => {
+    const {inputDriver} = createDriver(<MultiSelect options={options} mode="select"/>);
+    expect(inputDriver.hasMenuArrow()).toBeTruthy();
+  });
+
+  it('should render input wrapper with error', () => {
+    const {driver} = createDriver(<MultiSelect error options={options}/>);
+    expect(driver.inputWrapperHasError()).toBeTruthy();
+  });
+
   it('should not display a placeholder if there are any tags', () => {
     const tags = [{id: 'Alabama', label: 'Alabama'}];
     const placeholder = 'myPlaceholder';

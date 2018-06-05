@@ -21,6 +21,7 @@
 | fixedFooter | node | - | - | A fixed footer to the list |
 | delimiters | array | [','] (also Enter and Tab) | - | delimiters that will be treated like enter press |
 | maxNumRows | number | - | - | Max number of visible lines |
+| mode | string | - | - | passing `'select'`  will render a readOnly input with menuArrow suffix
 | ***All of the InputWithOptions Props are also available for this component*** | | | | |
 
 ## Option
