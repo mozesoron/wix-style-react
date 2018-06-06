@@ -89,10 +89,18 @@ class Input extends Component {
       }
     };
 
-    const hasErrors = error || status === Input.StatusError;
+    let suffixStatus = status;
+    let suffixStatusMessage = statusMessage && statusMessage !== '' ? statusMessage : '';
+
+    // Check for deprecated fields and use them if provided
+    if (error || errorMessage) {
+      suffixStatus = Input.StatusError;
+      suffixStatusMessage = errorMessage;
+    }
+
+    const hasErrors = suffixStatus === Input.StatusError;
+
     const isClearButtonVisible = (!!clearButton || !!onClear) && !!value && !hasErrors && !disabled;
-    const suffixStatus = status ? status : (error ? Input.StatusError : null);
-    const suffixStatusMessage = statusMessage && statusMessage !== '' ? statusMessage : errorMessage;
 
     const visibleSuffixCount = getVisibleSuffixCount({
       status: suffixStatus, statusMessage: suffixStatusMessage, disabled, help, magnifyingGlass, isClearButtonVisible, menuArrow, unit, suffix
@@ -282,7 +290,7 @@ Input.propTypes = {
   /** when set to true this component is disabled */
   disabled: PropTypes.bool,
 
-  /** Is input has a special status */
+  /** Input status - use to display an status indication for the user. for example: 'error' or 'loading' */
   status: PropTypes.oneOf([Input.StatusError, Input.StatusLoading]),
 
   /** Is input has errors
@@ -297,7 +305,7 @@ Input.propTypes = {
    */
   errorMessage: PropTypes.node,
 
-  /** The status (error/loading) message to display when hovering the error icon, if not given or empty there will be no tooltip */
+  /** The status (error/loading) message to display when hovering the status icon, if not given or empty there will be no tooltip */
   statusMessage: PropTypes.node,
   forceFocus: PropTypes.bool,
   forceHover: PropTypes.bool,
