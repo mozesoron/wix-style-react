@@ -14,6 +14,16 @@ Types of changes:
 
 ## next
 
+## 4.0.1 - 2018-06-05
+### Fixed
+- `<Input/>` - display error icon and dropdown arrow [#1769](https://github.com/wix/wix-style-react/pull/1769)
+- `<Search/>` - keep the focus after pressing clear button [#1764](https://github.com/wix/wix-style-react/pull/1764)
+
+### Added
+- `<ImageViewer>` - Add error state [#1772](https://github.com/wix/wix-style-react/pull/1772)
+- `<Search/>` - Added expandable feature [#1775](https://github.com/wix/wix-style-react/pull/1775)
+
+
 ## 4.0.0 - 2018-05-28
 ### Breaking
 - `<ToggleSwitch>` -  [migration guide](https://github.com/wix/wix-style-react/blob/master/src/ToggleSwitch/MIGRATION.md)
