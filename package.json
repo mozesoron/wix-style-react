@@ -15,15 +15,16 @@
     "pretest": "npm run lint && ./scripts/ensure-dist.sh",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "yoshi test --jest",
+    "test:watch": "yoshi test --jest --watch",
     "pretest:e2e": "./scripts/ensure-dist.sh",
     "test:e2e": "concurrently 'npm run test:e2e-only' 'node scripts/e2e-server.js' --names 'protractor,e2e-server' --success first --kill-others",
     "test:e2e-only": "NODE_ENV=production yoshi test --protractor",
     "build": "npm run lint && svg2react-icon && yoshi build && build-storybook && npm run export-components",
+    "pr-postbuild": "teamcity-surge-autorelease --dist=storybook-static",
     "storybook": "start-storybook -p 6006",
     "postpublish": "teamcity-surge-autorelease --dist=storybook-static",
     "export-components": "import-path --path src",
-    "lint": "yoshi lint",
-    "pr-release": "teamcity-surge-autorelease --dist=storybook-static"
+    "lint": "yoshi lint"
   },
   "yoshi": {
     "features": {
@@ -122,7 +123,7 @@
     "react-transition-group": "^2.2.1",
     "slate": "^0.20.3",
     "wix-animations": "^1.0.141",
-    "wix-ui-backoffice": "1.0.238",
+    "wix-ui-backoffice": "1.0.248",
     "wix-ui-icons-common": "^1.0.19",
     "wix-ui-test-utils": "^1.0.0"
   },
