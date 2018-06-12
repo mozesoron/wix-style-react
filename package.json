@@ -3,9 +3,15 @@
   "description": "wix-style-react",
   "version": "4.1.3",
   "main": "./dist/src/index.js",
+  "module": "./dist/es/src/index.js",
+  "sideEffects": [
+    "./.storybook/**/*.*",
+    "./stories/**/*.*"
+  ],
   "files": [
     "dist",
     "src",
+    "es",
     ".babelrc",
     "testkit",
     "*.js"
@@ -146,7 +152,12 @@
   },
   "babel": {
     "presets": [
-      "es2015",
+      [
+        "es2015",
+        {
+          "modules": false
+        }
+      ],
       "react",
       "stage-2"
     ]
