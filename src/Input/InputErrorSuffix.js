@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FormFieldError from 'wix-ui-icons-common/system/FormFieldError';
+import FormFieldErrorFilled from 'wix-ui-icons-common/system/FormFieldErrorFilled';
 import classNames from 'classnames';
 import Tooltip from '../Tooltip';
 import styles from './Input.scss';
@@ -22,7 +22,7 @@ class InputErrorSuffix extends React.Component {
         hideDelay={150}
         zIndex={10000}
         >
-        <div className={classes}><FormFieldError/></div>
+        <div className={classes}><FormFieldErrorFilled/></div>
       </Tooltip>
     );
   }

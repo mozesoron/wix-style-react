@@ -369,9 +369,6 @@ $material-gap: 8px;
 
 .exclamation {
   margin: 0 $gap;
-  background-color: $paletteR1;
-  width: 20px;
-  height: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -383,8 +380,9 @@ $material-gap: 8px;
   }
 
   > svg {
-    width: 10px;
-    height: 10px;
+    color: $paletteR1;
+    width: 20px;
+    height: 20px;
   }
 }
 

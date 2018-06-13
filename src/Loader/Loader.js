@@ -24,7 +24,14 @@ const arcsAngles = {
     dark: 180
   }
 };
-const strokeWidth = 4;
+
+const strokeWidth = {
+  tiny: 3,
+  small: 4,
+  medium: 4,
+  large: 4
+};
+
 const sizesInPx = {
   tiny: 18,
   small: 30,
@@ -57,6 +64,7 @@ export default class Loader extends WixComponent {
     const sizeInPx = sizesInPx[size];
     const lightArcAngle = arcsAngles[size].light;
     const darkArcAngle = arcsAngles[size].dark;
+    const strokeWidthInPx = strokeWidth[size];
 
     return (
       <div className={classNames(css.loaderContainer, css[size], css[color])}>
@@ -69,13 +77,13 @@ export default class Loader extends WixComponent {
           <Arc
             angle={lightArcAngle}
             className={css.lightArc}
-            strokeWidth={strokeWidth}
+            strokeWidth={strokeWidthInPx}
             viewBoxSize={sizeInPx}
             />
           <Arc
             angle={darkArcAngle}
             className={css.darkArc}
-            strokeWidth={strokeWidth}
+            strokeWidth={strokeWidthInPx}
             viewBoxSize={sizeInPx}
             />
         </div>
