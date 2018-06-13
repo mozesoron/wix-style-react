@@ -102,6 +102,16 @@ $material-gap: 8px;
   }
 }
 
+.noRightBorderRadius {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.noLeftBorderRadius {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
 .size {
   &-small  { @include Size($height: 30px, $fontSize: 14px); }
   &-normal { @include Size($height: 36px, $fontSize: 16px); }
@@ -113,7 +123,7 @@ $material-gap: 8px;
   &-normal {
     @include ThemeDefault($color: $D10, $borderColor: $B30, $backgroundColor: $D80);
     @include ThemeHover($backgroundColor: $B50);
-    @include ThemeFocus;
+    @include ThemeFocus($borderColor: $B10, $boxShadow: 0 0 0 3px $F00);
     @include ThemeError($borderColor: $paletteR1);
     @include ThemeDisable($color: $D55, $borderColor: $D60, $backgroundColor: $D80);
     @include ThemeDisableHover($borderColor: $GR20);
@@ -128,7 +138,7 @@ $material-gap: 8px;
   &-tags {
     @include ThemeDefault($color: $D10, $borderColor: $B30, $backgroundColor: transparent);
     @include ThemeHover($backgroundColor: $B50);
-    @include ThemeFocus;
+    @include ThemeFocus($borderColor: transparent, $boxShadow: none);
     @include ThemeError($borderColor: $paletteR1, $boxShadow: inset 0px 0px 5px 0px fade($R10, 60%));
     @include ThemeDisable($color: $D55, $borderColor: $D60, $backgroundColor: $D80);
     @include ThemeDisableHover($borderColor: $GR20);

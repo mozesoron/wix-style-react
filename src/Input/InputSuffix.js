@@ -26,7 +26,7 @@ const suffixRules = {
 };
 
 const getVisibleSuffixCount = args =>
-   Object.keys(suffixRules).map(key => suffixRules[key])
+  Object.keys(suffixRules).map(key => suffixRules[key])
     .map(fn => fn(args))
     .filter(x => x)
     .length;

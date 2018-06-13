@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import style from './ImageViewer.scss';
 import Tooltip from '../Tooltip';
-import Trash3 from '../Icons/dist/components/Trash3';
-import Replace from '../Icons/dist/components/Replace';
-import Plus2 from '../Icons/dist/components/Plus2';
+import Button from '../Button';
+import Delete from 'wix-ui-icons-common/Delete';
+import AddMedia from 'wix-ui-icons-common/system/AddMedia';
+import Replace from 'wix-ui-icons-common/Replace';
 import WixComponent from '../BaseComponents/WixComponent';
 import FormFieldError from 'wix-ui-icons-common/system/FormFieldError';
 import classNames from 'classnames';
@@ -28,14 +29,14 @@ class ImageViewer extends WixComponent {
       hideDelay: 0,
       align: 'center',
       placement: 'top',
-      moveBy: {x: 2, y: 0}
+      theme: 'dark'
     };
     const classes = classNames(style.container, {[style.hasLogo]: imageUrl, [style.hasError]: error, [style.addPadding]: !imageUrl});
     return (
       <div className={classes} style={{width, height}} data-hook="image-container">
         <div data-hook="add-image" className={style.addLogo} onClick={onAddImage}>
           <div className={style.dashedBorder}/>
-          <div className={style.plusIcon}><Plus2 size="47px"/></div>
+          <div className={style.plusIcon}><AddMedia size="31px"/></div>
         </div>
         {!!imageUrl &&
         <div className={style.changeLogoContainer}>
@@ -45,14 +46,14 @@ class ImageViewer extends WixComponent {
           <div className={style.imageBackground}>
             <div className={style.buttons}>
               <Tooltip content="Replace" {...tooltipCommonProps}>
-                <div data-hook="update-image" className={style.button} onClick={onUpdateImage}>
-                  <Replace size="1.2em"/>
-                </div>
+                <Button dataHook="update-image" onClick={onUpdateImage} theme="icon-whitesecondary">
+                  <Replace size="1.5em"/>
+                </Button >
               </Tooltip>
               <Tooltip content="Remove" {...tooltipCommonProps}>
-                <div data-hook="remove-image" className={style.button} onClick={onRemoveImage}>
-                  <Trash3 size="1.2em"/>
-                </div>
+                <Button dataHook="remove-image" theme="icon-whitesecondary" onClick={onRemoveImage}>
+                  <Delete size="1.5em"/>
+                </Button>
               </Tooltip>
             </div>
           </div>
@@ -64,11 +65,7 @@ class ImageViewer extends WixComponent {
           disabled={!this.props.errorMessage}
           placement={this.props.tooltipPlacement}
           content={this.props.errorMessage}
-          theme="dark"
-          maxWidth="230px"
-          hideDelay={5}
-          showDelay={5}
-          zIndex={10000}
+          {...tooltipCommonProps}
           >
           <div className={style.exclamation}><FormFieldError/></div>
         </Tooltip>}

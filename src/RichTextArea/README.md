@@ -5,6 +5,7 @@
 
 | propName | propType | defaultValue | isRequired | description |
 |----------|----------|--------------|------------|-------------|
+| absoluteLinks | bool | false | - | Is the rich text area automatically transforming relative links to absolute after user insert |
 | disabled | bool | false | - | Is the rich text area disabled |
 | error  | bool | false | - | Is input value erroneous |
 | errorMessage | string | - | - | The error message to display when hovering the error icon, if not given or empty there will be no tooltip |

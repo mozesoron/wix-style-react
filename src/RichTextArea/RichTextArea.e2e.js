@@ -20,7 +20,7 @@ describe('RichTextArea', () => {
     browser.get(storyUrl);
   });
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     await waitForVisibilityOf(richTextAreaTestkit.element());
   });
 
@@ -106,6 +106,31 @@ describe('RichTextArea', () => {
       await richTextAreaTestkit.insertLink();
       expect(await richTextAreaTestkit.getText()).toBe('sometext and wix');
       expect(await richTextAreaTestkit.isLinkAdded('http://www.wix.com')).toBeTruthy();
+    });
+
+    it('should insert link and it should become absolute if absoluteLinks props true', async () => {
+      await autoExampleDriver.setProps({absoluteLinks: true});
+      await focusEditor();
+      await richTextAreaTestkit.clickButtonByType('link');
+      await richTextAreaTestkit.isLinkDialogVisible();
+      await richTextAreaTestkit.enterLinkUrl('www.wix.com');
+      await richTextAreaTestkit.enterLinkText('WixSite');
+      await richTextAreaTestkit.insertLink();
+      expect(await richTextAreaTestkit.getText()).toBe('WixSite');
+      expect(await richTextAreaTestkit.isLinkAdded('//www.wix.com')).toBeTruthy();
+    });
+
+    it('should insert link and it should not become absolute if absoluteLinks props false', async () => {
+      await autoExampleDriver.setProps({absoluteLinks: false});
+      await focusEditor();
+      await richTextAreaTestkit.clickButtonByType('link');
+      await richTextAreaTestkit.isLinkDialogVisible();
+      await richTextAreaTestkit.enterLinkUrl('www.wix.com');
+      await richTextAreaTestkit.enterLinkText('WixSite');
+      await richTextAreaTestkit.insertLink();
+      expect(await richTextAreaTestkit.getText()).toBe('WixSite');
+      expect(await richTextAreaTestkit.isLinkAdded('//www.wix.com')).toBeFalsy();
+      expect(await richTextAreaTestkit.isLinkAdded('www.wix.com')).toBeTruthy();
     });
   });
 

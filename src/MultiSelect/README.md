@@ -10,7 +10,7 @@
 | onChange | func | - | + | A callback function to be called when the input value changed|
 | value | string | - | - | The value of the current input |
 | onSelect | func | - | - | Callback function called whenever the user selects a single option or multiple options (with copy paste). The function receives array of values as an argument. |
-| onManuallyInput | func | noop | - | Callback when the user pressed the Enter key or Tab key after he wrote in the Input field - meaning the user selected something not in the list |
+| onManuallyInput | func | noop | - | Callback when the user pressed the Enter key or Tab key (or any given delimiter) after he wrote in the Input field - meaning the user selected something not in the list |
 | onRemoveTag | func | - | + | A callback function to be called when a tag should be removed|
 | tags | array of objects | - | + | The tags. tags are just set of selected suggestions|
 | placeholder | string | - | - | the placeholder for the input|

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createDriverFactory} from '../test-common';
 import richTextAreaDriverFactory from './RichTextArea.driver';
-import RichTextArea from './RichTextArea';
+import RichTextArea, {makeHrefAbsolute} from './RichTextArea';
 
 const mockGetSelection = () => {
   const original = window.getSelection;
@@ -19,6 +19,23 @@ describe('RichTextArea', () => {
 
   afterEach(() => {
     window.getSelection.restore();
+  });
+
+  describe('makeHrefAbsolute method', () => {
+    it('should do nothing', () => {
+      expect(makeHrefAbsolute('http://www.wix.com')).toBe('http://www.wix.com');
+      expect(makeHrefAbsolute('https://www.wix.com')).toBe('https://www.wix.com');
+      expect(makeHrefAbsolute('https://www.wix.com')).toBe('https://www.wix.com');
+      expect(makeHrefAbsolute('//www.wix.com')).toBe('//www.wix.com');
+      expect(makeHrefAbsolute('//wix.com')).toBe('//wix.com');
+    });
+
+    it('should make href absolute', () => {
+      expect(makeHrefAbsolute('www.wix.com')).toBe('//www.wix.com');
+      expect(makeHrefAbsolute('wix.com')).toBe('//wix.com');
+      expect(makeHrefAbsolute('x')).toBe('//x');
+      expect(makeHrefAbsolute('')).toBe('//');
+    });
   });
 
   it('should render value as text', () => {

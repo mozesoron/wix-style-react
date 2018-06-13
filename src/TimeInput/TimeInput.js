@@ -167,11 +167,18 @@ export default class extends Component {
     this.updateDate({time: this.state.text});
   }
 
-  handleInputChange = ({target}) => {
-    if (this.props.disabled && this.props.dashesWhenDisabled) {
+  handleInputChange = e => {
+    // thats why cursor is jumping
+    // https://github.com/facebook/react/issues/955#issuecomment-327069204
+    const isDisabled = this.props.disabled && this.props.dashesWhenDisabled;
+    const isInvalid = /[^0-9 :]/.test(e.target.value);
+    if (isDisabled || isInvalid) {
+      e.preventDefault();
       return;
     }
-    return this.setState({text: target.value});
+    return this.setState({
+      text: e.target.value
+    });
   }
 
   handleHover = hover =>

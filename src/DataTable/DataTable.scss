@@ -2,7 +2,7 @@
 
 .table {
   border-collapse: collapse;
-  font-family:HelveticaNeueW01-55Roma,HelveticaNeueW02-55Roma,HelveticaNeueW10-55Roma,sans-serif;
+  font-family: HelveticaNeueW01-55Roma, HelveticaNeueW02-55Roma, HelveticaNeueW10-55Roma, sans-serif;
   table-layout: fixed;
   background-color: white;
 }
@@ -10,9 +10,17 @@
 .table th {
   background-color: rgba(240, 243, 247, 0.5);
   text-align: left;
-  text-align: start;  // not supported in IE11 & Edge; 'left' as fallback
+  text-align: start; // not supported in IE11 & Edge; 'left' as fallback
   color: $paletteD3;
   border-top: solid 1px $D60;
+  .th-container {
+    display: flex;
+    align-items: center;
+    .info-icon {
+      color: $B10;
+      margin-left: 6px;
+    }
+  }
 }
 
 .table td {
@@ -45,11 +53,12 @@
 }
 
 .sortArrowAsc,
-.sortArrowDesc{
+.sortArrowDesc {
   font-size: 9px;
-  margin: 0 4px;
+  margin-left: 6px;
 }
-.sortArrowDesc svg{
+
+.sortArrowDesc svg {
   transform: rotate(180deg);
 }
 
@@ -66,7 +75,7 @@
   td {
     border-bottom: none medium;
   }
-  
+
   cursor: pointer;
 
   &:nth-last-child(2) {

@@ -24,6 +24,7 @@ const dataTableDriverFactory = ({element, wrapper, component}) => {
   const getRowDetails = index => element.querySelector(`tbody tr td[data-hook="${index}_details"]`);
   const getHeaderTitleByIndex = index => getHeader().querySelectorAll('th')[index];
   const getSortableTitle = index => element.querySelector(`th [data-hook="${index}_title"]`);
+  const getTitleInfoIcon = index => element.querySelector(`th [data-hook="${index}_info_tooltip"]`);
 
   return {
     getRowsCount,
@@ -56,6 +57,7 @@ const dataTableDriverFactory = ({element, wrapper, component}) => {
     hasRowDetails: index => !!getRowDetails(index),
     getRowDetailsText: index => getRowDetails(index).textContent,
     hasSortableTitle: index => !!getSortableTitle(index),
+    hasInfoIcon: index => !!getTitleInfoIcon(index),
     hasSortDescending: index => {
       const sortableTitle = getSortableTitle(index);
       return !!sortableTitle && sortableTitle.classList.contains('sortArrowAsc');

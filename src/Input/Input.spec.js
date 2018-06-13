@@ -600,6 +600,21 @@ describe('Input', () => {
     const driver = createDriver(<Input width={120}/>);
     expect(driver.getWidth()).toBe('120px');
   });
+
+  describe('className prop', () => {
+    it('should set className on root element', () => {
+      const className = 'foo';
+      const driver = createDriver(<Input className={className}/>);
+      expect(driver.getRootElementClasses()).toContain(className);
+    });
+
+    it('should NOT affect the native input classes when className passed', () => {
+      const className = 'foo';
+      const driver = createDriver(<Input className={className} suffix={<div className="my-button"/>}/>);
+      expect(driver.getInputElementClasses()).not.toContain(className);
+      expect(driver.suffixComponentExists('.my-button')).toBeTruthy();
+    });
+  });
 });
 
 describe('testkit', () => {

@@ -6,7 +6,8 @@ import WixComponent from '../../BaseComponents/WixComponent';
 export const ThemeOptions = {
   NORMAL: {type: 'normal', color: {hover: '#4eb7f5', normal: '#3899ec'}},
   DARK_BACKGROUND: {type: 'darkBackground', color: {hover: '#f0f4f7', normal: '#f0f4f7'}},
-  GREYSCALE: {type: 'greyScale', color: {hover: '#162d3d', normal: '#162d3d'}}
+  GREYSCALE: {type: 'greyScale', color: {hover: '#162d3d', normal: '#162d3d'}},
+  DISABLED: {type: 'disabled', color: {hover: '#cbd3dc', normal: '#cbd3dc'}}
 };
 
 export default class TextLinkLayout extends WixComponent {
@@ -17,7 +18,8 @@ export default class TextLinkLayout extends WixComponent {
     darkBackground: PropTypes.bool,
     theme: PropTypes.oneOf(['normal', 'darkBackground', 'greyScale']),
     size: PropTypes.oneOf(['small', 'medium']),
-    display: PropTypes.oneOf(['block', 'inline-block'])
+    display: PropTypes.oneOf(['block', 'inline-block']),
+    disabled: PropTypes.bool
   };
 
   static defaultProps = {
@@ -25,7 +27,8 @@ export default class TextLinkLayout extends WixComponent {
     darkBackground: false, //TODO - this should be deprecated
     theme: ThemeOptions.NORMAL.type,
     size: 'medium',
-    display: 'block'
+    display: 'block',
+    disabled: false
   };
 
   constructor(props) {
@@ -44,8 +47,12 @@ export default class TextLinkLayout extends WixComponent {
   }
 
   getColor() {
-    const {theme, darkBackground} = this.props;
+    const {theme, darkBackground, disabled} = this.props;
     const {isHover} = this.state;
+
+    if (disabled) {
+      return ThemeOptions.DISABLED.color.normal;
+    }
 
     //this should be deprecated
     if (darkBackground) {
@@ -67,15 +74,15 @@ export default class TextLinkLayout extends WixComponent {
 
   render() {
     const {isHover} = this.state;
-    const {underlineStyle, size, children, display} = this.props;
+    const {underlineStyle, size, children, display, disabled} = this.props;
     const color = this.getColor();
 
     const style = {
       color,
       display,
       background: 'none',
-      cursor: 'pointer',
-      textDecoration: ((underlineStyle === 'hover' && isHover) || underlineStyle === 'always') ? 'underline' : 'none'
+      cursor: disabled ? 'default' : 'pointer',
+      textDecoration: ((underlineStyle === 'hover' && isHover && !disabled) || underlineStyle === 'always') ? 'underline' : 'none'
     };
 
     const className = size === 'medium' ? typography.t1_3 : typography.t3_3;

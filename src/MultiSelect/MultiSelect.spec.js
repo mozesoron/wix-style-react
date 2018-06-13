@@ -211,6 +211,18 @@ describe('multiSelect', () => {
     expect(onManuallyInput.mock.calls[0][0]).toBe('custom value');
   });
 
+  it('should call onManuallyInput after delimiter is pressed given no options', () => {
+    const onManuallyInput = jest.fn();
+    const {driver, inputDriver} = createDriver(<MultiSelect onManuallyInput={onManuallyInput} value="custom value"/>);
+
+    driver.focus();
+    inputDriver.enterText('custom value');
+    driver.pressCommaKey();
+
+    expect(onManuallyInput).toHaveBeenCalled();
+    expect(onManuallyInput.mock.calls[0][0]).toBe('custom value');
+  });
+
   it('should call onRemoveTag when removing tags', () => {
     const tagId = 'SweetHome';
     const tags = [{id: tagId, label: 'Alabama'}];

@@ -20,8 +20,16 @@ const defaultBlock = {
   key: 'defaultBlock'
 };
 
+/*
+  here we are checking is link absolute(if it contain 'https' or http or '//')
+  and if it not absolute, then we add '//' at the beginning of it,
+  to make link absolute
+*/
+export const makeHrefAbsolute = href => /^(https?:)?\/\//.test(href) ? href : `//${href}`;
+
 class RichTextArea extends WixComponent {
   static propTypes = {
+    absoluteLinks: PropTypes.bool,
     buttons: PropTypes.arrayOf(PropTypes.string), // TODO: use PropTypes.oneOf(),
     dataHook: PropTypes.string,
     disabled: PropTypes.bool,
@@ -36,6 +44,7 @@ class RichTextArea extends WixComponent {
   }
 
   static defaultProps = {
+    absoluteLinks: false,
     errorMessage: '',
     value: '<p></p>'
   }
@@ -267,6 +276,10 @@ class RichTextArea extends WixComponent {
   handleLinkButtonClick = ({href, text} = {}) => {
     const {editorState} = this.state;
     const transform = editorState.transform();
+    const decoratedHref = this.props.absoluteLinks
+      ? makeHrefAbsolute(href)
+      : href;
+
     if (this.hasLink()) {
       transform
         .unwrapInline('link');
@@ -274,12 +287,12 @@ class RichTextArea extends WixComponent {
       transform
         .wrapInline({
           type: 'link',
-          data: {href}
+          data: {href: decoratedHref}
         })
         .focus()
         .collapseToEnd()
     } else {
-      const linkContent = text || href;
+      const linkContent = text || decoratedHref;
       const startPos = editorState.anchorOffset;
       transform
         .insertText(linkContent)
@@ -291,7 +304,7 @@ class RichTextArea extends WixComponent {
         })
         .wrapInline({
           type: 'link',
-          data: {href}
+          data: {href: decoratedHref}
         })
         .focus()
         .collapseToEnd();

@@ -70,6 +70,10 @@ const inputDriverFactory = ({element, wrapper, component}) => {
     startComposing: () => ReactTestUtils.Simulate.compositionStart(input),
     endComposing: () => ReactTestUtils.Simulate.compositionEnd(input),
     getCursorLocation: () => input.selectionStart,
+    getRootElementClasses: () => element.classList,
+    getInputElementClasses: () => input.classList,
+    hasRightBorderRadius: () => !element.classList.contains(styles.noRightBorderRadius),
+    hasLeftBorderRadius: () => !element.classList.contains(styles.noLeftBorderRadius),
     setProps: props => {
       const ClonedWithProps = React.cloneElement(component, Object.assign({}, component.props, props), ...(component.props.children || []));
       ReactDOM.render(<div ref={r => element = r}>{ClonedWithProps}</div>, wrapper);

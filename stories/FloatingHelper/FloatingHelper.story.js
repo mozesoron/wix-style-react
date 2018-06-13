@@ -16,6 +16,9 @@ import FullExampleRaw from '!raw-loader!./FullExample';
 import {ProgrammaticExample} from './ProgrammaticExample';
 import ProgrammaticExampleRaw from '!raw-loader!./ProgrammaticExample';
 
+import {ControlledExample} from './ControlledExample';
+import ControlledExampleRaw from '!raw-loader!./ControlledExample';
+
 const exampleWrapperStyle = {marginTop: 100, marginBottom: 100};
 
 export default {
@@ -57,7 +60,7 @@ export default {
           body="In order to sell your music you need to choose a payment method."
           actionText="Ok, Take Me There"
           onActionClick={() => null}
-          image={<Image width="102" height="102" viewBox="4 4 18 18"/>}
+          image={<Image width="102" height="102"/>}
           />
       )}
     ]
@@ -83,6 +86,11 @@ export default {
         <CodeExample title="Programmatic Open Example" code={ProgrammaticExampleRaw}>
           <div style={exampleWrapperStyle}>
             <ProgrammaticExample/>
+          </div>
+        </CodeExample >
+        <CodeExample title="Controlled Example" code={ControlledExampleRaw}>
+          <div style={exampleWrapperStyle}>
+            <ControlledExample/>
           </div>
         </CodeExample >
       </div>

@@ -5,6 +5,7 @@
 }
 
 .container {
+  @include FontRoman();
   width: 204.7px;
   height: 144px;
   border-radius: 8px;
@@ -42,8 +43,6 @@
 
 .plus-icon {
   color: rgb(78, 183, 245);
-  height: 47px;
-  width: 47px;
   position: absolute;
 }
 
@@ -87,29 +86,13 @@
   color: white;
   justify-content: center;
   display: flex;
-  height: 38%;
+  margin: auto;
   align-items: baseline;
   opacity: 0;
   transition: opacity .1s linear;
-}
 
-.button {
-  transition: background .1s linear;
-  background: rgba(255, 255, 255, 0);
-  height: 36px;
-  width: 36px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.3);
-  }
-
-  &:first-child {
-    margin-right: 20px;
+  >:first-child {
+    margin-right: 12px;
   }
 }
 
@@ -165,4 +148,3 @@
     }
   }
 }
-

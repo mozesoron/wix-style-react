@@ -13,10 +13,10 @@ export {default as Checkbox} from './Checkbox';
 export {default as ToggleSwitch} from './ToggleSwitch';
 export {default as Modal} from './Modal';
 export {
-    MessageBoxMarketerialLayout, MessageBoxMarketerialLayout as MessageBoxLayout1,
-    MessageBoxFunctionalLayout, MessageBoxFunctionalLayout as MessageBoxLayout2,
-    HeaderLayout, HeaderLayout as HeaderLayout1,
-    FooterLayout, FooterLayout as FooterLayout1
+  MessageBoxMarketerialLayout, MessageBoxMarketerialLayout as MessageBoxLayout1,
+  MessageBoxFunctionalLayout, MessageBoxFunctionalLayout as MessageBoxLayout2,
+  HeaderLayout, HeaderLayout as HeaderLayout1,
+  FooterLayout, FooterLayout as FooterLayout1
 };
 export {default as RadioGroup} from './RadioGroup';
 export {default as Slider} from './Slider';
@@ -36,7 +36,7 @@ export {default as SideMenu} from './SideMenu';
 export {default as SideMenuDrill} from './SideMenu/DrillView';
 export {default as DropdownLayout} from './DropdownLayout';
 export {default as Dropdown} from './Dropdown';
-export {default as Autocomplete} from './AutoComplete';
+export {default as AutoComplete} from './AutoComplete';
 export {default as Label} from './Label';
 export {default as DataTable} from './DataTable';
 export {default as Text} from './Text';
@@ -54,5 +54,19 @@ export {default as Icons} from './Icons';
 export {default as Badge} from './Badge';
 export {default as EditableSelector} from './EditableSelector';
 export {default as StatsWidget} from './StatsWidget';
+export {default as AutoCompleteComposite} from './AutoCompleteComposite';
+export {default as Card} from './Card';
+export {default as ColorPicker} from './ColorPicker';
+export {default as CounterBadge} from './CounterBadge';
 export {default as FloatingHelper} from './FloatingHelper';
+export {HBox} from './HBox';
+export {VBox} from './VBox';
 export {default as Heading} from './Heading';
+export {default as IconWithOptions} from './IconWithOptions';
+export {default as MultiSelectComposite} from './MultiSelectComposite';
+export {default as RichTextArea} from './RichTextArea';
+export {default as RichTextAreaComposite} from './RichTextAreaComposite';
+export {default as Search} from './Search';
+export {default as Tabs} from './Tabs';
+export {default as Tag} from './Tag';
+export {default as TextLink} from './TextLink';

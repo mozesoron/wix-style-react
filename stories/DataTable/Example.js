@@ -7,10 +7,10 @@ const style = {
 };
 
 const baseData = [
-    {firstName: 'Meghan', lastName: 'Bishop'},
-    {firstName: 'Sara', lastName: 'Porter'},
-    {firstName: 'Deborah', lastName: 'Rhodes'},
-    {firstName: 'Walter', lastName: 'Jenning'}
+  {firstName: 'Meghan', lastName: 'Bishop'},
+  {firstName: 'Sara', lastName: 'Porter'},
+  {firstName: 'Deborah', lastName: 'Rhodes'},
+  {firstName: 'Walter', lastName: 'Jenning'}
 ];
 
 const generateData = () => {

@@ -33,7 +33,7 @@ storiesOf('10. Tables', module)
         <CodeExample title="With animated row details" code={ExampleWithAnimatedRowDetailsRaw}>
           <ExampleWithAnimatedRowDetails/>
         </CodeExample>
-        <CodeExample title="With sorting" code={ExampleSortableRaw}>
+        <CodeExample title="With sorting & info tooltip" code={ExampleSortableRaw}>
           <ExampleSortable/>
         </CodeExample>
         <CodeExample title="Without header" code={ExampleWithoutHeaderRaw}>

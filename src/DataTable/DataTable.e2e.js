@@ -1,5 +1,5 @@
 import eyes from 'eyes.it';
-import {dataTableTestkitFactory, getStoryUrl, waitForVisibilityOf} from '../../testkit/protractor';
+import {dataTableTestkitFactory, getStoryUrl, waitForVisibilityOf, scrollToElement} from '../../testkit/protractor';
 
 describe('Data Table', () => {
   const storyUrl = getStoryUrl('10. Tables', '10.1 DataTable');
@@ -40,5 +40,27 @@ describe('Data Table', () => {
 
     await browser.wait(async () => await driver.rowsCount() === itemsAfterLoad, 10000, 'New data wasnt loaded :(');
     expect(driver.rowsCount()).toEqual(itemsAfterLoad);
+  });
+
+  eyes.it('display story-data-table-sortable', async () => {
+    const dataHook = 'story-data-table-sortable';
+    const driver = dataTableTestkitFactory({dataHook});
+
+    browser.get(storyUrl);
+
+    await waitForVisibilityOf(driver.element(), 'Cant find Data Table Component');
+    await scrollToElement(driver.element());
+    // We only need a snapshot
+  });
+
+  eyes.it('display story-data-table-without-header', async () => {
+    const dataHook = 'story-data-table-without-header';
+    const driver = dataTableTestkitFactory({dataHook});
+
+    browser.get(storyUrl);
+
+    await waitForVisibilityOf(driver.element(), 'Cant find Data Table Component');
+    await scrollToElement(driver.element());
+    // We only need a snapshot
   });
 });

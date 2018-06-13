@@ -616,6 +616,23 @@ describe('DatePicker', () => {
     });
   });
 
+  describe('borderRadius', () => {
+    it('should have both borderRadius by default', () => {
+      const {inputDriver} = createDriver(<DatePicker onChange={noop}/>);
+      expect(inputDriver.hasRightBorderRadius()).toBeTruthy();
+      expect(inputDriver.hasLeftBorderRadius()).toBeTruthy();
+    });
+  });
+
+  describe('inputProps prop', () => {
+    it('should pass inputProps to input component', () => {
+      const {inputDriver} = createDriver(<DatePicker inputProps={{noRightBorderRadius: true, noLeftBorderRadius: true}} onChange={noop}/>);
+      expect(inputDriver.hasRightBorderRadius()).toBeFalsy();
+      expect(inputDriver.hasLeftBorderRadius()).toBeFalsy();
+    });
+  });
+
+
   describe('testkit', () => {
     it('should exist', () => {
       const div = document.createElement('div');

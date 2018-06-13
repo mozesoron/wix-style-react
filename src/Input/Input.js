@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import omit from 'lodash/omit';
 
 import Ticker from './Ticker';
 import Unit from './Unit';
@@ -144,7 +145,7 @@ class Input extends Component {
         onCompositionStart={() => this.onCompositionChange(true)}
         onCompositionEnd={() => this.onCompositionChange(false)}
         {...ariaAttribute}
-        {...props}
+        {...omit(props, 'className')}
         />);
 
     //needs additional wrapper with class .prefixSuffixWrapper to fix inputs with prefix in ie11
@@ -267,6 +268,17 @@ Input.defaultProps = {
   clearButton: false
 };
 
+const borderRadiusValidator = (props, propName) => {
+  const value = props[propName];
+  if (typeof value === 'string') {
+    throw new Error('Passing a string (for className) is deprecated. Use new className prop.');
+  } else if (typeof value === 'undefined' || typeof value === 'boolean') {
+    return null;
+  } else {
+    return new Error('Invalid type. boolean expected.');
+  }
+};
+
 Input.propTypes = {
   ariaControls: PropTypes.string,
   ariaDescribedby: PropTypes.string,
@@ -329,13 +341,16 @@ Input.propTypes = {
   /** Displays clear button (X) on a non-empty input */
   clearButton: PropTypes.bool,
 
+  /** A single CSS class name to be appended to ther Input's wrapper element. */
+  className: PropTypes.string,
+
   name: PropTypes.string,
 
   /** When set to true, this input will have no rounded corners on its left */
-  noLeftBorderRadius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  noLeftBorderRadius: borderRadiusValidator,
 
   /** When set to true, this input will have no rounded corners on its right */
-  noRightBorderRadius: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  noRightBorderRadius: borderRadiusValidator,
 
   /** Standard input onBlur callback */
   onBlur: PropTypes.func,

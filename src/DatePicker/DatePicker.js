@@ -46,8 +46,11 @@ export default class DatePicker extends WixComponent {
   static displayName = 'DatePicker';
 
   static propTypes = {
-    /** Can provide Input with your custom props */
+    /** Can provide Input with your custom props. If you don't need a custom input element, and only want to pass props to the Input, then use inputProps prop. I think this is not in use outside of WSR, and can be deprecated. */
     customInput: PropTypes.node,
+
+    /** Properties appended to the default Input component or the custom Input component. */
+    inputProps: PropTypes.object,
 
     /** Custom date format */
     dateFormat: PropTypes.string,
@@ -336,12 +339,13 @@ export default class DatePicker extends WixComponent {
       error,
       errorMessage,
       customInput,
-      width
+      width,
+      inputProps
     } = this.props;
 
     const {isOpen} = this.state;
 
-    const inputProps = {
+    const _inputProps = {
       dataHook: inputDataHook,
       value: (initialValue && formatDate(initialValue, dateFormat, locale)) || '',
       onInputClicked: this.openCalendar,
@@ -353,13 +357,14 @@ export default class DatePicker extends WixComponent {
       onKeyDown: this._handleKeyDown,
       error,
       errorMessage,
-      ...(customInput ? customInput.props : {})
+      ...(customInput ? customInput.props : {}),
+      ...inputProps
     };
 
     return (
       <div style={{width}} className={styles.root}>
         <div ref={ref => this.inputRef = ref}>
-          {React.cloneElement(customInput || <Input/>, inputProps)}
+          {React.cloneElement(customInput || <Input/>, _inputProps)}
         </div>
 
         <div

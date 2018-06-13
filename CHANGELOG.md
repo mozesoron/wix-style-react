@@ -14,15 +14,43 @@ Types of changes:
 
 ## next
 
-## 4.0.1 - 2018-06-05
+## 4.1.3 - 2018-06-12
+### Fixed
+- `<TextLink/>` - Updated disabled property behaciour [#1798](https://github.com/wix/wix-style-react/pull/1798)
+
+### Added
+- `<DataTable>` - Add info icon with tooltip to table header [#1770](https://github.com/wix/wix-style-react/pull/1770)
+
+## 4.1.2 - 2018-06-12
+### Added
+- `<RichTextArea/>` - add a flag to generate absolute paths url links [#1746](https://github.com/wix/wix-style-react/pull/1746)
+- `<DataTable/>` - add info icon with tooltip to table header [#1770](https://github.com/wix/wix-style-react/pull/1770)
+
+### Fixed
+- `<TimePicker/>` - Prevent typing letters [#1751](https://github.com/wix/wix-style-react/pull/1751)
+
+### Changed
+- Migrate to yoshi2 and storybook 4 [#1811](https://github.com/wix/wix-style-react/pull/1811)
+
+## 4.1.1 - 2018-06-11
+
+### Fixed
+- `<Input>` make ThemedInput noRight(Left)BorderRadius work. Add className prop. And fix DatePicker border. [#1794](https://github.com/wix/wix-style-react/pull/1794)
+- `<MultiSelect>` - Fix missing call to onManuallyInput when no options exists [#1804](https://github.com/wix/wix-style-react/pull/1804)
+- `<ImageViewer>` align buttons [#1781](https://github.com/wix/wix-style-react/pull/1781/files#diff-48c04422f656c8c0c6302f9b6db9b0ff)
+
+## 4.1.0 - 2018-06-06
 ### Fixed
 - `<Input/>` - display error icon and dropdown arrow [#1769](https://github.com/wix/wix-style-react/pull/1769)
 - `<Search/>` - keep the focus after pressing clear button [#1764](https://github.com/wix/wix-style-react/pull/1764)
+- `<Input/>` - remove box shadow when focusing Input with 'tags' theme [#1792](https://github.com/wix/wix-style-react/pull/1792)
+- fix version dependency of `wix-ui-icons-common` [#1807](https://github.com/wix/wix-style-react/pull/1807)
 
 ### Added
 - `<ImageViewer>` - Add error state [#1772](https://github.com/wix/wix-style-react/pull/1772)
 - `<Search/>` - Added expandable feature [#1775](https://github.com/wix/wix-style-react/pull/1775)
-
+  * KnownIssue with`<Search/>` !!! - When expandable feature is enabled, there is some bug related to keyboard navigation. Please DON't use it yet. Fix will come very soon. Thanks.
+- `<FloatingHelper/>` - add new component - 8.6 FloatingHelper [#1767](https://github.com/wix/wix-style-react/pull/1767),[#1790](https://github.com/wix/wix-style-react/pull/1790)
 
 ## 4.0.0 - 2018-05-28
 ### Breaking

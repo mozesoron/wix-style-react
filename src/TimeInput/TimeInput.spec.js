@@ -157,6 +157,16 @@ describe('TimeInput', () => {
       driver.toggleAmPmIndicator();
       expect(driver.getAmPmIndicatorText()).toBe('am');
     });
+
+    it(`should not allow to enter letters`, () => {
+      const props = {
+        defaultValue: defaultMoment
+      };
+      const driver = createDriver(<TimePicker {...props}/>);
+      driver.setValue('11:01');
+      driver.setValue('10a:02');
+      expect(driver.getValue()).toBe('11:01');
+    });
   });
 
   describe('Styling', () => {

@@ -4,6 +4,7 @@ import WixComponent from '../../BaseComponents/WixComponent';
 import styles from './RangeInputWithLabelComposite.scss';
 import classNames from 'classnames';
 import FieldLabelAttributes from '../../FieldLabelAttributes/FieldLabelAttributes';
+
 class RangeInputWithLabelComposite extends WixComponent {
   constructor(props) {
     super(props);
@@ -57,32 +58,32 @@ class RangeInputWithLabelComposite extends WixComponent {
     const lastInput = children.length === 3 ? children[2] : children[1];
 
     const additionalFirstInputProps = {
-      // This is a hack for passing a class to be added to the <Input>/<DatePicker> element
-      noRightBorderRadius: (rangeType === 'DatePicker') ? styles.firstDate : styles.firstinput,
+      className: (rangeType === 'DatePicker') ? styles.firstDate : styles.firstinput,
+      noRightBorderRadius: true,
       onKeyDown: e => this._doKeyDown(e),
       onFocus: e => this._handleFocusFirst(e),
       onBlur: e => this._handleBlurFirst(e)
     };
 
     const additionalLastInputProps = {
-      // This is a hack for passing a class to be added to the <Input>/<DatePicker> element
-      noLeftBorderRadius: (rangeType === 'DatePicker') ? styles.lastDate : styles.lastinput,
+      className: (rangeType === 'DatePicker') ? styles.lastDate : styles.lastinput,
+      noLeftBorderRadius: true,
       onKeyDown: e => this._doKeyDown(e),
       onFocus: e => this._handleFocusLast(e),
       onBlur: e => this._handleBlurLast(e)
     };
 
     const inputWrapperClassNames = classNames({
-      [styles.inputs]: true,
       [styles.hasFocusFirst]: this.state.hasFocusFirst,
-      [styles.hasFocusLast]: this.state.hasFocusLast
+      [styles.hasFocusLast]: this.state.hasFocusLast,
+      [styles.inputs]: true
     });
 
     return (<div className={styles.wrapper}>
       {label}
       <div className={inputWrapperClassNames}>
-        { React.cloneElement(firstInput, additionalFirstInputProps)}
-        { React.cloneElement(lastInput, additionalLastInputProps)}
+        { React.cloneElement(firstInput, rangeType === 'DatePicker' ? {inputProps: additionalFirstInputProps} : additionalFirstInputProps)}
+        { React.cloneElement(lastInput, rangeType === 'DatePicker' ? {inputProps: additionalLastInputProps} : additionalLastInputProps)}
       </div>
     </div>);
   }
