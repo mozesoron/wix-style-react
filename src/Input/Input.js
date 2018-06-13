@@ -305,6 +305,9 @@ Input.propTypes = {
   /** Input status - use to display an status indication for the user. for example: 'error' or 'loading' */
   status: PropTypes.oneOf([Input.StatusError, Input.StatusLoading]),
 
+  /** The status (error/loading) message to display when hovering the status icon, if not given or empty there will be no tooltip */
+  statusMessage: PropTypes.node,
+
   /** Is input has errors
    * @deprecated
    * @see status
@@ -317,8 +320,6 @@ Input.propTypes = {
    */
   errorMessage: PropTypes.node,
 
-  /** The status (error/loading) message to display when hovering the status icon, if not given or empty there will be no tooltip */
-  statusMessage: PropTypes.node,
   forceFocus: PropTypes.bool,
   forceHover: PropTypes.bool,
 
