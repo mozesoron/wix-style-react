@@ -14,11 +14,11 @@ $iconSize: 22px;
 }
 
 .expandableStyles {
-  > div {
-    > div {
-      > div {
-        transition: width .3s;
-      }
+  display: inline-block;
+
+  [data-input-parent] {
+    > div:nth-of-type(1) {
+      transition: width .3s;
     }
   }
 }
@@ -39,6 +39,8 @@ $iconSize: 22px;
 }
 
 .expanded {
+  display: block !important;
+
   [data-input-parent] {
     > div:nth-of-type(1) {
       width: 100%;
