@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
 import inputDriverFactory from '../Input/Input.driver';
 import dropdownLayoutDriverFactory from '../DropdownLayout/DropdownLayout.driver';
 import ReactDOM from 'react-dom';
@@ -16,12 +15,12 @@ const inputWithOptionsDriverFactory = ({element, wrapper, component}) => {
     inputWrapper: () => inputWrapper,
     focus: () => inputDriver.focus(),
     blur: () => dropdownLayoutDriver.mouseClickOutside(),
-    pressDownKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'ArrowDown'}),
-    pressUpKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'ArrowUp'}),
-    pressAnyKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'Any'}),
-    pressEnterKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'Enter'}),
-    pressTabKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'Tab'}),
-    pressEscKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'Escape'}),
+    pressDownKey: () => inputDriver.keyDown('ArrowDown'),
+    pressUpKey: () => inputDriver.keyDown('ArrowUp'),
+    pressAnyKey: () => inputDriver.keyDown('Any'),
+    pressEnterKey: () => inputDriver.keyDown('Enter'),
+    pressTabKey: () => inputDriver.keyDown('Tab'),
+    pressEscKey: () => inputDriver.keyDown('Escape'),
     outsideClick: () => document.body.dispatchEvent(new Event('mouseup', {cancelable: true})),
     setProps: props => {
       const ClonedWithProps = React.cloneElement(component, Object.assign({}, component.props, props), ...(component.props.children || []));

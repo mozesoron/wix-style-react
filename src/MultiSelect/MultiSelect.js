@@ -116,7 +116,7 @@ class MultiSelect extends InputWithOptions {
       super.hideOptions();
     }
 
-    if ((event.key === 'Enter' || event.key === 'Tab' || delimiters.includes(event.key)) && value.trim()) {
+    if ((event.key === 'Enter' || event.key === 'Tab' || delimiters.includes(event.key)) && value && value.trim()) {
       this._onManuallyInput(this.state.inputValue);
       if (options.length) {
         const unselectedOptions = this.getUnselectedOptions();
