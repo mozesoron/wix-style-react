@@ -180,11 +180,11 @@ class InputWithOptions extends WixComponent {
   }
 
   _onChange(event) {
-    this.setState({inputValue: event.target.value});
-
-    if (this.props.onChange) {
-      this.props.onChange(event);
-    }
+    this.setState({inputValue: event.target.value}, () => {
+      if (this.props.onChange) {
+        this.props.onChange(event);
+      }
+    });
   }
 
   _onInputClicked(event) {
