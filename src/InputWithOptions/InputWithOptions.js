@@ -5,6 +5,7 @@ import Input from '../Input';
 import omit from 'omit';
 import DropdownLayout from '../DropdownLayout/DropdownLayout';
 import Highlighter from '../Highlighter/Highlighter';
+import {chainEventHandlers} from '../utils/EventUtils';
 
 class InputWithOptions extends WixComponent {
 
@@ -56,13 +57,18 @@ class InputWithOptions extends WixComponent {
   }
 
   renderInput() {
-    const inputProps = Object.assign(omit(Object.keys(DropdownLayout.propTypes).concat(['onChange', 'dataHook']), this.props), this.inputAdditionalProps());
+    const inputAdditionalProps = this.inputAdditionalProps();
+    const inputProps = Object.assign(omit(Object.keys(DropdownLayout.propTypes).concat(['onChange', 'dataHook']), this.props), inputAdditionalProps);
 
     const {inputElement} = inputProps;
     return React.cloneElement(inputElement, {
       menuArrow: true,
       ref: input => this.input = input,
       ...inputProps,
+      onKeyDown: chainEventHandlers(
+        this.props.onKeyDown,
+        inputAdditionalProps && inputAdditionalProps.onKeyDown,
+        this._onKeyDown),
       theme: this.props.theme,
       onChange: this._onChange,
       onInputClicked: this._onInputClicked,
@@ -123,7 +129,7 @@ class InputWithOptions extends WixComponent {
     return (
       <div>
         {dropDirectionUp ? this._renderDropdownLayout() : null}
-        <div onKeyDown={this._onKeyDown} data-input-parent className={this.inputClasses()}>
+        <div data-input-parent className={this.inputClasses()}>
           {this.renderInput()}
         </div>
         {!dropDirectionUp ? this._renderDropdownLayout() : null}
