@@ -5,7 +5,10 @@ import uniqueId from 'lodash/uniqueId';
 import SliderHandle from './SliderHandle';
 import classNames from 'classnames';
 // This is a require and not an import because it will get tree shaked otherwise
-require('./Slider.scss').default;
+const sliderStyle = require('./Slider.scss').default;
+if (!sliderStyle) {
+  console.log('dummy-print');
+}
 
 /**
   * A slider component with multi-range support
