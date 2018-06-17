@@ -199,28 +199,41 @@ describe('multiSelect', () => {
     expect(onSelectCallArgs[1].id.startsWith('customOption_')).toEqual(true);
   });
 
-  it('should call onManuallyInput after delimiter is pressed and input is not empty', () => {
-    const onManuallyInput = jest.fn();
-    const {driver, inputDriver} = createDriver(<MultiSelect options={options} onManuallyInput={onManuallyInput} value="custom value"/>);
+  describe('onManuallyCalled', () => {
+    xit('should be called after Enter is pressed and input is not empty', () => {
+      const onManuallyInput = jest.fn();
+      const {driver, inputDriver} = createDriver(<MultiSelect options={options} onManuallyInput={onManuallyInput} value="custom value"/>);
 
-    driver.focus();
-    inputDriver.enterText('custom value');
-    driver.pressCommaKey();
+      driver.focus();
+      inputDriver.enterText('custom value');
+      driver.pressEnterKey();
 
-    expect(onManuallyInput).toHaveBeenCalled();
-    expect(onManuallyInput.mock.calls[0][0]).toBe('custom value');
-  });
+      expect(onManuallyInput.mock.calls.length).toBe(1);
+    });
 
-  it('should call onManuallyInput after delimiter is pressed given no options', () => {
-    const onManuallyInput = jest.fn();
-    const {driver, inputDriver} = createDriver(<MultiSelect onManuallyInput={onManuallyInput} value="custom value"/>);
+    it('should be called after delimiter is pressed and input is not empty', () => {
+      const onManuallyInput = jest.fn();
+      const {driver, inputDriver} = createDriver(<MultiSelect options={options} onManuallyInput={onManuallyInput} value="custom value"/>);
 
-    driver.focus();
-    inputDriver.enterText('custom value');
-    driver.pressCommaKey();
+      driver.focus();
+      inputDriver.enterText('custom value');
+      driver.pressCommaKey();
 
-    expect(onManuallyInput).toHaveBeenCalled();
-    expect(onManuallyInput.mock.calls[0][0]).toBe('custom value');
+      expect(onManuallyInput.mock.calls.length).toBe(1);
+      expect(onManuallyInput.mock.calls[0][0]).toBe('custom value');
+    });
+
+    it('should be called after delimiter is pressed given no options', () => {
+      const onManuallyInput = jest.fn();
+      const {driver, inputDriver} = createDriver(<MultiSelect onManuallyInput={onManuallyInput} value="custom value"/>);
+
+      driver.focus();
+      inputDriver.enterText('custom value');
+      driver.pressCommaKey();
+
+      expect(onManuallyInput.mock.calls.length).toBe(1);
+      expect(onManuallyInput.mock.calls[0][0]).toBe('custom value');
+    });
   });
 
   it('should call onRemoveTag when removing tags', () => {
