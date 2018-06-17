@@ -10,7 +10,7 @@ import {runInputWithOptionsTest} from '../InputWithOptions/InputWithOptions.spec
 
 runInputWithOptionsTest(multiSelectDriverFactory);
 
-describe('multiSelect', () => {
+describe('MultiSelect', () => {
 
   const createDriver = createDriverFactory(multiSelectDriverFactory);
   const options = [
@@ -200,7 +200,7 @@ describe('multiSelect', () => {
   });
 
   describe('onManuallyCalled', () => {
-    xit('should be called after Enter is pressed and input is not empty', () => {
+    it('should be called after Enter is pressed and input is not empty', () => {
       const onManuallyInput = jest.fn();
       const {driver, inputDriver} = createDriver(<MultiSelect options={options} onManuallyInput={onManuallyInput} value="custom value"/>);
 

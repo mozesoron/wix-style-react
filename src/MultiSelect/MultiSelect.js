@@ -91,33 +91,9 @@ class MultiSelect extends InputWithOptions {
   }
 
   _onManuallyInput(inputValue) {
-    if (inputValue) {
-      inputValue = inputValue.trim();
-      if (this.closeOnSelect()) {
-        this.hideOptions();
-      }
+    const {value, options} = this.props;
 
-      this.onManuallyInput(inputValue);
-    } else {
-      super.hideOptions();
-    }
-    this.clearInput();
-  }
-
-  onKeyDown(event) {
-    const {tags, value, onRemoveTag, delimiters, options} = this.props;
-
-    if (tags.length > 0 && (event.key === 'Delete' || event.key === 'Backspace') && value.length === 0) {
-      onRemoveTag(last(tags).id);
-    }
-
-    if (event.key === 'Escape') {
-      this.clearInput();
-      super.hideOptions();
-    }
-
-    if ((event.key === 'Enter' || event.key === 'Tab' || delimiters.includes(event.key)) && value && value.trim()) {
-      this._onManuallyInput(this.state.inputValue);
+    if (value && value.trim()) {
       if (options.length) {
         const unselectedOptions = this.getUnselectedOptions();
         const visibleOptions = unselectedOptions.filter(this.props.predicate);
@@ -130,8 +106,33 @@ class MultiSelect extends InputWithOptions {
       } else {
         this.props.onSelect([{id: value.trim(), label: value.trim()}]);
       }
+    }
 
+    if (inputValue) {
+      inputValue = inputValue.trim();
+      if (this.closeOnSelect()) {
+        this.hideOptions();
+      }
+
+      this.onManuallyInput(inputValue);
+    }
+    this.clearInput();
+  }
+
+  getManualSubmitKeys() {
+    return ['Enter', 'Tab'].concat(this.props.delimiters);
+  }
+
+  onKeyDown(event) {
+    const {tags, value, onRemoveTag} = this.props;
+
+    if (tags.length > 0 && (event.key === 'Delete' || event.key === 'Backspace') && value.length === 0) {
+      onRemoveTag(last(tags).id);
+    }
+
+    if (event.key === 'Escape') {
       this.clearInput();
+      super.hideOptions();
     }
 
     if (this.props.onKeyDown) {
