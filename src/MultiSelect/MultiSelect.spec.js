@@ -236,6 +236,17 @@ describe('MultiSelect', () => {
     });
   });
 
+  describe('onKeyDown', () => {
+    it('should be called once when character key pressed', () => {
+      const onKeyDown = jest.fn();
+      const {driver, inputDriver} = createDriver(<MultiSelect options={options} onKeyDown={onKeyDown}/>);
+
+      driver.focus();
+      inputDriver.keyDown('a');
+      expect(onKeyDown.mock.calls.length).toBe(1);
+    });
+  });
+
   it('should call onRemoveTag when removing tags', () => {
     const tagId = 'SweetHome';
     const tags = [{id: tagId, label: 'Alabama'}];
