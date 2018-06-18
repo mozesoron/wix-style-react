@@ -72,7 +72,6 @@ class InputWithOptions extends WixComponent {
       ref: input => this.input = input,
       ...inputProps,
       onKeyDown: chainEventHandlers(
-        this.props.onKeyDown,
         inputAdditionalProps && inputAdditionalProps.onKeyDown,
         this._onKeyDown),
       theme: this.props.theme,

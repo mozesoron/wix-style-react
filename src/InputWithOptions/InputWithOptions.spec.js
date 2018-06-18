@@ -383,15 +383,6 @@ const runInputWithOptionsTest = driverFactory => {
         expect(dropdownLayoutDriver.isShown()).toBeFalsy();
       });
 
-      it('should not handle default keyDown when defaultPrevented', () => {
-        const {driver, dropdownLayoutDriver} = createDriver(
-          <InputWithOptions options={options} onKeyDown={e => e.preventDefault()}/>
-        );
-        driver.focus();
-        expect(dropdownLayoutDriver.isShown()).toBeTruthy();
-        driver.pressEnterKey();
-        expect(dropdownLayoutDriver.isShown()).toBeTruthy();
-      });
     });
 
     describe('testkit', () => {
