@@ -22,10 +22,4 @@ describe('chainEventHandlers', () => {
     expect(fn2.mock.calls.length).toBe(1);
   });
 
-  it('should stop when defaultPrevented', () => {
-    const fn1 = event => event.defaultPrevented = true;
-    const fn2 = jest.fn();
-    chainEventHandlers(fn1, fn2)(newEvent());
-    expect(fn2.mock.calls.length).toBe(0);
-  });
 });
