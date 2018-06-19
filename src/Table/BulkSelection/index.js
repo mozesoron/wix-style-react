@@ -1,1 +1,1 @@
-export {BulkSelection} from './BulkSelection';
+export * from './BulkSelection';

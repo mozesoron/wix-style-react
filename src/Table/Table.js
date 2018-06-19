@@ -5,35 +5,21 @@ import s from './Table.scss';
 import DataTable from '../DataTable';
 import WixComponent from '../BaseComponents/WixComponent';
 import Checkbox from '../Checkbox';
-import {BulkSelection} from './BulkSelection';
-import {BulkSelectionState} from './BulkSelection/BulkSelection';
+import {BulkSelection, BulkSelectionState} from './BulkSelection';
 
 /**
  * Table is a composit component that allows adding header, fuooter and bulk actions to tables
  */
 export default class Table extends WixComponent {
 
-  handleRowOnChange(bulkSelectionContext) {
-    let selections;
-    const bulkSelectionState = this.getNextCheckboxState(this.state.selections);
-    if (bulkSelectionState === BulkSelectionState.INTERMEDIATE) {
-      selections = this.toggleAll(true);
-    } else if (bulkSelectionState === BulkSelectionState.CHECKED) {
-      selections = this.toggleAll(false);
-    } else {
-      selections = this.toggleAll(true);
-    }
-    bulkSelectionContext.setSelectionState({selections});
-  }
-
-  createCheckboxColumn({handleClickOnSelectAllCheckbox, getBulkSelectionState, toggleItem, isSelected}) {
+  createCheckboxColumn({toggleBulkSelection, getBulkSelectionState, toggleItem, isSelected}) {
     const bulkSelectionState = getBulkSelectionState();
     return {
       title: <Checkbox
         dataHook="table-select"
-        checked={bulkSelectionState === BulkSelectionState.CHECKED}
-        indeterminate={bulkSelectionState === BulkSelectionState.INTERMEDIATE}
-        onChange={() => handleClickOnSelectAllCheckbox()}
+        checked={bulkSelectionState === BulkSelectionState.ALL}
+        indeterminate={bulkSelectionState === BulkSelectionState.SOME}
+        onChange={() => toggleBulkSelection()}
         />,
       render: (row, rowNum) => (
         <Checkbox

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
 export const BulkSelectionState = Object.freeze({
-  CHECKED: 'checked',
-  UNCHECKED: 'unchecked',
-  INTERMEDIATE: 'indeterminate'
+  ALL: '_all_',
+  NONE: '_none_',
+  SOME: '_some_'
 });
 
 function getSelectionsCount(selections) {
@@ -15,12 +15,16 @@ function getSelectionsCount(selections) {
 function getNextBulkSelectionState(selections) {
   const numOfSelected = getSelectionsCount(selections);
   const numOfRows = selections.length;
-  return numOfSelected === 0 ? BulkSelectionState.UNCHECKED :
-    numOfSelected === numOfRows ? BulkSelectionState.CHECKED : BulkSelectionState.INTERMEDIATE;
+  return numOfSelected === 0 ? BulkSelectionState.NONE :
+    numOfSelected === numOfRows ? BulkSelectionState.ALL : BulkSelectionState.SOME;
 }
 
 /**
- * Table is a composit component that allows adding header, fuooter and bulk actions to tables
+ * BulkSelection manages the state and logic of bulk selection.
+ * Given an array of selectable items, it manages a bulk selection state (ALL, SOME, NONE),
+ * and provides helper methods for modifying the state.
+ *
+ * toggleBulkSelection(): changes the bulk state according to these state changes: ALL->NONE, SOME->ALL, NONE->ALL
  */
 export class BulkSelection extends React.Component {
 
@@ -47,12 +51,12 @@ export class BulkSelection extends React.Component {
     return this.state.selections.map(() => enable);
   }
 
-  handleClickOnSelectAllCheckbox = () => {
+  toggleBulkSelection = () => {
     let selections;
     const bulkSelectionState = getNextBulkSelectionState(this.state.selections);
-    if (bulkSelectionState === BulkSelectionState.INTERMEDIATE) {
+    if (bulkSelectionState === BulkSelectionState.SOME) {
       selections = this.toggleAll(true);
-    } else if (bulkSelectionState === BulkSelectionState.CHECKED) {
+    } else if (bulkSelectionState === BulkSelectionState.ALL) {
       selections = this.toggleAll(false);
     } else {
       selections = this.toggleAll(true);
@@ -77,7 +81,7 @@ export class BulkSelection extends React.Component {
       toggleItem: this.toggleItem,
       toggleAll: this.toggleAll,
       setSelection: this.setSelection,
-      handleClickOnSelectAllCheckbox: this.handleClickOnSelectAllCheckbox,
+      toggleBulkSelection: this.toggleBulkSelection,
       getBulkSelectionState: () => getNextBulkSelectionState(this.state.selections)
     };
   }
@@ -96,6 +100,7 @@ BulkSelection.propTypes = {
   selections: PropTypes.arrayOf(PropTypes.bool),
   /** Called when row selection changes. Receives the updated selection array as argument. */
   onSelectionChanged: PropTypes.func,
+  /** child as a function which receives the BulkSelection context */
   children: PropTypes.func
 };
 
