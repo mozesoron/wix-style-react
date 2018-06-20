@@ -71,7 +71,7 @@ Since We have different users using different versions, when we fix an important
 The library officially supports the 2 latest major versions, and in case some project uses a realy old version, we might break its build in order to force him to upgrade by using [depkeeper](https://github.com/wix/depkeeper).
 
 #### Gradual exposure
-2. When we implement a new breaking change which we want to gradually expose to our users, we can create an alpha version and ask some of our users to work with it, before we officially release it.
+When we implement a new breaking change which we want to gradually expose to our users, we can create an alpha version and ask some of our users to work with it, before we officially release it.
 
 ## Maintaining a CHANGELOG
 The [CHANGELOG](https://github.com/wix/wix-style-react/blob/master/CHANGELOG.md) purpose is to reflect what have changed, added or fixed in each version.
