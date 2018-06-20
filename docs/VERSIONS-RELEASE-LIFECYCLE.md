@@ -1,14 +1,20 @@
 # Versions Release Lifecycle
 
 * [Overview](#overview)
-* [How to release a new version](#releasing-a-new-version)
+* [TL-DR: How to release a new version](#releasing-a-new-version)
+   * [Regular release](#regular-release)
+   * [Older version release](#older-version-release)
+   * [Special rc version release](#speacial-rc-version-release)
 * [Motivation](#motivation)
     * [Why semantic versioning](#why-semver)
-    * [Gradual exposure](#gradual-exposure)
+    * [Why do we need to maintain multiple versions](#maintain-multiple-versions)
+      * [Maintain older version](#maintain-older-version)
+      * [Gradual exposure](#gradual-exposure)
 * [Maintaining a CHANGELOG](#maintaining-a-changelog)
 * [Releasable Branches](#releasable-branches)
 * [Npm dist tags](#npm-dist-tags)
 * [Storybook](#storybook)
+   * [When do we deploy a new storybook](#deploy-a-new-storybook)
 * [Eyes](#eyes)
 
 ## Overview
@@ -94,3 +100,5 @@ We deploy our storybook by using [teamcity-surge-autorelease](https://github.com
 3. Each version branch should pass a `--ver=<version>` flag to the surge command running in `postpublis` step. They storybook will be deployed to `https://wix-wix-style-react-pr-<version>.surge.sh/`.
 
 **Forgetting to pass --ver flag will `override` our master storybook!**
+
+## Eyes (TBD)
