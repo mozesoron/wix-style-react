@@ -31,7 +31,7 @@ This document summarizes the best practices of how to manage our versions, with 
  - Move to the relevant release branch. If you are creating a new one, make sure to call it `version_*` and configure it as a `protected branch`.
  - Make sure the [CHANGELOG](https://github.com/wix/wix-style-react/blob/master/CHANGELOG.md) is updated.
 - Change `package.json` version according to semver rules.
-- Make sure the `surge-auto-release` command which runs during the `postpublish` step in the `package-json` has the relevant `--ver` flag:
+- Make sure the `surge-auto-release` command which runs during the `postpublish` step in the `package.json` has the relevant `--ver` flag:
 ```
 "scripts": {
     "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=v<version_num>",
@@ -44,7 +44,7 @@ This document summarizes the best practices of how to manage our versions, with 
 - Configure it to be a protected branch.
 - Make sure the [CHANGELOG](https://github.com/wix/wix-style-react/blob/master/CHANGELOG.md) is updated.
 - Change `package.json` version according to semver rules. For example `"version": "4.0.0-alpha-1"`
- Make sure the `surge-auto-release` command which runs during the `postpublish` step in the `package-json` has the relevant `--ver` flag:
+ Make sure the `surge-auto-release` command which runs during the `postpublish` step in the `package.json` has the relevant `--ver` flag:
 ```
 "scripts": {
     "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=v<version_num>",
