@@ -55,8 +55,9 @@ This document summarizes the best practices of how to manage our versions, with 
 
 ## Motivation
 ### Why semantic versioning
-wix-style-react is a large infrastucture library which has many projects using it. The library is under a veavy development and often needs to break some API's or styling. It will not be realistic to break the users every time we wish to improve something, and that is where semver helps us.
+wix-style-react is a large infrastucture library which has many projects using it. The library is under a heavy development and often needs to break some API's or styling. It will not be realistic to break the users every time we wish to improve something, and that is where semver helps us.
 Instead of releasing automatically after every commit, we release our package manually with versions which complies with semver rules:
+
     - **Major** version for incompatible API changes.
     - **Minor** version for adding functionality in a backwards-compatible manner.
     - **Patch** version for backwards-compatible bug fixes.
