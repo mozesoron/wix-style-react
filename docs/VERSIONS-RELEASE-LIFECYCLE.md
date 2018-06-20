@@ -96,9 +96,9 @@ We deploy our storybook by using [teamcity-surge-autorelease](https://github.com
 ### When do we deploy a new storybook
 1. Each time master branch is doing `npm publish` in CI, `postpublish` is running and deploying a new storybook to `https://wix-wix-style-react.surge.sh`.
 
-2. Each time some regular branch runs in teamcity-pr, after the build is passing we run the `pr-postbuild` to deploy the story to `https://wix-wix-style-react-pr-<pr_number>.surge.sh/`.
+2. Each time some regular branch runs in teamcity-pr, after the build is passing we run the `pr-postbuild` command to deploy the story to `https://wix-wix-style-react-pr-<pr_number>.surge.sh/`.
 
-3. Each version branch should pass a `--ver=<version>` flag to the surge command running in `postpublis` step. They storybook will be deployed to `https://wix-wix-style-react-pr-<version>.surge.sh/`.
+3. Each version branch should pass a `--ver=<version>` flag to the surge command running in `postpublish` step. The storybook will be deployed to `https://wix-wix-style-react-pr-<version>.surge.sh/`.
 
 **Forgetting to pass --ver flag will `override` our master storybook!**
 
