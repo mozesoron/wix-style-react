@@ -3,13 +3,19 @@
 This document summarizes the best practices of how to manage our versions, with some basic information about how it all happens.
 
 ## Releasing a new version
-In order to release a new version, all we need to do is:
 1. Make sure the [CHANGELOG](https://github.com/wix/wix-style-react/blob/master/CHANGELOG.md) is updated. The best practice is to update it every time we merge to master, so it won't be annoying to do the dirty work when we want to do the release.
 
 2. Change `package.json` version according to semver rules.
     - **Major** version for incompatible API changes.
     - **Minor** version for adding functionality in a backwards-compatible manner.
     - **Patch** version for backwards-compatible bug fixes.
+
+
+## Creating a releasable branch
+1. Create a branch `version_**`.
+2. Update the version in `package.json`.
+3. Update surge-auto-release in the package-json with `--ver=<your_new_version>`
+4. Push the branch and configure it in github to be a protected branch.
 
 ## Parallel versioning
 There are 2 reasons why we need to maintain multiple versions:
