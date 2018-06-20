@@ -14,7 +14,7 @@
 * [Releasable Branches](#releasable-branches)
 * [Npm dist tags](#npm-dist-tags)
 * [Storybook](#storybook)
-   * [When do we deploy a new storybook](#deploy-a-new-storybook)
+   * [When do we deploy a new storybook](#deploy-storybook)
 * [Eyes](#eyes)
 
 ## Overview
