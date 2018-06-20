@@ -21,6 +21,7 @@ const inputWithOptionsDriverFactory = ({element, wrapper, component}) => {
     pressAnyKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'Any'}),
     pressEnterKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'Enter'}),
     pressTabKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'Tab'}),
+    pressSpaceKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: ' '}),
     pressEscKey: () => ReactTestUtils.Simulate.keyDown(inputWrapper, {key: 'Escape'}),
     outsideClick: () => document.body.dispatchEvent(new Event('mouseup', {cancelable: true})),
     setProps: props => {

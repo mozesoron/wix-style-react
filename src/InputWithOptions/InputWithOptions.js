@@ -145,6 +145,11 @@ class InputWithOptions extends WixComponent {
     return this.props.closeOnSelect;
   }
 
+  get isReadOnly() {
+    const {readOnly} = this.inputAdditionalProps() || {};
+    return readOnly;
+  }
+
   _onManuallyInput(inputValue = '') {
     if (this.state.isComposing) {
       return;
@@ -217,7 +222,7 @@ class InputWithOptions extends WixComponent {
   }
 
   _onKeyDown(event) {
-    if (this.props.disabled) {
+    if (this.props.disabled || !this._shouldDelegateEvent(event)) {
       return;
     }
     if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
@@ -234,6 +239,10 @@ class InputWithOptions extends WixComponent {
           this.showOptions();
       }
     }
+  }
+
+  _shouldDelegateEvent(event) {
+    return !['Spacebar', ' '].includes(event.key) || this.isReadOnly;
   }
 
   focus() {

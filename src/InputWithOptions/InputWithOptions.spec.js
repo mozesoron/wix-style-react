@@ -368,6 +368,35 @@ const runInputWithOptionsTest = driverFactory => {
       expect(inputDriver.getRequired()).toBeTruthy();
     });
 
+    describe('onSelect', () => {
+      it('should call onSelect on enter key press', () => {
+        const onSelect = jest.fn();
+        const {driver} = createDriver(<InputWithOptions options={options} onSelect={onSelect}/>);
+        driver.focus();
+        driver.pressDownKey();
+        driver.pressEnterKey();
+        expect(onSelect).toBeCalledWith(options[0]);
+      });
+
+      it('should call onSelect on tab key press', () => {
+        const onSelect = jest.fn();
+        const {driver} = createDriver(<InputWithOptions options={options} onSelect={onSelect}/>);
+        driver.focus();
+        driver.pressDownKey();
+        driver.pressTabKey();
+        expect(onSelect).toBeCalledWith(options[0]);
+      });
+
+      it('should not call onSelect on space key press', () => {
+        const onSelect = jest.fn();
+        const {driver} = createDriver(<InputWithOptions options={options} onSelect={onSelect}/>);
+        driver.focus();
+        driver.pressDownKey();
+        driver.pressSpaceKey();
+        expect(onSelect).not.toHaveBeenCalled();
+      });
+    });
+
     describe('testkit', () => {
       it('should exist', () => {
         const div = document.createElement('div');
