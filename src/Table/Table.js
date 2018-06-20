@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
+import defaultTo from 'lodash/defaultTo';
 import createReactContext from 'create-react-context';
 import DataTable, {DataTableHeader} from '../DataTable';
 import WixComponent from '../BaseComponents/WixComponent';
@@ -16,7 +17,14 @@ const TableDefaultProps = {
 export const TableContext = createReactContext(TableDefaultProps);
 
 function createColumns({tableProps, bulkSelectionContext}) {
-  const createCheckboxColumn = ({toggleBulkSelection, getBulkSelectionState, toggleItem, isSelected}) => {
+  const createCheckboxColumn = (
+    {
+      toggleBulkSelection,
+      getBulkSelectionState,
+      toggleSelectionById,
+      isSelected
+    }
+  ) => {
     const bulkSelectionState = getBulkSelectionState();
     return {
       title: <Checkbox
@@ -25,15 +33,17 @@ function createColumns({tableProps, bulkSelectionContext}) {
         indeterminate={bulkSelectionState === BulkSelectionState.SOME}
         onChange={() => toggleBulkSelection()}
         />,
-      render: (row, rowNum) => (
-        <Checkbox
-          dataHook="row-select"
-          checked={isSelected(rowNum)}
-          onChange={() => toggleItem(rowNum)}
-          />
-        ),
+      render: (row, rowNum) => {
+        const id = defaultTo(row.id, String(rowNum));
+        return (
+          <Checkbox
+            dataHook="row-select"
+            checked={isSelected(id)}
+            onChange={() => toggleSelectionById(id)}
+            />
+        );
+      },
       width: '12px'
-
     };
   };
 
@@ -168,7 +178,8 @@ export default class Table extends WixComponent {
     return (
       <TableContext.Provider value={this.state}>
         <BulkSelection
-          selections={this.props.selections}
+          selectedIds={this.props.selectedIds}
+          allIds={this.state.data.map((rowData, rowIndex) => defaultTo(rowData.id, String(rowIndex)))}
           onSelectionChanged={this.props.onSelectionChanged}
           >
           <div> {/* Wrapping with a div in case multiple children are passed*/}

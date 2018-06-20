@@ -1,6 +1,7 @@
 import TableDriverFactory from './Table.driver';
 import React from 'react';
 import Table from './Table';
+import DataTable from '../DataTable';
 import ReactTestUtils from 'react-dom/test-utils';
 import {createDriverFactory} from '../test-common';
 import {tableTestkitFactory} from '../../testkit';
@@ -16,6 +17,7 @@ describe('Table', () => {
     return {driver, wrapper};
   };
 
+
   const defaultProps = {
     id: 'id',
     data: [{a: 'value 1', b: 'value 2'}, {a: 'value 3', b: 'value 4'}],
@@ -28,9 +30,13 @@ describe('Table', () => {
     showSelection: true,
     children: <Table.Content/>
   };
+  const noneSelected = () => [];
+  const firstSelected = () => ['0'];
+  const secondSelected = () => ['1'];
+  const allSelected = () => ['0', '1'];
 
   const withSelection = {
-    selections: [true, false],
+    selectedIds: ['0'],
     showSelection: true
   };
 
@@ -53,45 +59,46 @@ describe('Table', () => {
     });
   });
 
-  describe('selection prop', () => {
-    it('should select rows according to selection prop', () => {
+  describe('selectedIds prop', () => {
+    it('should select rows according to selectedIds prop', () => {
       const driver = createDriver(<Table {...defaultProps} {...withSelection}/>);
       expect(driver.isRowSelected(0)).toBeTruthy();
       expect(driver.isRowSelected(1)).toBeFalsy();
     });
 
     it('should update selection if selection prop has change', async () => {
-      const selections = [false, false];
-      const {driver, wrapper} = createEnzymeDriver(<Table {...defaultProps} selections={selections}/>);
-      selections[0] = true;
-      wrapper.setProps({selections});
+      const selectedIds = [];
+      const {driver, wrapper} = createEnzymeDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
+      expect(driver.isRowSelected(0)).toBeFalsy();
+      wrapper.setProps({selectedIds: ['0']});
       expect(driver.isRowSelected(0)).toBeTruthy();
     });
 
-    it('should NOT reupdate selection if selection prop has change', async () => {
-      const selections = [false, false];
-      const {driver, wrapper} = createEnzymeDriver(<Table {...defaultProps} selections={selections}/>);
-      selections[0] = true;
-      wrapper.setProps({selections});
-      expect(driver.isRowSelected(0)).toBeTruthy();
+    //TODO: It seems that DataTable.render is not called (verified with console.log). But this test shows it does.
+    xit('should NOT re-render DataTable when new props are set but selection has NOT changed', async () => {
+      const {wrapper} = createEnzymeDriver(<Table {...defaultProps} selectedIds={['0']}/>);
+      const renderMock = jest.fn();
+      wrapper.find(DataTable).instance().render = renderMock;
+      wrapper.setProps({selectedIds: ['0']});
+      expect(renderMock.mock.calls.length).toBe(0);
     });
   });
 
   describe('row selection', () => {
-    it('should select row when checkbox clicked give row not selected', () => {
+    it('should select row when checkbox clicked given row not selected', () => {
       const driver = createDriver(<Table {...defaultProps} {...withSelection}/>);
       driver.clickRowChecbox(1);
       expect(driver.isRowSelected(1)).toBeTruthy();
     });
 
-    it('should unselect row when checkbox clicked give row selected', () => {
-      const driver = createDriver(<Table {...defaultProps} selections={[true, true]}/>);
+    it('should unselect row when checkbox clicked given row selected', () => {
+      const driver = createDriver(<Table {...defaultProps} selectedIds={allSelected()}/>);
       driver.clickRowChecbox(1);
       expect(driver.isRowSelected(1)).toBeFalsy();
     });
   });
 
-  describe('data prop', () => {
+  describe('re-render', () => {
     it('should re-render on data update', () => {
       const props = {
         id: 'id',
@@ -111,52 +118,60 @@ describe('Table', () => {
       wrapper.setProps({data});
       expect(driver.getCell(ROW_INDEX, COLUMN_A_INDEX).textContent).toBe(newValue);
     });
+
+    it('should keep selection when re-rendered given selectedIds not provided (Uncontrolled)', () => {
+      const {driver, wrapper} = createEnzymeDriver(<Table {...defaultProps}/>);
+      driver.clickRowChecbox(1);
+      expect(driver.isRowSelected(1)).toBeTruthy();
+      wrapper.setProps({...defaultProps});
+      expect(driver.isRowSelected(1)).toBeTruthy();
+    });
   });
 
   describe('BulkSelection', () => {
     describe('initial render', () => {
       it('should display bulk-selection as checked when all rows are selected', () => {
-        const selections = [true, true];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = allSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         expect(driver.isBulkSelectionChecked()).toBeTruthy();
         expect(driver.isBulkSelectionUnchecked()).toBeFalsy();
         expect(driver.isBulkSelectionIndeterminate()).toBeFalsy();
       });
 
       it('should display bulk-selection as unchecked when no rows are selected', () => {
-        const selections = [false, false];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = noneSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         expect(driver.isBulkSelectionUnchecked()).toBeTruthy();
         expect(driver.isBulkSelectionChecked()).toBeFalsy();
       });
 
       it('should display bulk-selection as partial when some rows are selected', () => {
-        const selections = [false, true];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = secondSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         expect(driver.isBulkSelectionIndeterminate()).toBeTruthy();
       });
     });
 
     describe('Update row selection', () => {
       it('should select all rows when bulk-selection checkbox clicked given no checkboxes are checked', () => {
-        const selections = [false, false];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = noneSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         driver.clickBulkSelectionCheckbox();
         expect(driver.isRowSelected(0)).toBeTruthy();
         expect(driver.isRowSelected(1)).toBeTruthy();
       });
 
       it('should select all rows when bulk-selection checkbox clicked given some checkboxes are checked', () => {
-        const selections = [false, true];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = secondSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         driver.clickBulkSelectionCheckbox();
         expect(driver.isRowSelected(0)).toBeTruthy();
         expect(driver.isRowSelected(1)).toBeTruthy();
       });
 
       it('should unselect all rows when bulk-selection checkbox clicked given all checkboxes are checked', () => {
-        const selections = [true, true];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = allSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         driver.clickBulkSelectionCheckbox();
         expect(driver.isRowSelected(0)).toBeFalsy();
         expect(driver.isRowSelected(1)).toBeFalsy();
@@ -166,47 +181,47 @@ describe('Table', () => {
     describe('onSelectionChanged', () => {
       it('should call onSelectionChanged when bulk-selection checkbox clicked given no checkboxes are checked', () => {
         const onSelectionChanged = jest.fn();
-        const selections = [false, false];
-        const driver = createDriver(<Table {...defaultProps} selections={selections} onSelectionChanged={onSelectionChanged}/>);
+        const selectedIds = noneSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds} onSelectionChanged={onSelectionChanged}/>);
         driver.clickBulkSelectionCheckbox();
-        expect(onSelectionChanged).toHaveBeenCalledWith([true, true]);
+        expect(onSelectionChanged).toHaveBeenCalledWith(allSelected());
       });
 
       it('should call onSelectionChanged when row selected given no checkboxes are checked', () => {
         const onSelectionChanged = jest.fn();
-        const selections = [false, false];
-        const driver = createDriver(<Table {...defaultProps} selections={selections} onSelectionChanged={onSelectionChanged}/>);
+        const selectedIds = noneSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds} onSelectionChanged={onSelectionChanged}/>);
         driver.clickRowChecbox(0);
         expect(onSelectionChanged.mock.calls.length).toBe(1);
-        expect(onSelectionChanged).toHaveBeenCalledWith([true, false]);
+        expect(onSelectionChanged).toHaveBeenCalledWith(firstSelected());
       });
     });
 
     describe('Update BulkSelection', () => {
       it('should check bulk-selection checkbox when all rows change to check', () => {
-        const selections = [false, true];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = secondSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         driver.clickRowChecbox(0);
         expect(driver.isBulkSelectionChecked()).toBeTruthy();
       });
 
       it('should uncheck bulk-selection checkbox when all rows change to not-selected', () => {
-        const selections = [false, true];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = secondSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         driver.clickRowChecbox(1);
         expect(driver.isBulkSelectionUnchecked()).toBeTruthy();
       });
 
       it('should show partial in bulk-selection checkbox when row unselected given all rows selected', () => {
-        const selections = [true, true];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = allSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         driver.clickRowChecbox(1);
         expect(driver.isBulkSelectionIndeterminate()).toBeTruthy();
       });
 
       it('should show partial in bulk-selection checkbox when row selected given all rows not selected', () => {
-        const selections = [false, false];
-        const driver = createDriver(<Table {...defaultProps} selections={selections}/>);
+        const selectedIds = noneSelected();
+        const driver = createDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
         driver.clickRowChecbox(1);
         expect(driver.isBulkSelectionIndeterminate()).toBeTruthy();
       });
@@ -219,7 +234,7 @@ describe('Table', () => {
         <Table
           {...defaultProps}
           showSelection
-          selections={[false, false]}
+          selectedIds={noneSelected()}
           />
         );
       expect(!!driver.getHeader()).toBeFalsy();
@@ -232,7 +247,7 @@ describe('Table', () => {
         <Table
           {...defaultProps}
           showSelection
-          selections={[true, true]}
+          selectedIds={allSelected()}
           >
           <Table.Header>
             {({getNumSelected}) => <div>{`${getNumSelected()} Selected`}</div>}
@@ -249,7 +264,7 @@ describe('Table', () => {
         <Table
           {...defaultProps}
           showSelection
-          selections={[true, true]}
+          selectedIds={allSelected()}
           >
           <Table.Content/>
           <Table.Footer>
@@ -266,7 +281,7 @@ describe('Table', () => {
         <Table
           {...defaultProps}
           showSelection
-          selections={[true, true]}
+          selectedIds={allSelected()}
           >
           <div>
             <Table.TitleBar/>
