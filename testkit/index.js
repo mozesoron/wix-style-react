@@ -214,5 +214,6 @@ export {
   textTestkitFactory,
   labelTestkitFactory,
   floatingHelperTestkitFactory,
-  linearProgressBarTestkitFactory
+  linearProgressBarTestkitFactory,
+  circularProgressBarTestkitFactory
 } from 'wix-ui-backoffice/dist/src/testkit';
