@@ -30,13 +30,13 @@ This document summarizes the best practices of how to manage our versions, with 
 - Announce on #wix-style-react slack channel. If there are new components or features worth mentioning, add it to the slack message.
 
 ### Older version release
-If the branch already exists, there is no need to create it again. Otherwise Lets say that our current latest version is `3` and we want to release a new major version, `4.0.0`.
+If the branch already exists, there is no need to create it again. Otherwise, Lets say that our current latest version is `3` and we want to release a new major version `4.0.0`.
 
 - Before releasing the new major version we should create a new release branch for the current version `version_3.x`. This branch must be configured as a [protected branch](https://github.com/wix/wix-style-react/settings/branches).
--  Update the `surge-auto-release` command which runs during the `postpublish` step in the `package.json` has the relevant `--ver=v3` flag:
+-  Update the `surge-auto-release` command which runs during the `postpublish` step in the `package.json` with `--ver=v3` flag:
 ```
 "scripts": {
-    "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=v3",
+    "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=v3"
 }
 ```
 
@@ -47,13 +47,13 @@ When we need to introduce some bug fix to this version branch:
 - Create a pr, wait for the pr build to pass and merge to `version_3.x` branch.
 
 ### Speacial rc version release
-Lets say that our current latest version is `4.1.0`, and we wish to introduce some sensitive new feature we call `new-icons`
+Lets say that our current latest version is `4.1.0`, and we wish to introduce some sensitive new feature we call `new-icons`.
 When we want to release an rc version to gradualy expose this feature:
 - Create a new release branch `version_new-icons.x`. This branch must be configured as a [protected branch](https://github.com/wix/wix-style-react/settings/branches).
 - Update the `surge-auto-release` command which runs during the `postpublish` step in the `package.json` has the relevant `--ver=new_icons` flag:
 ```
 "scripts": {
-    "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=new_icons",
+    "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=new_icons"
 }
 ```
 
