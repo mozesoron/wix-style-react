@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {string, number, arrayOf, oneOfType, func, any} from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import without from 'lodash/without';
 import defaultTo from 'lodash/defaultTo';
@@ -120,13 +120,13 @@ export class BulkSelection extends React.Component {
 
 BulkSelection.propTypes = {
   /** Array of item selection boolean states. Should correspond in length to the data prop */
-  selectedIds: PropTypes.arrayOf(PropTypes.string),
+  selectedIds: oneOfType([arrayOf(string), arrayOf(number)]),
   /** An array of all item ids (string ids) */
-  allIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  allIds: oneOfType([arrayOf(string), arrayOf(number)]).isRequired,
   /** Called when item selection changes. Receives the updated selectedIds array as argument. */
-  onSelectionChanged: PropTypes.func,
+  onSelectionChanged: func,
   /** Any - can consume the BulkSelectionProvider context */
-  children: PropTypes.any
+  children: any
 };
 
 

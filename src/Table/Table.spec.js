@@ -17,10 +17,10 @@ describe('Table', () => {
     return {driver, wrapper};
   };
 
-
+  const ID_1 = 'aaa', ID_2 = 'bbb';
   const defaultProps = {
     id: 'id',
-    data: [{a: 'value 1', b: 'value 2'}, {a: 'value 3', b: 'value 4'}],
+    data: [{id: ID_1, a: 'value 1', b: 'value 2'}, {id: ID_2, a: 'value 3', b: 'value 4'}],
     columns: [
       {title: 'Row Num', render: (row, rowNum) => rowNum},
       {title: 'A', render: row => row.a},
@@ -31,14 +31,9 @@ describe('Table', () => {
     children: <Table.Content/>
   };
   const noneSelected = () => [];
-  const firstSelected = () => ['0'];
-  const secondSelected = () => ['1'];
-  const allSelected = () => ['0', '1'];
-
-  const withSelection = {
-    selectedIds: ['0'],
-    showSelection: true
-  };
+  const firstSelected = () => [ID_1];
+  const secondSelected = () => [ID_2];
+  const allSelected = () => [ID_1, ID_2];
 
   it('should pass id prop to child', () => {
     const driver = createDriver(<Table {...defaultProps}/>);
@@ -47,7 +42,7 @@ describe('Table', () => {
 
   describe('showSelection prop', () => {
     it('should display selection column', () => {
-      const driver = createDriver(<Table {...defaultProps} {...withSelection}/>);
+      const driver = createDriver(<Table {...defaultProps} selectedIds={firstSelected()}/>);
       expect(driver.isRowCheckboxVisible(1)).toBeTruthy();
       expect(driver.isBulkSelectionCheckboxVisible()).toBeTruthy();
     });
@@ -60,8 +55,31 @@ describe('Table', () => {
   });
 
   describe('selectedIds prop', () => {
-    it('should select rows according to selectedIds prop', () => {
-      const driver = createDriver(<Table {...defaultProps} {...withSelection}/>);
+    it('should select rows according to selectedIds prop given string ids', () => {
+      const driver = createDriver(<Table {...defaultProps} selectedIds={firstSelected()}/>);
+      expect(driver.isRowSelected(0)).toBeTruthy();
+      expect(driver.isRowSelected(1)).toBeFalsy();
+    });
+
+    it('should select rows according to selectedIds prop given numeric ids', () => {
+      const ID_1 = 1234, ID_2 = 1235;
+      const driver = createDriver(
+        <Table
+          {...defaultProps}
+          data={[{id: ID_1, a: 'value 1', b: 'value 2'}, {id: ID_2, a: 'value 3', b: 'value 4'}]}
+          selectedIds={[ID_1]}
+          />);
+      expect(driver.isRowSelected(0)).toBeTruthy();
+      expect(driver.isRowSelected(1)).toBeFalsy();
+    });
+
+    it('should select rows according to selectedIds prop given row index as ids', () => {
+      const driver = createDriver(
+        <Table
+          {...defaultProps}
+          data={[{a: 'value 1', b: 'value 2'}, {a: 'value 3', b: 'value 4'}]}
+          selectedIds={[0]}
+          />);
       expect(driver.isRowSelected(0)).toBeTruthy();
       expect(driver.isRowSelected(1)).toBeFalsy();
     });
@@ -70,23 +88,23 @@ describe('Table', () => {
       const selectedIds = [];
       const {driver, wrapper} = createEnzymeDriver(<Table {...defaultProps} selectedIds={selectedIds}/>);
       expect(driver.isRowSelected(0)).toBeFalsy();
-      wrapper.setProps({selectedIds: ['0']});
+      wrapper.setProps({selectedIds: firstSelected()});
       expect(driver.isRowSelected(0)).toBeTruthy();
     });
 
     //TODO: It seems that DataTable.render is not called (verified with console.log). But this test shows it does.
     xit('should NOT re-render DataTable when new props are set but selection has NOT changed', async () => {
-      const {wrapper} = createEnzymeDriver(<Table {...defaultProps} selectedIds={['0']}/>);
+      const {wrapper} = createEnzymeDriver(<Table {...defaultProps} selectedIds={firstSelected()}/>);
       const renderMock = jest.fn();
       wrapper.find(DataTable).instance().render = renderMock;
-      wrapper.setProps({selectedIds: ['0']});
+      wrapper.setProps({selectedIds: firstSelected()});
       expect(renderMock.mock.calls.length).toBe(0);
     });
   });
 
   describe('row selection', () => {
     it('should select row when checkbox clicked given row not selected', () => {
-      const driver = createDriver(<Table {...defaultProps} {...withSelection}/>);
+      const driver = createDriver(<Table {...defaultProps} selectedIds={firstSelected()}/>);
       driver.clickRowChecbox(1);
       expect(driver.isRowSelected(1)).toBeTruthy();
     });

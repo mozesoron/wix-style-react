@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {string, number, arrayOf, oneOfType, func, bool, any} from 'prop-types';
 import omit from 'lodash/omit';
 import defaultTo from 'lodash/defaultTo';
 import createReactContext from 'create-react-context';
@@ -34,7 +34,7 @@ function createColumns({tableProps, bulkSelectionContext}) {
         onChange={() => toggleBulkSelection()}
         />,
       render: (row, rowNum) => {
-        const id = defaultTo(row.id, String(rowNum));
+        const id = defaultTo(row.id, rowNum);
         return (
           <Checkbox
             dataHook="row-select"
@@ -61,7 +61,7 @@ const TableHeader = props => {
 };
 TableHeader.displayName = 'Table.Header';
 TableHeader.propTypes = {
-  children: PropTypes.any
+  children: any
 };
 
 const TableFooter = props => {
@@ -75,7 +75,7 @@ const TableFooter = props => {
 };
 TableHeader.displayName = 'Table.Footer';
 TableFooter.propTypes = {
-  children: PropTypes.any
+  children: any
 };
 
 /**
@@ -142,7 +142,7 @@ const TableContent = ({titleBarVisible}) => {
 };
 TableContent.displayName = 'Table.Content';
 TableContent.propTypes = {
-  titleBarVisible: PropTypes.bool
+  titleBarVisible: bool
 };
 TableContent.defaultProps = {
   titleBarVisible: true
@@ -179,7 +179,7 @@ export default class Table extends WixComponent {
       <TableContext.Provider value={this.state}>
         <BulkSelection
           selectedIds={this.props.selectedIds}
-          allIds={this.state.data.map((rowData, rowIndex) => defaultTo(rowData.id, String(rowIndex)))}
+          allIds={this.state.data.map((rowData, rowIndex) => defaultTo(rowData.id, rowIndex))}
           onSelectionChanged={this.props.onSelectionChanged}
           >
           <div> {/* Wrapping with a div in case multiple children are passed*/}
@@ -204,11 +204,13 @@ Table.defaultProps = {
 Table.propTypes = {
   ...omit(DataTable.propTypes, ['thPadding', 'thHeight', 'thFontSize', 'thBorder', 'thColor', 'thOpacity', 'thLetterSpacing', 'hideHeader']),
   /** Indicates wether to show a selection column (with checkboxes) */
-  showSelection: PropTypes.bool,
-  /** Array of row selection boolean states. Should correspond in length to the data prop */
-  selections: PropTypes.arrayOf(PropTypes.bool),
+  showSelection: bool,
+    /** Array of selected row ids.
+     *  Idealy, id should be a property on the data row object.
+     *  If data objects do not have id property, then the data row's index would be used as an id. */
+  selectedIds: oneOfType([arrayOf(string), arrayOf(number)]),
   /** Called when row selection changes. Receives the updated selection array as argument. */
-  onSelectionChanged: PropTypes.func
+  onSelectionChanged: func
 };
 
 
