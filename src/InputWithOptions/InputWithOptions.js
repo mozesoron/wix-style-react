@@ -5,7 +5,7 @@ import Input from '../Input';
 import omit from 'omit';
 import DropdownLayout from '../DropdownLayout/DropdownLayout';
 import Highlighter from '../Highlighter/Highlighter';
-import {chainEventHandlers} from '../utils/EventUtils';
+import {chainEventHandlers} from '../utils/ChainEventHandlers';
 
 class InputWithOptions extends WixComponent {
 
@@ -227,10 +227,6 @@ class InputWithOptions extends WixComponent {
     }
   }
 
-  _onNonSubmitKeyPressed() {
-    this.showOptions();
-  }
-
   _onKeyDown(event) {
     if (this.props.disabled) {
       return;
@@ -241,10 +237,10 @@ class InputWithOptions extends WixComponent {
     }
 
     if (!this.dropdownLayout._onKeyDown(event)) {
-      if (this.getManualSubmitKeys().includes(event.key)) {
+      if (this.getManualSubmitKeys().indexOf(event.key) !== -1) {
         this._onManuallyInput(this.state.inputValue);
       } else {
-        this._onNonSubmitKeyPressed();
+        this.showOptions();
       }
     }
   }
