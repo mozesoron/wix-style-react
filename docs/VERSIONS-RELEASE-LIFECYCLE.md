@@ -1,60 +1,70 @@
 # Versions Release Lifecycle
 
 * [Overview](#overview)
-* [TL-DR: How to release a new version](#releasing-a-new-version)
+* [How to release a new version](#how-to-release-a-new-version)
    * [Regular release](#regular-release)
    * [Older version release](#older-version-release)
    * [Special rc version release](#speacial-rc-version-release)
 * [Motivation](#motivation)
-    * [Why semantic versioning](#why-semver)
-    * [Why do we need to maintain multiple versions](#maintain-multiple-versions)
+    * [Why semantic versioning](#why-semantic-versioning)
+    * [Why do we need to maintain multiple versions](#why-do-we-need-to-maintain-multiple-versions)
       * [Maintain older version](#maintain-older-version)
       * [Gradual exposure](#gradual-exposure)
 * [Maintaining a CHANGELOG](#maintaining-a-changelog)
 * [Releasable Branches](#releasable-branches)
 * [Npm dist tags](#npm-dist-tags)
 * [Storybook](#storybook)
-   * [When do we deploy a new storybook](#deploy-storybook)
+   * [When do we deploy a new storybook](#When-do-we-deploy-a-new-storybook)
 * [Eyes](#eyes)
 
 ## Overview
 This document summarizes the best practices of how to manage our versions, with some basic information about how it all happens.
 
-## TL-DR: How to release a new version
+## How to release a new version
+
 ### Regular release
+- Create a new branch from master branch.
 - Make sure the [CHANGELOG](https://github.com/wix/wix-style-react/blob/master/CHANGELOG.md) is updated.
 - Change `package.json` version according to semver rules.
 - Create a pr, wait for the pr build to pass and merge to master.
 - Announce on #wix-style-react slack channel. If there are new components or features worth mentioning, add it to the slack message.
 
- ### Older version release
- - Move to the relevant release branch. If you are creating a new one, make sure to call it `version_*` and configure it as a `protected branch`.
- - Make sure the [CHANGELOG](https://github.com/wix/wix-style-react/blob/master/CHANGELOG.md) is updated.
-- Change `package.json` version according to semver rules.
-- Make sure the `surge-auto-release` command which runs during the `postpublish` step in the `package.json` has the relevant `--ver` flag:
-```
-"scripts": {
-    "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=v<version_num>",
-}
-```
-- Create a pr, wait for the pr build to pass and merge to the relevant version branch.
+### Older version release
+If the branch already exists, there is no need to create it again. Otherwise Lets say that our current latest version is `3` and we want to release a new major version, `4.0.0`.
 
- ### Special rc version release
-- Create a new releasable branch with a name such as `version_*`. For example `version_4.0.0-alpha.x`.
-- Configure it to be a protected branch.
-- Make sure the [CHANGELOG](https://github.com/wix/wix-style-react/blob/master/CHANGELOG.md) is updated.
-- Change `package.json` version according to semver rules. For example `"version": "4.0.0-alpha-1"`
- Make sure the `surge-auto-release` command which runs during the `postpublish` step in the `package.json` has the relevant `--ver` flag:
+- Before releasing the new major version we should create a new release branch for the current version `version_3.x`. This branch must be configured as a [protected branch](https://github.com/wix/wix-style-react/settings/branches).
+-  Update the `surge-auto-release` command which runs during the `postpublish` step in the `package.json` has the relevant `--ver=v3` flag:
 ```
 "scripts": {
-    "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=v<version_num>",
+    "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=v3",
 }
 ```
-- Create a pr, wait for the pr build to pass and merge to the relevant version branch.
+
+When we need to introduce some bug fix to this version branch:
+- Create a new branch from the `version_3.x` branch and name it with the next relevant version, for example: `release/3.1.1`.
+- Make sure the CHANGELOG is updated.
+- Change `package.json` version according to semver rules.
+- Create a pr, wait for the pr build to pass and merge to `version_3.x` branch.
+
+### Speacial rc version release
+Lets say that our current latest version is `4.1.0`, and we wish to introduce some sensitive new feature we call `new-icons`
+When we want to release an rc version to gradualy expose this feature:
+- Create a new release branch `version_new-icons.x`. This branch must be configured as a [protected branch](https://github.com/wix/wix-style-react/settings/branches).
+- Update the `surge-auto-release` command which runs during the `postpublish` step in the `package.json` has the relevant `--ver=new_icons` flag:
+```
+"scripts": {
+    "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static --ver=new_icons",
+}
+```
+
+- Create a new branch from the `version_new-icons.x` branch and name it with the next relevant version, for example: `release/new_icons.1`.
+- Create a pr, wait for the pr build to pass and merge to `version_new-icons.x` branch.
 
 
 ## Motivation
+
 ### Why semantic versioning
+
 wix-style-react is a large infrastucture library which has many projects using it. The library is under a heavy development and often needs to break some API's or styling. It will not be realistic to break the users every time we wish to improve something, and that is where semver helps us.
 Instead of releasing automatically after every commit, we release our package manually with versions which complies with semver rules:
 
@@ -63,7 +73,9 @@ Instead of releasing automatically after every commit, we release our package ma
    - **Patch** version for backwards-compatible bug fixes.
 
 ### Why do we need to maintain multiple versions
+
 #### Maintain older version
+
 When releasing a new major version, it often introduces breaking changes. We can't expect our users to immediately upgrade to the latest version, so we must maintain the older version as well.
 
 Since We have different users using different versions, when we fix an important bug, we might need to introduce this fix in some older supported versions as well.
@@ -94,6 +106,7 @@ For each releasable branch we can create alpha/ betta / rc versions by using the
 We deploy our storybook by using [teamcity-surge-autorelease](https://github.com/wix-private/fed-infra/tree/master/teamcity-surge-autorelease) package.
 
 ### When do we deploy a new storybook
+
 1. Each time master branch is doing `npm publish` in CI, `postpublish` is running and deploying a new storybook to `https://wix-wix-style-react.surge.sh`.
 
 2. Each time some regular branch runs in teamcity-pr, after the build is passing we run the `pr-postbuild` command to deploy the story to `https://wix-wix-style-react-pr-<pr_number>.surge.sh/`.
