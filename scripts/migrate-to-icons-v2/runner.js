@@ -10,12 +10,12 @@ const type = typeArg.split('=')[1];
 const moduleName = 'wix-style-react';
 const pathToModuleRoot = require.resolve(moduleName);
 const pathToModuleFolder = pathToModuleRoot
-    .substr(0, pathToModuleRoot.indexOf(moduleName) + moduleName.length)
+    .substr(0, pathToModuleRoot.indexOf(moduleName) + moduleName.length);
 
 const execProc = exec(`MIGRATION=${type} jscodeshift -t ${pathToModuleFolder}/scripts/migrate-to-icons-v2 ${path}`);
 
-execProc.stdout.on('data', (data) => console.log(data.toString()))
+execProc.stdout.on('data', data => console.log(data.toString()));
 
-execProc.stderr.on('data', (data) => console.log(data.toString()))
+execProc.stderr.on('data', data => console.log(data.toString()));
 
-execProc.on('exit', (code) => console.log('Done with code:', code.toString()))
+execProc.on('exit', code => console.log('Done with code:', code.toString()));

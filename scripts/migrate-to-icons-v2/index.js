@@ -5,7 +5,7 @@ const CYAN = '\x1b[36m';
 const errors = [];
 const migratedIcons = [];
 
-const printDepricationMessage = error => {
+const printDeprecationMessage = error => {
   console.log(RED, error.text);
   console.log(CYAN, 'Problem happen in file', error.where);
   console.log(CYAN, 'On trying to migrate such value', error.fullValue);
@@ -31,13 +31,13 @@ const onTick = ({oldIconName, newIconName, where, fullValue}) => {
 module.exports = (file, api) => {
   const result = transformFile({file, api, onError, onTick});
 
-  console.log(CYAN, '\n', migratedIcons.length, 'icons was migrated, in file', file.path, '\n');
+  console.log(CYAN, '\n', migratedIcons.length, 'icons were migrated, in file', file.path, '\n');
 
   if (errors.length) {
-    console.log(RED, '\n', errors.length, ' icons was not migrated and require your attention: \n');
+    console.log(RED, '\n', errors.length, ' icons were not migrated and require your attention: \n');
   }
 
-  errors.forEach(printDepricationMessage);
+  errors.forEach(printDeprecationMessage);
 
   return result.toSource({quote: 'single'});
 };
