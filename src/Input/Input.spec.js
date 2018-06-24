@@ -610,7 +610,7 @@ describe('Input', () => {
     });
 
     it('should not show counter when hasCounter is not present', () => {
-      const driver = createDriver(<Input/>);
+      const driver = createDriver(<Input value={'abc'} maxLength={30}/>);
       expect(driver.getHasCounter()).toBeFalsy();
     });
   });
