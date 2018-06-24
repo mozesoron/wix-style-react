@@ -1,7 +1,6 @@
 import React from 'react';
 import {string, number, arrayOf, oneOfType, func, any} from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import without from 'lodash/without';
 import createReactContext from 'create-react-context';
 export const BulkSelectionContext = createReactContext();
 
@@ -55,9 +54,9 @@ export class BulkSelection extends React.Component {
 
   toggleAll = enable => {
     if (enable) {
-      this.setSelectedIds({selectedIds: this.props.allIds});
+      this.setSelectedIds(this.props.allIds);
     } else {
-      this.setSelectedIds({selectedIds: []});
+      this.setSelectedIds([]);
     }
   }
 
@@ -77,16 +76,17 @@ export class BulkSelection extends React.Component {
   }
 
   toggleSelectionById = id => {
-    let newSelectedIds;
-    if (this.isSelected(id)) {
-      newSelectedIds = without(this.state.selectedIds, id);
-    } else {
-      newSelectedIds = [...this.state.selectedIds, id];
-    }
-    this.setSelectedIds({selectedIds: newSelectedIds});
+    this.setSelectedIds(
+      this.isSelected(id) ?
+      this.state.selectedIds.filter(_id => _id !== id) :
+      this.state.selectedIds.concat(id)
+    );
   }
 
-  setSelectedIds = ({selectedIds}) => {
+  setSelectedIds = selectedIds => {
+    if (!Array.isArray(selectedIds)) {
+      throw new Error('selectedIds must be an array');
+    }
     this.setState({selectedIds}, () => {
       this.props.onSelectionChanged && this.props.onSelectionChanged(selectedIds.slice());
     });
