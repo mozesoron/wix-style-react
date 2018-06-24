@@ -602,6 +602,18 @@ describe('Input', () => {
       expect(driver.suffixComponentExists('.my-button')).toBeTruthy();
     });
   });
+
+  describe('counter', () => {
+    it('should show correct value when hasCounter and maxLength present', () => {
+      const driver = createDriver(<Input hasCounter maxLength={30} value={'abc'}/>);
+      expect(driver.getCounterValue()).toEqual('3/30');
+    });
+
+    it('should not show counter when hasCounter is not present', () => {
+      const driver = createDriver(<Input/>);
+      expect(driver.getHasCounter()).toBeFalsy();
+    });
+  });
 });
 
 describe('testkit', () => {

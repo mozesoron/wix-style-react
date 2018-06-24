@@ -17,7 +17,8 @@ class Input extends Component {
   static Group = Group;
 
   state = {
-    focus: false
+    focus: false,
+    counter: (this.props.value || this.props.defaultValue || '').length
   };
 
   componentDidMount() {
@@ -74,7 +75,8 @@ class Input extends Component {
       tooltipPlacement,
       onTooltipShow,
       autocomplete,
-      required
+      required,
+      hasCounter
     } = this.props;
 
     const onIconClicked = () => {
@@ -137,6 +139,7 @@ class Input extends Component {
     //https://github.com/wix/wix-style-react/issues/1691
     return (<div className={styles.inputWrapper}>
       {prefix && <div className={styles.prefixSuffixWrapper}><div className={styles.prefix}>{prefix}</div></div>}
+      {hasCounter && maxLength && <span className={styles.counter} data-hook="input-counter">{this.state.counter}/{maxLength}</span>}
 
       { inputElement }
       { visibleSuffixCount > 0 && <div className={styles.prefixSuffixWrapper}><InputSuffix
@@ -214,7 +217,7 @@ class Input extends Component {
     if (this.props.type === 'number' && !(/^[\d.,\-+]*$/.test(e.target.value))) {
       return;
     }
-
+    this.props.hasCounter && this.setState({counter: e.target.value.length});
     this.props.onChange && this.props.onChange(e);
   }
 
@@ -393,6 +396,8 @@ Input.propTypes = {
   tooltipPlacement: PropTypes.string,
   type: PropTypes.string,
   unit: PropTypes.string,
+  /** When true a letters counter will appear */
+  hasCounter: PropTypes.bool,
 
   /** Inputs value */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

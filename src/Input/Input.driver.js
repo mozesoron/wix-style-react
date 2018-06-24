@@ -7,6 +7,7 @@ const inputDriverFactory = ({element, wrapper, component}) => {
   const input = element && element.querySelector('input');
   const clearButton = element && element.querySelector(`.${styles.clearButton}`);
   const suffixNode = element && element.querySelector(`.${styles.suffix}`);
+  const counterSelector = '[data-hook="input-counter"]';
 
   const driver = {
     trigger: (trigger, event) => ReactTestUtils.Simulate[trigger](input, event),
@@ -76,7 +77,9 @@ const inputDriverFactory = ({element, wrapper, component}) => {
     setProps: props => {
       const ClonedWithProps = React.cloneElement(component, Object.assign({}, component.props, props), ...(component.props.children || []));
       ReactDOM.render(<div ref={r => element = r}>{ClonedWithProps}</div>, wrapper);
-    }
+    },
+    getHasCounter: () => !!element.querySelectorAll(counterSelector).length,
+    getCounterValue: () => element.querySelector(counterSelector).textContent
   };
 
   return driver;

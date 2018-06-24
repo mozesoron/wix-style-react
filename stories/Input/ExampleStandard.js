@@ -15,6 +15,7 @@ const Example = ({theme}) =>
     <div className="ltr" style={style}>Focus<Input theme={theme} forceFocus/></div>
     <div className="ltr" style={style}>Hover<Input theme={theme} forceHover/></div>
     <div className="ltr" style={style}>With placeholder<Input theme={theme} placeholder="Search..."/></div>
+    <div className="ltr" style={style}>With Counter<br/><Input theme={theme} hasCounter maxLength="10" placeholder="With Counter.."/></div>
     <div className="ltr" style={style}>Disabled<br/><Input theme={theme} disabled placeholder="disabled"/></div>
     <div className="ltr" style={style}>Disabled with search<br/><Input theme={theme} magnifyingGlass disabled placeholder="disabled with search"/></div>
     { theme === 'amaterial' && <div className="ltr" style={style}><Input title="With Title" placeholder="Placeholder..." theme={theme}/></div>}
