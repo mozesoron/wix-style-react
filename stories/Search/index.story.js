@@ -1,4 +1,8 @@
+import React from 'react';
 import Search from 'wix-style-react/Search';
+import CodeExample from 'wix-storybook-utils/CodeExample';
+import ExpandableExampleRaw from '!raw-loader!./expandable.example';
+import ExpandableSearchExample from './expandable.example';
 
 const createOption = (value, id = 0) => ({id, value});
 
@@ -19,7 +23,7 @@ const options = [
 
 const settings = {
   category: '3. Inputs',
-  storyName: '3.9a Search',
+  storyName: '3.9 Search',
   dataHook: 'storybook-search',
   options
 };
@@ -51,5 +55,14 @@ export default {
       {label: 'One option', value: [createOption('Just me :)')]},
       {label: `${options.length} options`, value: options}
     ]
-  }
+  },
+
+  examples: (
+    <div>
+      <h1>Examples</h1>
+      <CodeExample title="Expandable" code={ExpandableExampleRaw}>
+        <ExpandableSearchExample/>
+      </CodeExample>
+    </div>
+  )
 };

@@ -37,8 +37,7 @@ import '../stories/DatePicker.story.js'; // 3.6 DatePicker
 import '../stories/Range'; // 3.7 Range
 import '../stories/MultiSelect'; // 3.8 Tags
 import '../stories/MultiSelectComposite'; // 3.8 + MultiSelectComposite
-import '../stories/Search/index.story'; // 3.9a Search
-import '../stories/Search/expandable.story'; // 3.9b Search
+import '../stories/Search/index.story'; // 3.9 Search
 import '../stories/ImageViewer'; // 3.10 ImageViewer
 import '../stories/FilePicker'; // 3.10 + FilePicker
 import '../stories/GoogleAddressInput'; // 3.11 GoogleAddressInput
