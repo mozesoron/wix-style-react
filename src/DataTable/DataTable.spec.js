@@ -10,7 +10,7 @@ import {mount} from 'enzyme';
 describe('Table', () => {
   const createDriver = createDriverFactory(dataTableDriverFactory);
 
-  const defaultProps = {
+  const createDefaultProps = () => ({
     id: 'id',
     data: [{a: 'value 1', b: 'value 2'}, {a: 'value 3', b: 'value 4'}],
     columns: [
@@ -19,7 +19,8 @@ describe('Table', () => {
       {title: 'B', render: row => row.b}
     ],
     rowClass: 'class-name'
-  };
+  });
+  const defaultProps = createDefaultProps();
 
   it('should pass id prop to child', () => {
     const driver = createDriver(<DataTable {...defaultProps}/>);
@@ -154,6 +155,25 @@ describe('Table', () => {
     expect(driver.getRowsWithDataHook(rowDataHook)[0].textContent).toBe('0value 1value 2');
     expect(driver.getRowsWithDataHook(rowDataHook)[1].textContent).toBe('1value 3value 4');
     expect(driver.getRowsWithDataHook(rowDataHook).length).toBe(defaultProps.data.length);
+  });
+
+  describe('row keys', () => {
+    it('should assign data.id as row keys', () => {
+      const props = createDefaultProps();
+      props.data[0].id = '000';
+      props.data[1].id = '111';
+      const wrapper = mount(<DataTable {...props}/>);
+      const getRowKey = (wrapper, index) => wrapper.find('tbody tr[data-table-row="dataTableRow"]').at(index).key();
+      expect(getRowKey(wrapper, 0)).toBe('000');
+      expect(getRowKey(wrapper, 1)).toBe('111');
+    });
+
+    it('should use rowIndex as keys', () => {
+      const wrapper = mount(<DataTable {...createDefaultProps()}/>);
+      const getRowKey = (wrapper, index) => wrapper.find('tbody tr[data-table-row="dataTableRow"]').at(index).key();
+      expect(getRowKey(wrapper, 0)).toBe('0');
+      expect(getRowKey(wrapper, 1)).toBe('1');
+    });
   });
 
   it('should assign a dynamic dataHook to rows', () => {

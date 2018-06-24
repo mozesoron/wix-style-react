@@ -37,6 +37,7 @@ const dataTableDriverFactory = ({element, wrapper, component}) => {
     getRowWithDataHook: dataHookName => element.querySelector(`[data-hook="${dataHookName}"]`),
     /** Returns an array representing the text content of the cells in a given row `index`.  */
     getRowText: index => values(getRows()[index].querySelectorAll('td')).map(td => td.textContent),
+    getRowKey: index => getRow(index).getAttribute('key'),
     getRowClasses: index => values(getRows()[index].classList),
     /** Get header cell element: (columnIndex) => Element */
     getHeaderCell,

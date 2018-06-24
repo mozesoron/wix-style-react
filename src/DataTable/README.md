@@ -7,7 +7,7 @@
 | propName | propType | defaultValue | isRequired | description |
 |----------|----------|--------------|------------|-------------|
 | id | string | - | - | An id to pass to the table |
-| data | array | [] | - | The data to display |
+| data | array | [] | - | The data to display. (If data.id exists then it will be used as the React key value for each row, otherwise, the rowIndex will be used) |
 | columns | array | [] | - | Configuration of the table's columns. See table below |
 | showHeaderWhenEmpty | bool | false | - | Should the table show the header when data is empty |
 | rowDataHook | string or func | - | - | A string data-hook to apply to all table body rows. or a func which calculates the data-hook for each row  - Signature: `(rowData, rowNum) => string`|

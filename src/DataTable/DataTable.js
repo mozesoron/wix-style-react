@@ -173,8 +173,9 @@ class DataTable extends WixComponent {
 
     optionalRowProps.className = classNames(rowClasses);
 
+    const key = rowData.id === undefined ? rowNum : rowData.id;
     const rowsToRender = [(
-      <tr data-table-row="dataTableRow" key={rowNum} {...optionalRowProps}>
+      <tr data-table-row="dataTableRow" key={key} {...optionalRowProps}>
         {this.props.columns.map((column, colNum) => this.renderCell(rowData, column, rowNum, colNum))}
       </tr>
     )];
@@ -183,7 +184,7 @@ class DataTable extends WixComponent {
       const showDetails = !!this.state.selectedRows[rowNum];
 
       rowsToRender.push(
-        <tr key={`${rowNum}_details`} className={classNames(this.style.rowDetails)}>
+        <tr key={`${key}_details`} className={classNames(this.style.rowDetails)}>
           <td
             data-hook={`${rowNum}_details`}
             className={classNames(this.style.details, showDetails ? this.style.active : '')}
