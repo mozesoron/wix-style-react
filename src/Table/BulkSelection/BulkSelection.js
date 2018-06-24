@@ -2,7 +2,6 @@ import React from 'react';
 import {string, number, arrayOf, oneOfType, func, any} from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import without from 'lodash/without';
-import defaultTo from 'lodash/defaultTo';
 import createReactContext from 'create-react-context';
 export const BulkSelectionContext = createReactContext();
 
@@ -25,7 +24,7 @@ export class BulkSelection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedIds: defaultTo(props.selectedIds, [])
+      selectedIds: (props.selectedIds || []).slice()
     };
   }
 
