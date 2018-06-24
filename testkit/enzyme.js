@@ -66,6 +66,9 @@ export const textLinkLayoutTestkitFactory = enzymeTestkitFactoryCreator(textLink
 import dataTableDriverFactory from '../src/DataTable/DataTable.driver';
 export const dataTableTestkitFactory = enzymeTestkitFactoryCreator(dataTableDriverFactory);
 
+import tableDriverFactory from '../src/Table/Table.driver';
+export const tableTestkitFactory = enzymeTestkitFactoryCreator(tableDriverFactory);
+
 import textAreaDriverFactory from '../src/TextArea/TextArea.driver';
 export const textAreaTestkitFactory = enzymeTestkitFactoryCreator(textAreaDriverFactory);
 
@@ -138,6 +141,9 @@ export const timeInputTestkitFactory = enzymeTestkitFactoryCreator(timeInputDriv
 import sliderDriverFactory from '../src/Slider/Slider.driver';
 export const sliderTestkitFactory = enzymeTestkitFactoryCreator(sliderDriverFactory);
 
+import addItemDriverFactory from '../src/AddItem/AddItem.driver';
+export const addItemTestkitFactory = enzymeTestkitFactoryCreator(addItemDriverFactory);
+
 import imageViewerDriverFactory from '../src/ImageViewer/ImageViewer.driver';
 export const imageViewerTestkitFactory = enzymeTestkitFactoryCreator(imageViewerDriverFactory);
 
@@ -204,5 +210,6 @@ export {
   toggleSwitchTestkitFactory,
   textTestkitFactory,
   labelTestkitFactory,
-  floatingHelperTestkitFactory
+  floatingHelperTestkitFactory,
+  linearProgressBarTestkitFactory
 } from 'wix-ui-backoffice/dist/src/testkit/enzyme';

@@ -50,7 +50,13 @@ export default class ColorPickerConverter extends WixComponent {
 
     return (
       <div>
-        <Tabs items={tabs} activeId={activeTab} onClick={this.changeTab}/>
+        <Tabs
+          minWidth={0}
+          items={tabs}
+          activeId={activeTab}
+          type="uniformFull"
+          onClick={this.changeTab}
+          />
         {activeTab === HEX && <ColorPickerConverterHex current={current} onChange={this.props.onChange}/>}
         {activeTab === RGB && <ColorPickerConverterRgb current={current} onChange={this.props.onChange}/>}
         {activeTab === HSB && <ColorPickerConverterHsb current={current} onChange={this.props.onChange}/>}

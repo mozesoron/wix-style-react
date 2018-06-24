@@ -7,6 +7,8 @@ import Checkbox from './Checkbox';
 import {checkboxTestkitFactory as enzymeCheckboxTestkitFactory} from '../../testkit/enzyme';
 import {mount} from 'enzyme';
 
+const cachedConsoleWarn = global.console.warn;
+
 describe('Checkbox', () => {
   const createDriver = createDriverFactory(checkboxDriverFactory);
 
@@ -60,6 +62,30 @@ describe('Checkbox', () => {
     const driver = createDriver(<Checkbox indeterminate/>);
 
     expect(driver.isIndeterminate()).toBeTruthy();
+  });
+
+  it('should warn with deprecation warning, if size === "large" passed', () => {
+    const cachedConsoleError = global.console.error;
+    global.console.warn = jest.fn();
+    global.console.error = jest.fn();
+    createDriver(<Checkbox size="large"/>);
+    expect(global.console.warn).toBeCalledWith('Warning: Checkbox prop "size" with value "large" is deprecated and will be removed in next major release, please use "medium" size instead');
+    global.console.warn = cachedConsoleWarn;
+    global.console.error = cachedConsoleError;
+  });
+
+  it('should warn with deprecation warning, if active prop passed', () => {
+    global.console.warn = jest.fn();
+    createDriver(<Checkbox active/>);
+    expect(global.console.warn).toBeCalledWith('Warning: Checkbox prop "active" is deprecated, use "checked" prop instead');
+    global.console.warn = cachedConsoleWarn;
+  });
+
+  it('should not warn with deprecation warning, if no size', () => {
+    global.console.warn = jest.fn();
+    createDriver(<Checkbox/>);
+    expect(global.console.warn).not.toBeCalled();
+    global.console.warn = cachedConsoleWarn;
   });
 
   describe('testkit', () => {

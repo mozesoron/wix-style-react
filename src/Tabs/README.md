@@ -10,6 +10,7 @@
 | activeId | string or number | - | - | Id of active tab |
 | type | string ('compact', 'uniformSide', 'uniformFull') | - | - | Tabs type |
 | width | string or number | - | - | Set tab width (only for uniformSide type) |
+| minWidth | string or number | - | - | Override tabs minWidth |
 | hasDivider | bool | true | - | Controls whether grey divider is visible |
 
 ## Item

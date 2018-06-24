@@ -9,6 +9,9 @@ export const inputAreaTestkitFactory = testkitFactoryCreator(inputAreaDriverFact
 import tooltipDriverFactory from '../src/Tooltip/Tooltip.driver';
 export const tooltipTestkitFactory = testkitFactoryCreator(tooltipDriverFactory);
 
+import addItemDriverFactory from '../src/AddItem/AddItem.driver';
+export const addItemTestkitFactory = testkitFactoryCreator(addItemDriverFactory);
+
 import backofficeTooltipDriverFactory from '../src/Backoffice/Tooltip/Tooltip.driver';
 export const backofficeTooltipTestkitFactory = testkitFactoryCreator(backofficeTooltipDriverFactory);
 
@@ -65,6 +68,9 @@ export const textLinkLayoutTestkitFactory = testkitFactoryCreator(textLinkLayout
 
 import dataTableDriverFactory from '../src/DataTable/DataTable.driver';
 export const dataTableTestkitFactory = testkitFactoryCreator(dataTableDriverFactory);
+
+import tableDriverFactory from '../src/Table/Table.driver';
+export const tableTestkitFactory = testkitFactoryCreator(tableDriverFactory);
 
 import textAreaDriverFactory from '../src/TextArea/TextArea.driver';
 export const textAreaTestkitFactory = testkitFactoryCreator(textAreaDriverFactory);
@@ -207,5 +213,6 @@ export {
   toggleSwitchTestkitFactory,
   textTestkitFactory,
   labelTestkitFactory,
-  floatingHelperTestkitFactory
+  floatingHelperTestkitFactory,
+  linearProgressBarTestkitFactory
 } from 'wix-ui-backoffice/dist/src/testkit';

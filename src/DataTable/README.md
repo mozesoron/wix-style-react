@@ -25,26 +25,28 @@
 | loader | node | Loading ...| - | The loader to show when loading more items. |
 | useWindow | boolean | true | - | Add scroll listeners to the window, or else, the component's parentNode. |
 | scrollElement | DOM Object | - | - | Add scroll listeners to specified DOM Object. |
-| thPadding | string | '5px' | - | Table headers padding |
-| thHeight | string | '36px' | - | Table headers height |
-| thFontSize | string | '12px' | - | Table headers font size |
-| thBorder | string | '1px' | - | Table headers border |
-| thColor | string | '#123456' | - | Table headers color |
-| thOpacity | string | '0.8' | - | Table headers opacity |
+| rowVerticalPadding | string | 'medium' | - | Table cell vertical padding. should be 'medium' or 'large' |
+| thPadding | string | - | - | *Deprecated* Table headers padding |
+| thHeight | string | - | - | *Deprecated* Table headers height |
+| thFontSize | string | - | - | *Deprecated* Table headers font size |
+| thBorder | string | - | - | *Deprecated* Table headers border |
+| thColor | string | - | - | *Deprecated* Table headers color |
+| thOpacity | string | - | - | *Deprecated* Table headers opacity |
 | thLetterSpacing | string | '1.5px' | - | Table headers letter spacing |
 | rowDetails | func | - | - | Function that returns React component that will be rendered in row details section. Example: `rowDetails={(row, rowNum) => <MyRowDetailsComponent {...row} />}` |
 | allowMultiDetailsExpansion | boolean | false | - | Allows to open multiple row details |
 | onSortClick | func | - | - | A callback function called on each column title click. Signature `onSortClick(colData, colNum)` |
+| newDesign | boolean | false | - | A flag specifying weather to apply the new layout/design update. Default will change to true in the next major release (version 5.0.0)|
 
 ### Column object props
 
 | propName | propType | defaultValue | isRequired | description |
 |----------|----------|--------------|------------|-------------|
 | title | string or node | - | true | A string or any element, the column's header title  |
-| render | func | - | true | A function to render column cells. The function will be called with each row's data and should return a jsx element. Signature: `render(rowData, rowNum)` |
+| render | function | - | true | A function to render column cells. The function will be called with each row's data and should return a jsx element. Signature: `render(rowData, rowNum)` |
 | width | string | - | - | The width to apply to the column. No value means column will try to contain its children, if possible |
 | important | bool | false | - | Whether font color should be stronger, more dominant |
 | sortable | bool | false | - | Enables sorting by column |
 | sortDescending | bool | - | - | Pass false - for ascending sort, true - for descending|
-| style | object | - | - | Sets the column inline style |
+| style | object | - | - | Sets the column inline style. Vertical padding cannot be set here, please use table rowVerticalPadding  |
 | infoTooltipProps | object | - | - | Props object for [tooltip](https://wix-wix-style-react.surge.sh/?selectedKind=7.%20Tooltips&selectedStory=7.1.%20Tooltip&full=0&addons=0&stories=1&panelRight=0). Note: dataHook, moveBy and children will not be passed to tooltip. |

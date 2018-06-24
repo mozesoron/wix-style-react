@@ -79,7 +79,7 @@ $marginLeft: $paddingLeft;
   .isEditorFocused & {
     @include FocusBox;
   }
-  
+
   .isEditorFocused.withError & {
     @include FocusBoxError;
   }
@@ -125,7 +125,7 @@ $marginLeft: $paddingLeft;
     display: flex;
     position: absolute;
     top: 6px;
-    right: 6px;
+    right: 12px;
 
     &:hover {
       background-color: $R10;

@@ -71,15 +71,16 @@ class InputWithTags extends React.Component {
       'fixedFooter',
       'dataHook',
       'onFocus',
+      'withSelection',
       'onBlur',
       'onInputClicked'], inputProps);
     const fontSize = (desiredProps.size && desiredProps.size === 'small') ? '14px' : '16px';
 
     let rowMultiplier;
     if (tags.length && tags[0].size === 'large') {
-      rowMultiplier = 48;
+      rowMultiplier = 47;
     } else {
-      rowMultiplier = 36;
+      rowMultiplier = 35;
     }
     const maxHeight = this.props.maxHeight || this.props.maxNumRows * rowMultiplier || 'initial';
 
@@ -113,6 +114,7 @@ class InputWithTags extends React.Component {
                 desiredProps.onChange && desiredProps.onChange(e);
               }
             }}
+            withSelection
             />
         </span>
       </div>

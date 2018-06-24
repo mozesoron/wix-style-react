@@ -53,7 +53,7 @@ class GoogleAddressInput extends React.Component {
     } = this.state;
 
     const options = [
-      ...suggestions.map(({description}, id) => ({id, value: description})),
+      ...suggestions.map(({description, id}) => ({id, value: description})),
 
       ...(
         this.props.footer ?

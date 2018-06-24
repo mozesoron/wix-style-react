@@ -31,6 +31,5 @@ describe('MultiSelect', () => {
       }).then(height => {
         expect(height).toBe(ELEMENT_HEIGHT_SINGLE_LINE);
       });
-  });
-
+  }, {version: '<Input/> - On text click - select all'});
 });

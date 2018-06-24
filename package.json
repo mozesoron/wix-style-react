@@ -1,7 +1,7 @@
 {
   "name": "wix-style-react",
   "description": "wix-style-react",
-  "version": "4.1.3",
+  "version": "4.3.0",
   "main": "./dist/src/index.js",
   "files": [
     "dist",
@@ -20,9 +20,9 @@
     "test:e2e": "concurrently 'npm run test:e2e-only' 'node scripts/e2e-server.js' --names 'protractor,e2e-server' --success first --kill-others",
     "test:e2e-only": "NODE_ENV=production yoshi test --protractor",
     "build": "npm run lint && svg2react-icon && yoshi build && build-storybook && npm run export-components",
-    "pr-postbuild": "teamcity-surge-autorelease --dist=storybook-static",
+    "pr-postbuild": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static",
     "storybook": "start-storybook -p 6006",
-    "postpublish": "teamcity-surge-autorelease --dist=storybook-static",
+    "postpublish": "npx teamcity-surge-autorelease@^1.0.0 --dist=storybook-static",
     "export-components": "import-path --path src",
     "lint": "yoshi lint"
   },
@@ -84,7 +84,7 @@
     "sinon": "^1.17.6",
     "svg2react-icon": "^1.0.0",
     "wait-for-cond": "^1.0.3",
-    "wix-storybook-utils": "^1.0.0",
+    "wix-storybook-utils": "^2.0.0",
     "yoshi": "^2.8.3"
   },
   "peerDependencies": {
@@ -123,12 +123,9 @@
     "react-transition-group": "^2.2.1",
     "slate": "^0.20.3",
     "wix-animations": "^1.0.141",
-    "wix-ui-backoffice": "1.0.253",
+    "wix-ui-backoffice": "1.0.260",
     "wix-ui-icons-common": "1.0.39",
     "wix-ui-test-utils": "^1.0.0"
-  },
-  "optionalDependencies": {
-    "teamcity-surge-autorelease": "^1.0.3"
   },
   "jest": {
     "setupFiles": [

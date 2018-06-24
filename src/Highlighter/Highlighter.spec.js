@@ -104,6 +104,42 @@ describe('Highlighter', () => {
     expect(wrapper.html()).toEqual(expectedResult);
   });
 
+  it('should save styles of children', () => {
+    const expectedResult = `<div class="option-class"><div><span><span>Arizona</span></span></div><div class="some-class"></div></div>`;
+
+    const wrapper = createDriver(
+      <Highlighter match="p">
+        <div className="option-class">
+          <div>Arizona</div>
+          <div className="some-class"/>
+        </div>
+      </Highlighter>
+    );
+
+    expect(wrapper.html()).toEqual(expectedResult);
+  });
+
+  it('should save dom structure of children', () => {
+    const expectedResult = `<div class="option-class"><div><span><span><span><span>Arizona</span></span></span></span></div><div class="some-class"><div class="some-class-2"></div></div></div>`;
+
+    const wrapper = createDriver(
+      <Highlighter match="p">
+        <div className="option-class">
+          <div>
+            <span>
+              <span>Arizona</span>
+            </span>
+          </div>
+          <div className="some-class">
+            <div className="some-class-2"/>
+          </div>
+        </div>
+      </Highlighter>
+    );
+
+    expect(wrapper.html()).toEqual(expectedResult);
+  });
+
   describe('testkit', () => {
     it('should exist', () => {
       expect(isTestkitExists(<Highlighter/>, highlighterTestkitFactory)).toBe(true);

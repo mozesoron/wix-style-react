@@ -10,97 +10,71 @@ import PropTypes from 'prop-types';
  * with strong dom element.
  * It remains children element structure.
  */
+
+const childKeyGenerator = () => {
+  let childKey = 0;
+  return () => `highlighted-child-${childKey++}`;
+};
+
+const ELEM_TYPES = {
+  STRING: 'string',
+  ARRAY: 'array',
+  REACT_ELEMENT: 'React_element'
+};
+
+const getElementType = element => {
+  if (Array.isArray(element)) {
+    return ELEM_TYPES.ARRAY;
+  }
+  if (React.isValidElement(element)) {
+    return ELEM_TYPES.REACT_ELEMENT;
+  }
+  if (typeof element === 'string') {
+    return ELEM_TYPES.STRING;
+  }
+
+  return '';
+};
+
+const highlight = (element, match, nextChildKey) => {
+  if (!element) {
+    return null;
+  }
+  const elementType = getElementType(element);
+  const elementTypesMap = {
+    [ELEM_TYPES.STRING]: (elem, match) => (<HighlightedItem key={nextChildKey()} match={match}>{elem}</HighlightedItem>),
+    [ELEM_TYPES.REACT_ELEMENT]: elem => {
+      if (elem.props.children) {
+        return React.cloneElement(
+          elem,
+          {...elem.props, key: nextChildKey()},
+          highlight(elem.props.children, match, nextChildKey)
+        );
+      }
+      return elem;
+    },
+    [ELEM_TYPES.ARRAY]: elem => elem.map(el => highlight(el, match, nextChildKey))
+  };
+
+  return elementTypesMap[elementType] ? elementTypesMap[elementType](element, match) : element;
+};
+
 class Highlighter extends WixComponent {
   static propTypes = {
     /** match to highlight */
     match: PropTypes.string
   };
 
-  _reactKey = 0;
-  _CHILD_TYPES = {
-    STRING: 'string',
-    ARRAY: 'array',
-    REACT_ELEMENT: 'React_element'
-  };
-
-  _isReactElement(element) {
-    return element.props !== undefined;
-  }
-
-  _renderHighlightItem(element, reactKey) {
-    return (
-      <HighlightedItem
-        match={this.props.match}
-        key={`highlighted-child${reactKey}`}
-        >
-        { element }
-      </HighlightedItem>
-    );
-  }
-
-  _renderArrayOfChildren(element, parent) {
-    return element.map(child => {
-      this._reactKey += 1;
-
-      if (this._isReactElement(child)) {
-        return this._highlight(child.props.children, child);
-      }
-
-      return this._highlight(child, parent);
-    });
-  }
-
-  _getElementType(element) {
-    let type = '';
-
-    if (Array.isArray(element)) {
-      type = this._CHILD_TYPES.ARRAY;
-    } else if (this._isReactElement(element)) {
-      type = this._CHILD_TYPES.REACT_ELEMENT;
-    } else if (typeof element === 'string') {
-      type = this._CHILD_TYPES.STRING;
-    }
-
-    return type;
-  }
-
-  _highlight(element, parent) {
-    switch (this._getElementType(element)) {
-      case this._CHILD_TYPES.STRING: {
-        this._reactKey += 1;
-
-        if (parent) {
-          return React.cloneElement(
-            parent,
-            Object.assign({}, parent.props),
-            this._renderHighlightItem(element, this._reactKey)
-          );
-        }
-
-        return this._renderHighlightItem(element, this._reactKey);
-      }
-      case this._CHILD_TYPES.REACT_ELEMENT: {
-        if (parent) {
-          return React.cloneElement(
-            parent,
-            Object.assign({}, {key: `highlighted-child${this._reactKey}`}, parent.props),
-            this._highlight(element.props.children, element)
-          );
-        }
-
-        return this._highlight(element.props.children, element);
-      }
-      case this._CHILD_TYPES.ARRAY:
-        return this._renderArrayOfChildren(element, parent);
-      default:
-        return;
-    }
+  constructor() {
+    super();
+    // we want to create new react keys generator for instance of highlighter
+    this.nextChildKey = childKeyGenerator();
   }
 
   render() {
     return (
       <span>
-        {this.props.children && this._highlight(this.props.children)}
+        {highlight(this.props.children, this.props.match, this.nextChildKey)}
       </span>
     );
   }

@@ -60,7 +60,12 @@ export default class ColorPickerHsb extends WixComponent {
       top: `${100 - current.value()}%`
     };
     return (
-      <div className={css.root} ref={e => this.gradient = e} onMouseDown={this.onMarkerDragStart}>
+      <div
+        className={css.root}
+        data-hook="color-picker-hsb"
+        ref={e => this.gradient = e}
+        onMouseDown={this.onMarkerDragStart}
+        >
         <div className={css.hue} style={{background: hue.hex()}}/>
         <div className={css.saturation}/>
         <div className={css.brightness}/>

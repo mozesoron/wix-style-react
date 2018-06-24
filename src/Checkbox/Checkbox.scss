@@ -4,7 +4,7 @@
 .root {
   display: inline-block;
   outline: none;
-  
+
   label {
     display: flex;
     cursor: pointer;
@@ -16,14 +16,14 @@
     .checkbox {
       @include FocusBox;
     }
-  
-    &.hasError {  
+
+    &.hasError {
       .checkbox {
         @include FocusBoxError;
-      } 
+      }
     }
   }
-  
+
 }
 
 .children {
@@ -51,6 +51,7 @@
   box-sizing: border-box;
 }
 
+/* TODO remove .large in next major version */
 .large {
   width: 20px;
   height: 20px;

@@ -63,3 +63,19 @@ open localhost:6006
     * `wix-style-react/testkit/index.js`
     * `wix-style-react/testkit/enzyme.js`
     * `wix-style-react/testkit/protractor.js`
+
+## Writing test drivers
+* drivers should be a good way to inteact with the component when testing and do one of the following:
+  * make a side effect (click)
+  * retrieve some data (some value / is checked)
+  * another component driver to interact with (an autocomplete the uses an input can return the input driver)
+* drivers should test the behavior and not test React, so do query for props but values.
+* use `data-hook`s to query for elements in the DOM.
+* enzyme / vanilla drivers should be written without any enzyme related functionality, they should stay pure vanilla dom manipulation.
+* Each test has sanity check for testkit and should use the `isTestkitExists` and `isEnzymeTestkitExists`.
+* notes regarding existing drivers:
+  * Do not use the `setProps` method. this function will not work for the consumer of this driver.
+  * Support `exists()` method also when the result should be false. for example, syntax like `element.childNodes[0]` should be more safe: `if (element) { element.childNodes[0] }...`
+
+
+  

@@ -46,10 +46,25 @@ export default {
   },
 
   exampleProps: {
-    backgroundImageUrl: [
-      '',
-      'https://static.wixstatic.com/media/f0548921c53940ec803dfb1c203e96fe.jpg/v1/fill/w_400,h_100/f0548921c53940ec803dfb1c203e96fe.jpg'
+    children: [
+      {
+        label: 'header, tail & content',
+        value: [header(Breadcrumbs), tail, content(false)]
+      },
+      {
+        label: 'header & content',
+        value: [header(Breadcrumbs), content(false)]
+      },
+      {
+        label: 'just content',
+        value: [content(false)]
+      }
     ],
-    gradientClassName: ['', 'background-gradient']
+    backgroundImageUrl: [
+      {
+        label: 'https://some-host.com/image-path.jpg',
+        value: 'https://static.wixstatic.com/media/f0548921c53940ec803dfb1c203e96fe.jpg/v1/fill/w_400,h_100/f0548921c53940ec803dfb1c203e96fe.jpg'
+      }
+    ]
   }
 };

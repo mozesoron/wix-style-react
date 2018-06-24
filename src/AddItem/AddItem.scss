@@ -1,0 +1,57 @@
+@import '../common';
+@import '../mixins/layout';
+
+.container {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background-color: $B50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .2s linear;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 12px;
+  // This fixes animation bug when border radius doesn't affect on animation
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+
+  &:hover {
+    background-color: $B40;
+  }
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  
+  &.ratio16x9 {
+    @include aspect-ratio(16, 9);
+  }
+  &.ratio4x3 {
+    @include aspect-ratio(4, 3);
+  }
+  &.ratio3x4 {
+    @include aspect-ratio(3, 4);
+  }
+  &.ratio1x1 {
+    @include aspect-ratio(1, 1);
+  }
+}
+
+.dashed-border {
+  border: dashed 1px $B20;
+  border-radius: 3px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus-icon {
+  color: $B10;
+}

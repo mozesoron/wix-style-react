@@ -22,9 +22,10 @@ const dataTableDriverFactory = ({element, wrapper, component}) => {
   const getRow = rowIndex => getRows()[rowIndex];
   const getCell = (rowIndex, cellIndex) => getRow(rowIndex).querySelectorAll('td')[cellIndex];
   const getRowDetails = index => element.querySelector(`tbody tr td[data-hook="${index}_details"]`);
-  const getHeaderTitleByIndex = index => getHeader().querySelectorAll('th')[index];
+  const getHeaderCell = index => getHeader().querySelectorAll('th')[index];
   const getSortableTitle = index => element.querySelector(`th [data-hook="${index}_title"]`);
   const getTitleInfoIcon = index => element.querySelector(`th [data-hook="${index}_info_tooltip"]`);
+  const getSortableTitleArrowDesc = index => element.querySelector(`th [data-hook="${index}_title"]  [data-hook="sort_arrow_dec"]`);
 
   return {
     getRowsCount,
@@ -34,10 +35,15 @@ const dataTableDriverFactory = ({element, wrapper, component}) => {
     },
     getRowsWithDataHook: dataHookName => element.querySelectorAll(`[data-hook="${dataHookName}"]`),
     getRowWithDataHook: dataHookName => element.querySelector(`[data-hook="${dataHookName}"]`),
+    /** Returns an array representing the text content of the cells in a given row `index`.  */
     getRowText: index => values(getRows()[index].querySelectorAll('td')).map(td => td.textContent),
     getRowClasses: index => values(getRows()[index].classList),
-    getHeaderCellStyle: index => getHeaderTitleByIndex(index).style,
-    getHeaderCellWidth: index => getHeaderTitleByIndex(index).style.width,
+    /** Get header cell element: (columnIndex) => Element */
+    getHeaderCell,
+    getHeaderCellStyle: index => getHeaderCell(index).style,
+    getHeaderCellWidth: index => getHeaderCell(index).style.width,
+    /** Get cell element: (rowIndex, columnIndex) => Element */
+    getCell,
     getCellStyle: (rowIndex, colIndex) => getCell(rowIndex, colIndex).style,
     getCellWidth: (rowIndex, colIndex) => getCell(rowIndex, colIndex).width,
     isRowClickable: index => getRows()[index].classList.contains('clickableDataRow'),
@@ -58,13 +64,13 @@ const dataTableDriverFactory = ({element, wrapper, component}) => {
     getRowDetailsText: index => getRowDetails(index).textContent,
     hasSortableTitle: index => !!getSortableTitle(index),
     hasInfoIcon: index => !!getTitleInfoIcon(index),
+    hasNewSortDescending: index => !!getSortableTitleArrowDesc(index),
     hasSortDescending: index => {
       const sortableTitle = getSortableTitle(index);
       return !!sortableTitle && sortableTitle.classList.contains('sortArrowAsc');
     },
-    clickSort: (index, eventData) => ReactTestUtils.Simulate.click(getHeaderTitleByIndex(index), eventData),
+    clickSort: (index, eventData) => ReactTestUtils.Simulate.click(getHeaderCell(index), eventData),
     getRowDetails: index => getRowDetails(index)
-
   };
 };
 

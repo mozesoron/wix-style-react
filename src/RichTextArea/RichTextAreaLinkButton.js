@@ -30,6 +30,7 @@ class RichTextAreaLinkButton extends Component {
 
   getTooltipContent = isSelectionExpanded => (
     <RichTextAreaLinkForm
+      selection={this.props.selection}
       onSubmit={this.handleFormSubmit}
       onCancel={this.hideForm}
       isTextInputVisible={isSelectionExpanded}
@@ -68,6 +69,7 @@ class RichTextAreaLinkButton extends Component {
 }
 
 RichTextAreaLinkButton.propTypes = {
+  selection: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   isActive: PropTypes.bool,
   disabled: PropTypes.bool,

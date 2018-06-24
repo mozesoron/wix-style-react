@@ -6,12 +6,12 @@ It is rendered with [Storybook](https://storybook.js.org).
 
 ## Story
 
-**story** is a term we use to describe single page which contains all documentation about component. For
-instance, [this page with `<ToggleSwitch/>`](https://github.com/wix/wix-style-react/blob/master/stories/ToggleSwitch.story.js) is a story.
+**story** is a term we use to describe single page which contains all documentation about component.
+These pages can be done manually or automatically. To do it automatically, a small configuration is required.
 
-All of what you see in the aforementioned link is generated automatically from component source. The code examples, the list of props, the preview, all of it is done so you don't have to.
+Here's an [example of `<RadioGroup/>` story configuration](https://github.com/wix/wix-style-react/blob/master/stories/RadioGroup.story.js).
 
-All you need is a little configuration.
+What you see in that link is generated from component source: props list, preview area and code examples.
 
 ## Creating a story
 
@@ -20,22 +20,28 @@ and renders it. In order for loader to know what/how to document component, you 
 
 ## Short example
 
-Let's look again at [`<ToggleSwitch/>` story page](https://github.com/wix/wix-style-react/blob/master/stories/ToggleSwitch.story.js):
-
 ```js
-import ToggleSwitch from 'wix-style-react/ToggleSwitch'; // 1.
+import RadioGroup from 'wix-style-react/RadioGroup'; // 1
 
-export default { // 2.
-  category: '4. Selection', // 3.
-  storyName: '4.4 ToggleSwitch', // 4.
+export default { // 2
+  category: '4. Selection', // 3
+  storyName: '4.3 Radio Button Group', // 4
+  component: RadioGroup, // 5
+  componentPath: '../src/RadioGroup', // 6
 
-  component: ToggleSwitch, // 5.
-  componentPath: '../src/ToggleSwitch', // 6.
+  componentProps: setState => ({ // 7
+    value: 1,
+    hasError: false,
+    size: 'medium',
+    children: exampleChildren[0].value,
+    onChange: value => setState({value}),
+    dataHook: 'storybook-radiogroup'
+  }),
 
-  componentProps: (setState, getState) => ({ // 7.
-    onChange: () => setState({checked: !getState().checked}),
-    dataHook: 'storybook-toggleswitch'
-  })
+  exampleProps: { // 8
+    children: exampleChildren,
+    onChange: value => value
+  }
 };
 ```
 
@@ -46,8 +52,37 @@ export default { // 2.
 1. `component` a reference to component which is to be documented
 1. `componentPath` a path to component. This is for parser to know where to start parsing your component
 1. `componentProps` an object (or function returning object) which outlines props to be given to `5.` - a component
+1. `exampleProps` **optional** object of the same shape as component props used to configure possible prop values (explained below)
 
-## Full API (long example)
+## Long example
+
+### Readme files
+
+Your component may have documentation written in markdown. Markdown
+files should stay alongside component source, for example:
+
+```md
+  Component
+  ├── index.js // entry file
+  ├── Component.js // source of component
+  ├── README.md // will be shown at the top of story page. make sure it includes a nice title
+  ├── README.ACCESSIBILITY.md // will appear as separate `Accessibility` tab
+  └── README.TESTKIT.md // will appear as separate `Testkit` tab
+```
+
+### Props categories
+
+Interactive props list is split into sections:
+1. **Primary Props** - props set in `componentProps` or `exampleProps` get here;
+1. **Callback Props** - props that start with `on`, like `onClick`;
+1. **HTML Props** - props like `tabIndex` or `href` and alike
+1. **Accessibility** - props that start with `aria` like `ariaRequired`
+1. **Misc. props** - props that don't fit any other category
+
+if some prop should be under **Primary Props** but it's not, simply define it in
+`componentProps` or `exampleProps`.
+
+### Full API
 
 Scaffold:
 
@@ -55,17 +90,11 @@ Scaffold:
 // MyStory.story.js
 
 export default {
-  // config
+  category: '',
+  component: '',
+  componentPath: ''
 }
 ```
-
-### README
-
-If a `README.md` file is present alongside the component's source, then it will be displayed at the top of the Usage tab (Instead of the automatic component name title, so you need to add a Title in the README)
-
-
-### Story Configuration Properties
----
 
 #### `category` - `string` required
 
@@ -77,7 +106,6 @@ Name of Storybook "section" under which this story will be placed (e.g. `Core`, 
 
 Name of the story in sidebar. If omitted, it will use `displayName` of
 the component.
-
 
 ---
 
@@ -114,7 +142,7 @@ export default {
 }
 ```
 
-NOTE: when proxing a component to another library (e.g WSR->WUB), then please give the path through the `node_modules` to the original source file.
+NOTE: when proxying component from another library (e.g. wix-ui-backoffice -> wix-style-react), give path using `node_modules` to original source file.
 
 ---
 
@@ -127,19 +155,22 @@ When supplied, then it overwrites the automatic import statement.
 
 #### `displayName` - `string`
 
-An override for the component's displayName.
+use this string as components displayName. There may be a case when
+parsed displayName is incorrect (for example some HOC changed it).
 
 ---
+
 #### `componentProps` - `object` or `function`
 
-Props that will be passed to `component`. Either given as-is with `object` or computed in `function`.
-Imagine it as `<Component {...componentProps}/>`. Here you can set any required props.
+Props that will be passed to `component`. Either given as-is with
+`object` or computed in `function`. Imagine it as `<Component
+{...componentProps}/>`. This is the place to set required props.
 
- * when `object`, it will be passed to `component` as props.
- * when `function`, its signature is `(setState, getState) => props` where:
-   * `setState` - `function`: accepts one argument - object. When called this object will be set as `componentProps`
-   * `getState` - `function`: does not accept anything. When called it will return an object containing currently used props
-   * `props` - return value `object`: whatever is returned will be used as new `componentProps`
+* when `object`, it will be passed to `component` as props.
+* when `function`, its signature is `(setState, getState) => props` where:
+  * `setState` - `function`: accepts one argument - object. When called this object will be set as `componentProps`
+  * `getState` - `function`: does not accept anything. When called it will return an object containing currently used props
+  * `props` - return value `object`: whatever is returned will be used as new `componentProps`
 
 For example:
 
@@ -211,10 +242,29 @@ hardcoded string of import example
 
 #### `exampleProps` - `object`
 
-exampleProps is an object who's keys are prop names, and their values are either: 
-- a list of possible values
-- a function
-##### An example using a list value:
+`exampleProps` is an optional object of same shape as `componentProps`.
+It's purpose is to configure how interactive props in storybook are displayed.
+
+automated process tries to derive how a prop is controlled from it's
+type (e.g. a boolean prop is controlled with `<ToggleSwitch/>`, a string with `<Input/>` etc.)
+
+however, it's not always possible to derive controller from prop type
+and in those cases you are able to configure it manually:
+
+```js
+exampleProps: {
+  children: ['a', 'list', 'of', 'possible', 'children']
+}
+```
+
+the above would show `children` prop with a dropdown.
+
+Below are possible ways to set `exampleProps`
+
+##### Using list
+
+this will create a dropdown for `placement` prop with `bottom`,`top`,`right` & `left` options
+
 ```js
 export default {
   // ... other config
@@ -223,35 +273,47 @@ export default {
   }
 }
 ```
-In this example the story's Props section (which is interactive) will include a 'placement' props with a Radio-Selection (or Dropdown selection) for the `placement` values.
 
-##### An example using a function value:
-```js
-export default {
-  // ... other config
-  exampleProps: {
-    onClick: ()=>{/** see interactive preview */})
-  }
-}
-```
-In this example auto-docs will create an interactive prop value text which will "glow" when the callback is called.
+##### Using list of objects
 
-##### Initial value
-Initialy, the rendered Preview is rendered with the props in `componentProps`, and the `placement` selection would be unselected.
+objects are of `{label, value}` shape. They are useful when example
+value can't be represented as string (for example if value is a component or a function)
 
-##### Moreover
-`exampleProps` is mostly useful when the prop values have more complex types like functions or ReactNode. For example, you can use it with the children prop:
 ```js
 export default {
   // ... other config
   exampleProps: {
     children: [
-      'hello',
-      <span>Another hello</span>,
-      <div onClick={() => console.log('you clicked me!')}>yet another hello</div>
+      { label: 'just a string', value: 'hello' },
+      { label: 'simple component', value: <div>hello</div> },
+      { label: 'another component', value: <MaybeImportedComponent/> },
+      {
+        label: 'nested components',
+        value: (
+          <div>
+            <SomeComponent/>
+            <SomeOtherComponent/>
+          </div>
+        )
+      },
     ]
   }
 }
 ```
 
-For simple primitive prop types (like booleans), auto-docs will automatically create the appropriate interactive control.
+the above would show `children` prop with a dropdown having 4 options.
+
+##### Using functions
+
+when exampleProp is a function, it's return value will be displayed in
+storybook when that function was called. It will also glow blue. Very
+useful to indicate when callbacks happen.
+
+```js
+export default {
+  // ... other config
+  exampleProps: {
+    onClick: () => 'i was called!'
+  }
+}
+```

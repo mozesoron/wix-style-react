@@ -7,6 +7,11 @@ export default {
   component: TimeInput,
   componentPath: '../src/TimeInput', // TODO: move folder to TimePicker to align with component name
 
+  componentProps: {
+    dashesWhenDisabled: false,
+    disabled: false
+  },
+
   exampleProps: {
     onChange: moment => moment.format('h:mm a')
   }

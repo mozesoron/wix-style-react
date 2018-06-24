@@ -73,7 +73,12 @@ export default class ColorPicker extends WixComponent {
       <div className={css.root}>
         <ColorPickerHsb current={current} onChange={this.change}/>
         <ColorPickerHue current={current} onChange={this.change}/>
-        <ColorPickerHistory show={showHistory} current={current} previous={previous}/>
+        <ColorPickerHistory
+          show={showHistory}
+          current={current}
+          previous={previous}
+          onClick={this.change}
+          />
         <ColorPickerConverter showConverter={showConverter} showInput={showInput} current={current} onChange={this.change}/>
         {children && (
           <div className={css.children}>{children}</div>
@@ -91,7 +96,7 @@ export default class ColorPicker extends WixComponent {
   }
 
   change(color) {
-    this.setState({current: color}, () => {
+    this.setState({current: color, previous: this.state.current}, () => {
       this.props.onChange(color);
     });
   }
@@ -103,7 +108,6 @@ export default class ColorPicker extends WixComponent {
   cancel() {
     this.props.onCancel(this.state.previous);
   }
-
 }
 
 function equal(color1, color2) {

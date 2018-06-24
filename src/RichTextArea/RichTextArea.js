@@ -283,14 +283,6 @@ class RichTextArea extends WixComponent {
     if (this.hasLink()) {
       transform
         .unwrapInline('link');
-    } else if (editorState.isExpanded) {
-      transform
-        .wrapInline({
-          type: 'link',
-          data: {href: decoratedHref}
-        })
-        .focus()
-        .collapseToEnd()
     } else {
       const linkContent = text || decoratedHref;
       const startPos = editorState.anchorOffset;
@@ -326,6 +318,7 @@ class RichTextArea extends WixComponent {
       <div className={className} data-hook={dataHook}>
         <div className={classNames(styles.toolbar, {[styles.disabled]: disabled})} data-hook='toolbar'>
           <RichTextEditorToolbar
+            selection={editorState.fragment.text}
             disabled={disabled}
             onClick={this.handleButtonClick}
             onLinkButtonClick={this.handleLinkButtonClick}

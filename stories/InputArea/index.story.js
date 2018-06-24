@@ -28,9 +28,15 @@ export default {
   storyName: '3.2 + InputArea',
   component: InputArea,
   componentPath: '../../src/InputArea',
+
   componentProps: {
-    dataHook: AUTO_EXAMPLE_DATA_HOOK
+    dataHook: AUTO_EXAMPLE_DATA_HOOK,
+    error: false,
+    theme: 'normal',
+    hasCounter: false,
+    resizable: false
   },
+
   examples: (
     <div>
       <CodeExample title="Standard" code={ExampleStandardRaw}>

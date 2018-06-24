@@ -22,7 +22,7 @@ export default class ControlledHeadingExample extends React.Component {
   render() {
     return (
       <div>
-        <div style={{background: 'azure', width: '355px', margin: '30px 20px'}}><Text>{`import {Heading} from 'wix-ui-backoffice/Heading';`}</Text></div>
+        <div style={{background: 'azure', width: '355px', margin: '30px 20px'}}><Text>{`import Heading from 'wix-style-react/Heading';`}</Text></div>
         <div style={{display: 'flex'}}>
           <div style={{marginRight: '120px'}}>
             <Heading> Props </Heading><br/><br/><br/>

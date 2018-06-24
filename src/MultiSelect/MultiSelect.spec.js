@@ -244,7 +244,7 @@ describe('multiSelect', () => {
   it('should set maxHeight when maxNumRows defined', () => {
     const {driver} = createDriver(<MultiSelect maxNumRows={2} options={options}/>);
 
-    expect(driver.getMaxHeight()).toBe('72px');
+    expect(driver.getMaxHeight()).toBe('70px');
   });
 
   it('should set maxHeight when maxNumRows defined (large tags)', () => {
@@ -254,7 +254,7 @@ describe('multiSelect', () => {
 
     const {driver} = createDriver(<MultiSelect maxNumRows={2} tags={options} options={options}/>);
 
-    expect(driver.getMaxHeight()).toBe('96px');
+    expect(driver.getMaxHeight()).toBe('94px');
   });
 
   it('should allow to write any text as tag when options are empty', () => {

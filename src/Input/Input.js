@@ -239,6 +239,7 @@ class Input extends Component {
 Input.displayName = 'Input';
 
 Input.defaultProps = {
+  autoSelect: true,
   size: 'normal',
   theme: 'normal',
   errorMessage: '',

@@ -36,6 +36,13 @@ export default {
     dataHook: 'multi-select-checkbox'
   }),
 
+  exampleProps: {
+    options: [
+      {label: 'One option', value: [{id: 0, value: 'Just me here'}]},
+      {label: `${options.length} options`, value: options}
+    ]
+  },
+
   examples: (
     <CodeExample title="Standard" code={ExampleStandardRaw}>
       <ExampleStandard/>

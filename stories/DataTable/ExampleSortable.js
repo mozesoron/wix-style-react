@@ -1,10 +1,7 @@
 import React from 'react';
 import DataTable from 'wix-style-react/DataTable';
+import {any, string} from 'prop-types';
 import './Example.scss';
-
-const style = {
-  width: '50%'
-};
 
 const baseData = [
   {firstName: 'Meghan', lastName: 'Bishop'},
@@ -15,6 +12,18 @@ const baseData = [
 ];
 
 class DataTableSortableExample extends React.Component {
+  static propTypes = {
+    style: any,
+    dataHook: string
+  }
+
+  static defaultProps = {
+    style: {
+      width: '966px'
+    },
+    dataHook: 'story-data-table-sortable'
+  }
+
   constructor(props) {
     super(props);
     this.state = {sort: {}, data: baseData};
@@ -37,12 +46,13 @@ class DataTableSortableExample extends React.Component {
 
   render() {
     return (
-      <div style={style}>
+      <div style={this.props.style}>
         <DataTable
-          dataHook="story-data-table-sortable"
+          dataHook={this.props.dataHook}
           data={this.state.data}
           onSortClick={(col, colNum) => this.handleSortClick(colNum)}
           itemsPerPage={20}
+          newDesign
           columns={[
             {title: 'Row Number', render: (row, rowNum) => '#' + (rowNum + 1), width: '20%', minWidth: '75px', important: true, infoTooltip: {content: 'Very informative tooltip text'}},
             {title: 'First Name', sortable: true, sortDescending: !!this.state.sort[1], render: row => <span>{row.firstName}</span>, width: '40%', minWidth: '100px'},

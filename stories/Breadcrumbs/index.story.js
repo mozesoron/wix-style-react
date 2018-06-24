@@ -46,11 +46,14 @@ export default {
   componentPath: './../../src/Breadcrumbs',
   componentProps: {
     activeId: '1',
-    items
+    items,
+    size: 'medium'
   },
   exampleProps: {
-    activeId: [
-      '1', '2', '3'
+    activeId: ['1', '2', '3'],
+    items: [
+      {label: 'One item', value: [{id: 0, value: 'Homepage'}]},
+      {label: 'Three items', value: items}
     ]
   },
   examples: (

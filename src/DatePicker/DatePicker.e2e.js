@@ -40,7 +40,7 @@ describe('DatePicker', () => {
       inputDriver.click();
       expect(calendarDriver.exists()).toBe(true);
       expect(calendarDriver.isVisible()).toBe(true);
-    });
+    }, {version: '<Input/> - On text click - select all'});
 
     eyes.it('should close calendar on selecting date with click', () => {
       inputDriver.click();
@@ -54,7 +54,7 @@ describe('DatePicker', () => {
 
       inputDriver.pressEscKey();
       expect(calendarDriver.exists()).toBe(false);
-    });
+    }, {version: '<Input/> - On text click - select all'});
 
     eyes.it('should close calendar on Tab key', () => {
       inputDriver.click();
@@ -70,7 +70,7 @@ describe('DatePicker', () => {
       inputDriver.pressEnterKey();
 
       expect(inputDriver.getValue()).toBe('2017/05/01');
-    });
+    }, {version: '<Input/> - On text click - select all'});
 
     eyes.it('should select next day date', () => {
       autoExampleDriver.setProps({value: new Date('2017/05/01')});

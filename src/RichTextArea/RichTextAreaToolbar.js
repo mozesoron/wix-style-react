@@ -43,6 +43,7 @@ class RichTextAreaToolbar extends WixComponent {
     return (
       <div className={classNames(styles.button, {[styles.disabled]: disabled})}>
         <RichTextAreaLinkButton
+          selection={this.props.selection}
           disabled={disabled}
           onClick={onLinkButtonClick}
           type="link"
@@ -70,6 +71,7 @@ class RichTextAreaToolbar extends WixComponent {
 }
 
 RichTextAreaToolbar.propTypes = {
+  selection: PropTypes.string,
   onClick: PropTypes.func,
   onLinkButtonClick: PropTypes.func,
   onImageButtonClick: PropTypes.func,

@@ -14,6 +14,7 @@ import '../stories/Label'; // 1.2 + Label
 import '../stories/Heading'; // 1.3 Heading
 import '../stories/Icons'; // 1.4 Icons
 import '../stories/Loader.story.js'; // 1.5 Loader
+import '../stories/LinearProgressBar.story.js'; // 1.6 LinearProgressBar
 
 // 2. Layout
 import '../stories/Page/index.story.js'; // 2.5 Page
@@ -41,6 +42,7 @@ import '../stories/Search/expandable.story'; // 3.9b Search
 import '../stories/ImageViewer'; // 3.10 ImageViewer
 import '../stories/FilePicker'; // 3.10 + FilePicker
 import '../stories/GoogleAddressInput'; // 3.11 GoogleAddressInput
+import '../stories/AddItem/addItem.story.js'; // 3.12 AddItem
 
 // 4. Selection
 import '../stories/Dropdown'; // 4.1 Dropdown
@@ -108,6 +110,9 @@ import '../stories/Badge'; // 12.1 Badge
 import '../stories/CounterBadge'; //12.3 CounterBadge
 import '../stories/Highlighter.story.js'; // 12.4 Highlighter
 import '../stories/Tag.story.js'; // 12.5 Tag
+
+// 13. Work in progress
+import '../stories/Table'; // 13.1 Table Card
 
 // TPA
 import '../stories/TPA/Button';

@@ -2,6 +2,7 @@ import './assets/helvetica.scss';
 
 import {MessageBoxMarketerialLayout, MessageBoxFunctionalLayout, HeaderLayout, FooterLayout} from './MessageBox';
 
+export {default as AddItem} from './AddItem';
 export {default as Button} from './Button';
 export {default as ButtonLayout} from './ButtonLayout';
 export {default as Input} from './Input';
@@ -39,6 +40,7 @@ export {default as Dropdown} from './Dropdown';
 export {default as AutoComplete} from './AutoComplete';
 export {default as Label} from './Label';
 export {default as DataTable} from './DataTable';
+export {default as Table} from './Table';
 export {default as Text} from './Text';
 export {default as TextArea} from './TextArea';
 export {default as Range} from './Range';
@@ -70,3 +72,4 @@ export {default as Search} from './Search';
 export {default as Tabs} from './Tabs';
 export {default as Tag} from './Tag';
 export {default as TextLink} from './TextLink';
+export {default as LinearProgressBar} from './LinearProgressBar';

@@ -4,11 +4,11 @@ import style from './ImageViewer.scss';
 import Tooltip from '../Tooltip';
 import Button from '../Button';
 import Delete from 'wix-ui-icons-common/Delete';
-import AddMedia from 'wix-ui-icons-common/system/AddMedia';
 import Replace from 'wix-ui-icons-common/Replace';
 import WixComponent from '../BaseComponents/WixComponent';
 import FormFieldError from 'wix-ui-icons-common/system/FormFieldError';
 import classNames from 'classnames';
+import AddItem from '../AddItem/AddItem';
 
 class ImageViewer extends WixComponent {
 
@@ -31,13 +31,12 @@ class ImageViewer extends WixComponent {
       placement: 'top',
       theme: 'dark'
     };
-    const classes = classNames(style.container, {[style.hasLogo]: imageUrl, [style.hasError]: error, [style.addPadding]: !imageUrl});
+    const classes = classNames(style.container, {[style.hasLogo]: imageUrl, [style.hasError]: error});
     return (
       <div className={classes} style={{width, height}} data-hook="image-container">
-        <div data-hook="add-image" className={style.addLogo} onClick={onAddImage}>
-          <div className={style.dashedBorder}/>
-          <div className={style.plusIcon}><AddMedia size="31px"/></div>
-        </div>
+        {!imageUrl &&
+        <AddItem data-hook="add-image" tooltipContent="Add Image" height={height} onClick={onAddImage}/>
+        }
         {!!imageUrl &&
         <div className={style.changeLogoContainer}>
           <div className={style.imageLayout}>

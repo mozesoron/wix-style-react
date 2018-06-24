@@ -114,9 +114,11 @@ $material-gap: 8px;
 
 .size {
   &-small  { @include Size($height: 30px, $fontSize: 14px); }
+  &-small-with-selection { @include Size($height: 28px, $fontSize: 14px); }
   &-normal { @include Size($height: 36px, $fontSize: 16px); }
   &-normal-with-selection { @include Size($height: 34px, $fontSize: 16px); }
   &-large  { @include Size($height: 60px, $fontSize: 22px); }
+  &-large-with-selection { @include Size($height: 58px, $fontSize: 22px); }
 }
 
 .theme {

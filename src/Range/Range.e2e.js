@@ -80,7 +80,7 @@ describe('Range', () => {
       expect(driver.isFocusedFirst()).toBe(false);
       await driver.clickFirst();
       expect(driver.isFocusedFirst()).toBe(true);
-    });
+    }, {version: '<Input/>-On text click - select all'});
 
     eyes.it('should show focused styles for last item', async () => {
       expect(driver.isFocusedLast()).toBe(false);

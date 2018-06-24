@@ -31,11 +31,6 @@ describe('ImageViewer', () => {
       expect(driver.getImageUrl()).toBe(IMAGE_URL);
     });
 
-    it('should trigger add image', () => {
-      driver.clickAdd();
-      expect(addImage).toBeCalled();
-    });
-
     it('should trigger update image', () => {
       driver.clickUpdate();
       expect(updateImage).toBeCalled();
@@ -44,6 +39,16 @@ describe('ImageViewer', () => {
     it('should trigger remove image', () => {
       driver.clickRemove();
       expect(removeImage).toBeCalled();
+    });
+
+    it('should trigger add image', () => {
+      props = {
+        imageUrl: '',
+        onAddImage: addImage
+      };
+      driver = createDriver(<ImageViewer {...props}/>);
+      driver.clickAdd();
+      expect(addImage).toBeCalled();
     });
 
   });
@@ -85,6 +90,29 @@ describe('ImageViewer', () => {
       expect(driver.getContainerStyles()).toEqual(null);
     });
   });
+  describe('hide or show add image', () => {
+
+    it('should not display AddItem component if image exists', () => {
+
+      props = {
+        imageUrl: IMAGE_URL
+      };
+
+      driver = createDriver(<ImageViewer {...props}/>);
+      expect(driver.isAddItemVisible()).toBeFalsy();
+    });
+
+    it('should display AddItem component if image dosnt exists', () => {
+
+      props = {
+        imageUrl: ''
+      };
+
+      driver = createDriver(<ImageViewer {...props}/>);
+      expect(driver.isAddItemVisible()).toBeTruthy();
+    });
+
+  });
 
 
   describe('Error state', () => {
@@ -124,12 +152,11 @@ describe('ImageViewer', () => {
 
   });
 
-
   describe('testkit', () => {
     it('should exist', () => {
       const div = document.createElement('div');
       const dataHook = 'myDataHook';
-      const wrapper = div.appendChild(ReactTestUtils.renderIntoDocument(<div><ImageViewer dataHook={dataHook}/></div>));
+      const wrapper = div.appendChild(ReactTestUtils.renderIntoDocument(<div><ImageViewer imageUrl="" dataHook={dataHook}/></div>));
       const imageViewerTestkit = imageViewerTestkitFactory({wrapper, dataHook});
       expect(imageViewerTestkit.exists()).toBeTruthy();
     });

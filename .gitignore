@@ -22,3 +22,4 @@ package-lock.json
 /*.js
 !wallaby.js
 !protractor.conf.js
+.DS_Store

@@ -5,6 +5,7 @@ import WixComponent from '../../BaseComponents/WixComponent';
 import ButtonLayout from '../../ButtonLayout/ButtonLayout';
 import omit from 'omit';
 import {withFocusable, focusableStates} from '../../common/Focusable';
+import {pickAccessibilityProps} from '../../common/accessibility';
 
 const ICON_SIZES = {
   'x-small': '8px',
@@ -71,6 +72,7 @@ class Button extends WixComponent {
           onFocus={this.props.focusableOnFocus} // For some reason eslint react/prop-types rule doesn't work here ?!#$
           onBlur={this.props.focusableOnBlur}
           {...focusableStates(this.props)}
+          {...pickAccessibilityProps(this.props)}
           >
           {this.addPrefix()}
           {children}
