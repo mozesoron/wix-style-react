@@ -8,6 +8,7 @@ const addItemDriverFactory = ({wrapper, element}) => {
   const addButton = () => byHook('add-container');
   const addTooltip = () => byHook('add-tooltip');
 
+
   return {
     /** return the driver element */
     element: () => element,
